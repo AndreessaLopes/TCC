@@ -1,0 +1,70 @@
+# ===========================================
+# Ambiente Python
+# ===========================================
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.Python
+
+# ===========================================
+# Editores
+# ===========================================
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ===========================================
+# Conjuntos de dados
+# Não versionados por volume. Ver README para
+# instruções de obtenção.
+# ===========================================
+dataset/
+dataset_24_06/
+dataset_baseline/
+dataset_final/
+dataset_limpo/
+dataset_aug/
+dataset_70_20_10_corrigido/
+
+# ===========================================
+# Artefatos de treinamento e inferência
+# ===========================================
+runs/
+*.pt
+*.onnx
+*.tflite
+*_saved_model/
+modelos_tflite/
+
+# ===========================================
+# Saídas intermediárias
+# ===========================================
+preanotacoes_cacho/
+preanotacoes_cacho_v2/
+amostra_visual/
+revisao_anotacoes/
+removidos/
+*.log
+saida.log
+
+# ===========================================
+# LaTeX (caso o texto seja versionado junto)
+# ===========================================
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc

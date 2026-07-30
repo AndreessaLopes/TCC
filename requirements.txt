@@ -1,0 +1,45 @@
+# ===========================================
+# Dependências principais
+# ===========================================
+ultralytics==8.4.36
+torch==2.5.1
+torchvision
+
+# ===========================================
+# Processamento de imagens e dados
+# ===========================================
+numpy
+pandas
+Pillow
+opencv-python
+imagehash
+
+# ===========================================
+# Visualização
+# ===========================================
+matplotlib
+seaborn
+
+# ===========================================
+# Utilitários
+# ===========================================
+tqdm
+
+# ===========================================
+# Conversão para TensorFlow Lite
+# Necessárias apenas na etapa 05. A instalação
+# do TensorFlow é volumosa; instale somente se
+# for executar a conversão.
+# ===========================================
+# tensorflow
+# onnx
+# onnx2tf
+# onnxslim
+# sng4onnx
+# onnx_graphsurgeon
+
+# ===========================================
+# Aumento de dados (script experimental,
+# não utilizado no fluxo final)
+# ===========================================
+# albumentations
