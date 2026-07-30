@@ -209,7 +209,3 @@ Métricas no conjunto de teste (285 imagens, 2.399 instâncias):
 - Classificação do estágio de maturação dos frutos detectados
 
 ---
-
-## Observações
-
-O script `augment.py` implementa aumento de dados offline e foi mantido apenas como registro. O fluxo adotado utiliza o aumento dinâmico da biblioteca Ultralytics durante o treinamento, conforme descrito na metodologia.
