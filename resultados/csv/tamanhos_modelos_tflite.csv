@@ -1,0 +1,2 @@
+modelo,precisao,arquivo,tamanho_mb,opset,tempo_conversao_s
+yolov10n,INT8,yolov10n_int8.tflite,2.82,19,3567.5

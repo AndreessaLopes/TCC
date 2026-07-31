@@ -33,14 +33,23 @@ dataset_aug/
 dataset_70_20_10_corrigido/
 
 # ===========================================
-# Artefatos de treinamento e inferência
+# Artefatos de treinamento
 # ===========================================
 runs/
 *.pt
 *.onnx
-*.tflite
+
+# ===========================================
+# Artefatos intermediários da conversão TFLite
+#
+# Os modelos finais em modelos_tflite/ são
+# versionados; os intermediários gerados em
+# runs/ durante a exportação, não.
+# ===========================================
 *_saved_model/
-modelos_tflite/
+runs/**/*.tflite
+calibration_image_sample_data*.npy
+calibration_image_sample_data*.zip
 
 # ===========================================
 # Saídas intermediárias
@@ -54,7 +63,7 @@ removidos/
 saida.log
 
 # ===========================================
-# LaTeX (caso o texto seja versionado junto)
+# LaTeX
 # ===========================================
 *.aux
 *.bbl
