@@ -1,4 +1,5 @@
 import 'package:cafescan/theme/CoffeFonts.dart';
+import 'package:cafescan/widgets/ModalHelp.dart';
 import 'package:cafescan/widgets/StartPageCard.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +69,12 @@ class StartPage extends StatelessWidget {
                 child: Text('Começar'),
               ),
             ),
-            TextButton(onPressed: () {}, child: Text('Como funciona o app?')),
+            TextButton(
+              onPressed: () {
+                ModalHelp.showHelpDialog(context);
+              },
+              child: Text('Como funciona o app?'),
+            ),
           ],
         ),
       ),
