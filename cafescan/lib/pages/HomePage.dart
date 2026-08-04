@@ -2,6 +2,7 @@ import 'package:cafescan/theme/CoffeColors.dart';
 import 'package:cafescan/theme/CoffeFonts.dart';
 import 'package:cafescan/widgets/ButtonDelegate.dart';
 import 'package:cafescan/widgets/ModalHelp.dart';
+import 'package:cafescan/widgets/NavBar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: CoffeColors.bg,
       appBar: AppBar(
         backgroundColor: CoffeColors.bg,
         title: Row(
@@ -138,6 +140,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: NavBar(),
     );
   }
 }

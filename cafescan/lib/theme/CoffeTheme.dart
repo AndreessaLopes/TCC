@@ -35,5 +35,19 @@ final class CoffeTheme {
       bodyMedium: CoffeFonts.normalText,
       bodyLarge: CoffeFonts.primaryText,
     ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: CoffeColors.bg,
+      elevation: 8,
+      selectedItemColor: CoffeColors.accent,
+      unselectedItemColor: CoffeColors.neutral500,
+      selectedLabelStyle: CoffeFonts.primaryText.copyWith(
+        fontSize: 12,
+        color: CoffeColors.accent,
+      ),
+      unselectedLabelStyle: CoffeFonts.normalText.copyWith(
+        fontSize: 12,
+        color: CoffeColors.neutral500,
+      ),
+    ),
   );
 }
