@@ -13,7 +13,7 @@ class _CapturaPageState extends State<CapturaPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(child: Text('Captura Page')),
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: NavBar(currentIndex: 1),
     );
   }
 }

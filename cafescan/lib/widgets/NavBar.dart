@@ -1,29 +1,28 @@
-import 'package:cafescan/pages/CapturaPage.dart';
-import 'package:cafescan/pages/HomePage.dart';
-import 'package:cafescan/theme/CoffeColors.dart';
 import 'package:flutter/material.dart';
 
-class NavBar extends StatefulWidget {
-  const NavBar({super.key});
-
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
-
-class _NavBarState extends State<NavBar> {
-  int currentIndex = 0;
-
-  static const _screens = [HomePage(), CapturaPage()];
+class NavBar extends StatelessWidget {
+  final int currentIndex;
+  const NavBar({super.key, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(index: currentIndex, children: _screens),
-      bottomNavigationBar: BottomNavigationBar(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            offset: Offset(0, -2),
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: CoffeColors.bg,
         currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
+        onTap: (index) {
+          if (index == currentIndex) return;
+          const routes = ['/home', '/capture', '/batch', '/metrics'];
+          Navigator.pushReplacementNamed(context, routes[index]);
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.tune_rounded),

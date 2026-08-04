@@ -36,17 +36,19 @@ final class CoffeTheme {
       bodyLarge: CoffeFonts.primaryText,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: CoffeColors.bg,
+      backgroundColor: CoffeColors.surface,
       elevation: 8,
-      selectedItemColor: CoffeColors.accent,
-      unselectedItemColor: CoffeColors.neutral500,
-      selectedLabelStyle: CoffeFonts.primaryText.copyWith(
+      selectedIconTheme: IconThemeData(color: CoffeColors.accent, size: 35),
+      selectedItemColor: CoffeColors.accent700,
+      unselectedItemColor: CoffeColors.neutral600,
+      selectedLabelStyle: CoffeFonts.normalText.copyWith(
         fontSize: 12,
-        color: CoffeColors.accent,
+        fontWeight: FontWeight.bold,
+        color: CoffeColors.accent700,
       ),
       unselectedLabelStyle: CoffeFonts.normalText.copyWith(
         fontSize: 12,
-        color: CoffeColors.neutral500,
+        color: CoffeColors.neutral600,
       ),
     ),
   );
