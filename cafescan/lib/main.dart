@@ -1,6 +1,7 @@
 import 'package:cafescan/pages/BatchesPage.dart';
 import 'package:cafescan/pages/CapturePage.dart';
 import 'package:cafescan/pages/HomePage.dart';
+import 'package:cafescan/pages/MetricsPage.dart';
 import 'package:cafescan/pages/StartPage.dart';
 import 'package:cafescan/theme/CoffeTheme.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ void main() {
         '/home': (context) => const HomePage(),
         '/capture': (context) => const CapturePage(),
         '/batch': (context) => const BatchesPage(),
+        '/metrics': (context) => const MetricsPage(),
       },
     ),
   );

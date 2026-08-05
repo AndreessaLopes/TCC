@@ -1,4 +1,5 @@
 import 'package:cafescan/theme/CoffeFonts.dart';
+import 'package:cafescan/theme/MetricsStore.dart';
 import 'package:cafescan/widgets/ModalHelp.dart';
 import 'package:flutter/material.dart';
 import '../theme/CoffeColors.dart';
@@ -19,6 +20,8 @@ class _BatchesPageState extends State<BatchesPage> {
   int progress = 0;
   double latencyMs = 0;
   double ramMb = 0;
+  double latSum = 0;
+  double latSumSq = 0;
 
   static const total = 285;
   final String configLabel = 'NanoDet-Plus · GPU';
@@ -30,6 +33,8 @@ class _BatchesPageState extends State<BatchesPage> {
       progress = 0;
       latencyMs = 0;
       ramMb = 0;
+      latSum = 0;
+      latSumSq = 0;
     });
     Future.doWhile(() async {
       await Future.delayed(const Duration(milliseconds: 90));
@@ -37,14 +42,37 @@ class _BatchesPageState extends State<BatchesPage> {
       setState(() {
         progress = (progress + 3).clamp(0, total);
         latencyMs = 19 + (progress % 7);
+        latSum += latencyMs;
+        latSumSq += latencyMs * latencyMs;
         ramMb = 96 + progress * 0.08;
         if (progress >= total) {
           running = false;
           done = true;
+          _saveRun();
         }
       });
       return running;
     });
+  }
+
+  void _saveRun() {
+    final avg = latSum / total;
+    final variance = (latSumSq / total) - (avg * avg);
+    final std = variance > 0 ? variance : 0.0;
+    MetricsStore.instance.addRun(
+      LastRun(
+        configLabel: configLabel,
+        delegate: configLabel.contains('GPU') ? 'GPU' : 'CPU',
+        imagesTotal: total,
+        timestamp: 'agora',
+        avgLatencyMs: avg.toStringAsFixed(1),
+        stdDevMs: std.toStringAsFixed(1),
+        ramMB: ramMb.round(),
+        tempC: '38.2',
+        tempDelta: '7.2',
+        batteryUsedPct: '5.1',
+      ),
+    );
   }
 
   void cancel() => setState(() {
@@ -69,9 +97,9 @@ class _BatchesPageState extends State<BatchesPage> {
               "Execução em lote",
               style: CoffeFonts.primaryText.copyWith(fontSize: 20),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 color: CoffeColors.accent100,
@@ -91,7 +119,7 @@ class _BatchesPageState extends State<BatchesPage> {
             child: Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: CoffeColors.divider, width: 1),
@@ -253,7 +281,7 @@ class _BatchesPageState extends State<BatchesPage> {
                           color: CoffeColors.accent2_700,
                           size: 18,
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
                           'Lote concluído',
                           style: CoffeFonts.primaryText.copyWith(
@@ -274,7 +302,7 @@ class _BatchesPageState extends State<BatchesPage> {
                       width: double.infinity,
                       child: OutlinedButton(
                         onPressed: () =>
-                            Navigator.pushNamed(context, '/metrics'),
+                            Navigator.pushReplacementNamed(context, '/metrics'),
                         child: const Text(
                           'Ver métricas completas',
                           style: TextStyle(fontSize: 14),
