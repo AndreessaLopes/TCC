@@ -1,6 +1,7 @@
 import 'package:cafescan/theme/CoffeColors.dart';
 import 'package:cafescan/theme/CoffeFonts.dart';
 import 'package:cafescan/widgets/ButtonDelegate.dart';
+import 'package:cafescan/widgets/ButtonModels.dart';
 import 'package:cafescan/widgets/ModalHelp.dart';
 import 'package:cafescan/widgets/NavBar.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String model = 'NanoDet-Plus';
+  final List<Map<String, dynamic>> models = [
+    {
+      'model': 'YOLOv8n',
+      'modelFile': 'yolov8n_int8.tflite',
+      'photoPixelSize': '320x320',
+      'modelDescription': 'Rápido, indicado para CPU',
+      'photoMemorySize': '6.2MB',
+    },
+    {
+      'model': 'YOLOv5n',
+      'modelFile': 'yolov5n_fp16.tflite',
+      'photoPixelSize': '320x320',
+      'modelDescription': 'Equilíbrio geral',
+      'photoMemorySize': '7.4MB',
+    },
+    {
+      'model': 'EfficientDet-Lite0',
+      'modelFile': 'efficientdet_lite0.tflite',
+      'photoPixelSize': '320x320',
+      'modelDescription': 'Leve, boa precisão',
+      'photoMemorySize': '4.4MB',
+    },
+    {
+      'model': 'EfficientDet-Lite2',
+      'modelFile': 'efficientdet_lite2.tflite',
+      'photoPixelSize': '448x448',
+      'modelDescription': 'Mais preciso, mais pesado',
+      'photoMemorySize': '7.2MB',
+    },
+    {
+      'model': 'MobileNetV3-SSD',
+      'modelFile': 'mobilenet_v3_ssd.tflite',
+      'photoPixelSize': '300x300',
+      'modelDescription': 'Clássico, estável',
+      'photoMemorySize': '5.8MB',
+    },
+  ];
   Delegate delegate = Delegate.gpu;
 
-  String get configLabel =>
-      '$model · ${delegate == Delegate.gpu ? 'GPU' : 'CPU'}';
+  String get configLabel {
+    return '$selectedModel · ${delegate == Delegate.gpu ? 'GPU' : 'CPU'}';
+  }
+
+  String selectedModel = 'YOLOv8n';
+
   @override
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.of(context).size;
@@ -91,6 +132,23 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 16,
               ),
             ),
+            ...models.map(
+              (model) => ButtonModels(
+                model: model['model'],
+                modelFile: model['modelFile'],
+                photoPixelSize: model['photoPixelSize'],
+                modelDescription: model['modelDescription'],
+                photoMemorySize: model['photoMemorySize'],
+                isActive: selectedModel == model['model'],
+                onChanged: (value) {
+                  setState(() {
+                    selectedModel = value;
+                  });
+                },
+                selectedModel: selectedModel,
+                value: model['model'],
+              ),
+            ),
             Text(
               "DELEGATE",
               style: CoffeFonts.primaryText.copyWith(
@@ -137,6 +195,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            SizedBox(height: sizeOf.height * 0.01,)
           ],
         ),
       ),
