@@ -1,4 +1,5 @@
-import 'package:cafescan/pages/CapturaPage.dart';
+import 'package:cafescan/pages/BatchesPage.dart';
+import 'package:cafescan/pages/CapturePage.dart';
 import 'package:cafescan/pages/HomePage.dart';
 import 'package:cafescan/pages/StartPage.dart';
 import 'package:cafescan/theme/CoffeTheme.dart';
@@ -14,7 +15,8 @@ void main() {
       routes: {
         '/start': (context) => const StartPage(),
         '/home': (context) => const HomePage(),
-        '/capture': (context) => const CapturaPage(),
+        '/capture': (context) => const CapturePage(),
+        '/batch': (context) => const BatchesPage(),
       },
     ),
   );
