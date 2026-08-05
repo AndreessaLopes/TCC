@@ -1,3 +1,5 @@
+import 'package:cafescan/models/DetectionConfig.dart';
+import 'package:cafescan/theme/ConfigStore.dart';
 import 'package:cafescan/theme/CoffeColors.dart';
 import 'package:cafescan/theme/CoffeFonts.dart';
 import 'package:cafescan/widgets/ButtonDelegate.dart';
@@ -14,54 +16,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> models = [
-    {
-      'model': 'YOLOv8n',
-      'modelFile': 'yolov8n_int8.tflite',
-      'photoPixelSize': '320x320',
-      'modelDescription': 'Rápido, indicado para CPU',
-      'photoMemorySize': '6.2MB',
-    },
-    {
-      'model': 'YOLOv5n',
-      'modelFile': 'yolov5n_fp16.tflite',
-      'photoPixelSize': '320x320',
-      'modelDescription': 'Equilíbrio geral',
-      'photoMemorySize': '7.4MB',
-    },
-    {
-      'model': 'EfficientDet-Lite0',
-      'modelFile': 'efficientdet_lite0.tflite',
-      'photoPixelSize': '320x320',
-      'modelDescription': 'Leve, boa precisão',
-      'photoMemorySize': '4.4MB',
-    },
-    {
-      'model': 'EfficientDet-Lite2',
-      'modelFile': 'efficientdet_lite2.tflite',
-      'photoPixelSize': '448x448',
-      'modelDescription': 'Mais preciso, mais pesado',
-      'photoMemorySize': '7.2MB',
-    },
-    {
-      'model': 'MobileNetV3-SSD',
-      'modelFile': 'mobilenet_v3_ssd.tflite',
-      'photoPixelSize': '300x300',
-      'modelDescription': 'Clássico, estável',
-      'photoMemorySize': '5.8MB',
-    },
-  ];
-  Delegate delegate = Delegate.gpu;
+  final _store = ConfigStore.instance;
 
-  String get configLabel {
-    return '$selectedModel · ${delegate == Delegate.gpu ? 'GPU' : 'CPU'}';
+  @override
+  void initState() {
+    super.initState();
+    _store.addListener(_onStoreChanged);
   }
 
-  String selectedModel = 'YOLOv8n';
+  @override
+  void dispose() {
+    _store.removeListener(_onStoreChanged);
+    super.dispose();
+  }
+
+  void _onStoreChanged() {
+    if (mounted) setState(() {});
+  }
+
+  /// Texto descritivo exibido em cada cartão de modelo.
+  String _description(ModelVariant variant) {
+    switch (variant.precision) {
+      case Precision.fp32:
+        return 'Precisão original, sem quantização';
+      case Precision.fp16:
+        return 'Metade do tamanho, perda desprezível';
+      case Precision.int8:
+        return 'Menor arquivo, quantização inteira';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: CoffeColors.bg,
       appBar: AppBar(
@@ -72,15 +60,15 @@ class _HomePageState extends State<HomePage> {
               "Configuração",
               style: CoffeFonts.primaryText.copyWith(fontSize: 20),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
-              padding: EdgeInsets.all(6),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(color: CoffeColors.accent, width: 1.5),
               ),
               child: Text(
-                "6 combinações",
+                "${DetectionConfig.totalConfigurations} combinações",
                 style: TextStyle(fontSize: 12, color: CoffeColors.accent),
               ),
             ),
@@ -94,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: CoffeColors.divider, width: 1),
@@ -120,7 +108,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: sizeOf.height * 0.02,
           children: [
-            Text(
+            const Text(
               'Escolha o modelo (.tflite) e o delegate de execução.',
               style: TextStyle(fontSize: 14),
             ),
@@ -132,21 +120,20 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 16,
               ),
             ),
-            ...models.map(
-              (model) => ButtonModels(
-                model: model['model'],
-                modelFile: model['modelFile'],
-                photoPixelSize: model['photoPixelSize'],
-                modelDescription: model['modelDescription'],
-                photoMemorySize: model['photoMemorySize'],
-                isActive: selectedModel == model['model'],
+            ...ModelVariant.all.map(
+              (variant) => ButtonModels(
+                model: variant.label,
+                modelFile: variant.fileName,
+                photoPixelSize:
+                    '${ModelVariant.inputSize}x${ModelVariant.inputSize}',
+                modelDescription: _description(variant),
+                photoMemorySize: '${variant.sizeMB.toStringAsFixed(2)} MB',
+                isActive: _store.variant.label == variant.label,
                 onChanged: (value) {
-                  setState(() {
-                    selectedModel = value;
-                  });
+                  _store.selectVariant(ModelVariant.byLabel(value));
                 },
-                selectedModel: selectedModel,
-                value: model['model'],
+                selectedModel: _store.variant.label,
+                value: variant.label,
               ),
             ),
             Text(
@@ -158,8 +145,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ButtonDelegate(
-              value: delegate,
-              onChanged: (d) => setState(() => delegate = d),
+              value: _store.delegate,
+              onChanged: (d) => _store.selectDelegate(d),
             ),
             Container(
               width: double.infinity,
@@ -171,17 +158,23 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'CONFIGURAÇÃO ATIVA',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: CoffeColors.accent600,
-                      letterSpacing: 1.3,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'CONFIGURAÇÃO ATIVA',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: CoffeColors.accent600,
+                          letterSpacing: 1.3,
+                        ),
+                      ),
+                      const Spacer(),
+                      _statusIndicator(),
+                    ],
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    configLabel,
+                    _store.config.label,
                     style: CoffeFonts.primaryText.copyWith(
                       fontSize: 20,
                       color: CoffeColors.accent800,
@@ -189,17 +182,50 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Troca instantânea — sem necessidade de recarregar o app. Ideal para comparar em campo.',
-                    style: TextStyle(fontSize: 13),
+                    _store.error ??
+                        'Troca instantânea — sem necessidade de recarregar o app. '
+                            'Ideal para comparar em campo.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: _store.error != null ? Colors.red[900] : null,
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: sizeOf.height * 0.01,)
+            SizedBox(height: sizeOf.height * 0.01),
           ],
         ),
       ),
-      bottomNavigationBar: NavBar(currentIndex: 0),
+      bottomNavigationBar: const NavBar(currentIndex: 0),
     );
+  }
+
+  /// Indica visualmente o estado de carregamento do modelo selecionado.
+  Widget _statusIndicator() {
+    if (_store.loading) {
+      return SizedBox(
+        width: 14,
+        height: 14,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          color: CoffeColors.accent600,
+        ),
+      );
+    }
+
+    if (_store.error != null) {
+      return Icon(Icons.error_outline, size: 16, color: Colors.red[900]);
+    }
+
+    if (_store.isReady) {
+      return Icon(
+        Icons.check_circle_outline,
+        size: 16,
+        color: CoffeColors.accent600,
+      );
+    }
+
+    return const SizedBox.shrink();
   }
 }
