@@ -52,10 +52,16 @@ class _ButtonModelsState extends State<ButtonModels> {
         spacing: sizeOf.height * 0.01,
         children: [
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(widget.model, style: CoffeFonts.primaryText),
-              Spacer(),
+              Expanded(
+                child: Text(
+                  widget.model,
+                  style: CoffeFonts.primaryText,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+              const SizedBox(width: 8),
               RadioGroup<String>(
                 onChanged: (String? value) {
                   if (value != null) {

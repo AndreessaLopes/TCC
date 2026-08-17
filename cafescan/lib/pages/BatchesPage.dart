@@ -181,20 +181,29 @@ class _BatchesPageState extends State<BatchesPage> {
         backgroundColor: CoffeColors.bg,
         title: Row(
           children: [
-            Text(
-              "Execução em lote",
-              style: CoffeFonts.primaryText.copyWith(fontSize: 20),
-            ),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: CoffeColors.accent100,
-              ),
+            Expanded(
               child: Text(
-                _store.config.label,
-                style: TextStyle(fontSize: 11, color: CoffeColors.accent800),
+                "Execução em lote",
+                style: CoffeFonts.primaryText.copyWith(fontSize: 20),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+            const SizedBox(width: 8),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 140),
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: CoffeColors.accent100,
+                ),
+                child: Text(
+                  _store.config.label,
+                  style: TextStyle(fontSize: 11, color: CoffeColors.accent800),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
             ),
           ],
@@ -393,6 +402,7 @@ class _BatchesPageState extends State<BatchesPage> {
               _currentFile!,
               style: TextStyle(fontSize: 12, color: CoffeColors.accent700),
               overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           if (!_isWarmup)
             Text(
@@ -500,14 +510,17 @@ class _BatchesPageState extends State<BatchesPage> {
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(
         children: [
-          Text(
-            label,
-            style: CoffeFonts.normalText.copyWith(
-              fontSize: 13,
-              color: CoffeColors.neutral700,
+          Expanded(
+            child: Text(
+              label,
+              style: CoffeFonts.normalText.copyWith(
+                fontSize: 13,
+                color: CoffeColors.neutral700,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
-          const Spacer(),
           Text(
             value,
             style: CoffeFonts.normalText.copyWith(

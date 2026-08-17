@@ -23,6 +23,7 @@ class _TestePageState extends State<TestePage> {
 
   void _print(String msg) {
     debugPrint(msg);
+    if (!mounted) return;
     setState(() => _log.add(msg));
   }
 
@@ -51,13 +52,14 @@ class _TestePageState extends State<TestePage> {
       }
     }
 
-    setState(() => _busy = false);
+    if (mounted) setState(() => _busy = false);
   }
 
   /// Executa uma detecção sobre uma imagem escolhida.
   Future<void> _detectar() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (picked == null) return;
+    if (!mounted) return;
 
     setState(() {
       _busy = true;
@@ -104,7 +106,7 @@ class _TestePageState extends State<TestePage> {
       _print('$s');
     } finally {
       await _service.dispose();
-      setState(() => _busy = false);
+      if (mounted) setState(() => _busy = false);
     }
   }
 

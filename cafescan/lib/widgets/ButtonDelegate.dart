@@ -62,12 +62,16 @@ class ButtonDelegate extends StatelessWidget {
                 color: selected ? CoffeColors.bg : CoffeColors.neutral700,
               ),
               const SizedBox(width: 6),
-              Text(
-                label,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  color: selected ? CoffeColors.bg : CoffeColors.neutral700,
+              Flexible(
+                child: Text(
+                  label,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: selected ? CoffeColors.bg : CoffeColors.neutral700,
+                  ),
                 ),
               ),
             ],

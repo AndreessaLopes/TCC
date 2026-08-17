@@ -500,6 +500,7 @@ class _MetricsPageState extends State<MetricsPage> {
               color: CoffeColors.neutral600,
             ),
             overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ],
       ),
@@ -522,6 +523,7 @@ class _MetricsPageState extends State<MetricsPage> {
                 color: CoffeColors.neutral600,
               ),
               overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
           Expanded(

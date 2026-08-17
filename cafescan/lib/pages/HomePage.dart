@@ -56,20 +56,29 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: CoffeColors.bg,
         title: Row(
           children: [
-            Text(
-              "Configuração",
-              style: CoffeFonts.primaryText.copyWith(fontSize: 20),
-            ),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: CoffeColors.accent, width: 1.5),
-              ),
+            Expanded(
               child: Text(
-                "${DetectionConfig.totalConfigurations} combinações",
-                style: TextStyle(fontSize: 12, color: CoffeColors.accent),
+                "Configuração",
+                style: CoffeFonts.primaryText.copyWith(fontSize: 20),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+            const SizedBox(width: 8),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 140),
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: CoffeColors.accent, width: 1.5),
+                ),
+                child: Text(
+                  "${DetectionConfig.totalConfigurations} combinações",
+                  style: TextStyle(fontSize: 12, color: CoffeColors.accent),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
             ),
           ],

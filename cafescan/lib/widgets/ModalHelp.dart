@@ -9,6 +9,7 @@ class ModalHelp {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: CoffeColors.bg,
+          scrollable: true,
           title: Text(
             'Como usar o CaféScan',
             style: CoffeFonts.primaryText.copyWith(fontSize: 20),

@@ -33,6 +33,7 @@ class _CapturePageState extends State<CapturePage> {
     );
 
     if (picked == null) return;
+    if (!mounted) return;
 
     setState(() {
       _photo = File(picked.path);
@@ -182,11 +183,14 @@ class _CapturePageState extends State<CapturePage> {
         children: [
           Row(
             children: [
-              Text(
-                '${result.count} ${result.count == 1 ? "grão detectado" : "grãos detectados"}',
-                style: CoffeFonts.primaryText,
+              Expanded(
+                child: Text(
+                  '${result.count} ${result.count == 1 ? "grão detectado" : "grãos detectados"}',
+                  style: CoffeFonts.primaryText,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
-              const Spacer(),
               GestureDetector(
                 onTap: () => setState(() => _showConfidence = !_showConfidence),
                 child: Icon(
@@ -239,8 +243,14 @@ class _CapturePageState extends State<CapturePage> {
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         children: [
-          Text(label, style: style),
-          const Spacer(),
+          Expanded(
+            child: Text(
+              label,
+              style: style,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
           Text('${ms.toStringAsFixed(1)} ms', style: style),
         ],
       ),
@@ -251,15 +261,19 @@ class _CapturePageState extends State<CapturePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton.icon(
-          onPressed: _processing ? null : () => _pick(ImageSource.camera),
-          icon: const Icon(Icons.camera_alt_outlined, size: 18),
-          label: const Text('Capturar'),
+        Flexible(
+          child: ElevatedButton.icon(
+            onPressed: _processing ? null : () => _pick(ImageSource.camera),
+            icon: const Icon(Icons.camera_alt_outlined, size: 18),
+            label: const Text('Capturar', overflow: TextOverflow.ellipsis),
+          ),
         ),
-        OutlinedButton.icon(
-          onPressed: _processing ? null : () => _pick(ImageSource.gallery),
-          icon: const Icon(Icons.photo_library_outlined, size: 18),
-          label: const Text('Galeria'),
+        Flexible(
+          child: OutlinedButton.icon(
+            onPressed: _processing ? null : () => _pick(ImageSource.gallery),
+            icon: const Icon(Icons.photo_library_outlined, size: 18),
+            label: const Text('Galeria', overflow: TextOverflow.ellipsis),
+          ),
         ),
       ],
     );
