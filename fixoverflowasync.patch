@@ -1,0 +1,358 @@
+From 309ce8544a3751511bf020f1a8d1de4ec0da1ef2 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 17 Aug 2026 21:31:31 +0000
+Subject: [PATCH] Fix overflow risks and async-suspension bugs in CafeScan
+
+- Guard AppBar title Rows (BatchesPage, HomePage) so the dynamic
+  config-label badge no longer overflows the fixed title text; cap
+  the badge width and ellipsize both.
+- Wrap every label/value Row built from dynamic or long strings
+  (metric rows, model label, CPU/GPU segment, capture result header)
+  in Expanded/Flexible with ellipsis so large accessibility text
+  scales or long labels truncate instead of throwing a RenderFlex
+  overflow.
+- Add maxLines:1 everywhere TextOverflow.ellipsis was set without it
+  (it's a no-op without maxLines, letting text wrap and grow instead
+  of truncating).
+- Make the help AlertDialog scrollable so its long content can't
+  overflow vertically on short screens.
+- Fix async-suspension bugs: CapturePage._pick and TestePage were
+  calling setState() after an await (image picker / model load)
+  without checking `mounted` first, which crashes if the widget is
+  disposed while the future is pending.
+---
+ cafescan/lib/pages/BatchesPage.dart      | 51 +++++++++++++++---------
+ cafescan/lib/pages/CapturePage.dart      | 42 ++++++++++++-------
+ cafescan/lib/pages/HomePage.dart         | 35 ++++++++++------
+ cafescan/lib/pages/MetricsPage.dart      |  2 +
+ cafescan/lib/pages/TestePage.dart        |  6 ++-
+ cafescan/lib/widgets/ButtonDelegate.dart | 16 +++++---
+ cafescan/lib/widgets/ButtonModels.dart   | 12 ++++--
+ cafescan/lib/widgets/ModalHelp.dart      |  1 +
+ 8 files changed, 108 insertions(+), 57 deletions(-)
+
+diff --git a/cafescan/lib/pages/BatchesPage.dart b/cafescan/lib/pages/BatchesPage.dart
+index 5b18031..65cb4ab 100644
+--- a/cafescan/lib/pages/BatchesPage.dart
++++ b/cafescan/lib/pages/BatchesPage.dart
+@@ -181,20 +181,29 @@ class _BatchesPageState extends State<BatchesPage> {
+         backgroundColor: CoffeColors.bg,
+         title: Row(
+           children: [
+-            Text(
+-              "Execução em lote",
+-              style: CoffeFonts.primaryText.copyWith(fontSize: 20),
+-            ),
+-            const Spacer(),
+-            Container(
+-              padding: const EdgeInsets.all(8),
+-              decoration: BoxDecoration(
+-                borderRadius: BorderRadius.circular(30),
+-                color: CoffeColors.accent100,
+-              ),
++            Expanded(
+               child: Text(
+-                _store.config.label,
+-                style: TextStyle(fontSize: 11, color: CoffeColors.accent800),
++                "Execução em lote",
++                style: CoffeFonts.primaryText.copyWith(fontSize: 20),
++                overflow: TextOverflow.ellipsis,
++                maxLines: 1,
++              ),
++            ),
++            const SizedBox(width: 8),
++            ConstrainedBox(
++              constraints: const BoxConstraints(maxWidth: 140),
++              child: Container(
++                padding: const EdgeInsets.all(8),
++                decoration: BoxDecoration(
++                  borderRadius: BorderRadius.circular(30),
++                  color: CoffeColors.accent100,
++                ),
++                child: Text(
++                  _store.config.label,
++                  style: TextStyle(fontSize: 11, color: CoffeColors.accent800),
++                  overflow: TextOverflow.ellipsis,
++                  maxLines: 1,
++                ),
+               ),
+             ),
+           ],
+@@ -393,6 +402,7 @@ class _BatchesPageState extends State<BatchesPage> {
+               _currentFile!,
+               style: TextStyle(fontSize: 12, color: CoffeColors.accent700),
+               overflow: TextOverflow.ellipsis,
++              maxLines: 1,
+             ),
+           if (!_isWarmup)
+             Text(
+@@ -500,14 +510,17 @@ class _BatchesPageState extends State<BatchesPage> {
+       padding: const EdgeInsets.symmetric(vertical: 3),
+       child: Row(
+         children: [
+-          Text(
+-            label,
+-            style: CoffeFonts.normalText.copyWith(
+-              fontSize: 13,
+-              color: CoffeColors.neutral700,
++          Expanded(
++            child: Text(
++              label,
++              style: CoffeFonts.normalText.copyWith(
++                fontSize: 13,
++                color: CoffeColors.neutral700,
++              ),
++              overflow: TextOverflow.ellipsis,
++              maxLines: 1,
+             ),
+           ),
+-          const Spacer(),
+           Text(
+             value,
+             style: CoffeFonts.normalText.copyWith(
+diff --git a/cafescan/lib/pages/CapturePage.dart b/cafescan/lib/pages/CapturePage.dart
+index c2ec201..3106f09 100644
+--- a/cafescan/lib/pages/CapturePage.dart
++++ b/cafescan/lib/pages/CapturePage.dart
+@@ -33,6 +33,7 @@ class _CapturePageState extends State<CapturePage> {
+     );
+ 
+     if (picked == null) return;
++    if (!mounted) return;
+ 
+     setState(() {
+       _photo = File(picked.path);
+@@ -182,11 +183,14 @@ class _CapturePageState extends State<CapturePage> {
+         children: [
+           Row(
+             children: [
+-              Text(
+-                '${result.count} ${result.count == 1 ? "grão detectado" : "grãos detectados"}',
+-                style: CoffeFonts.primaryText,
++              Expanded(
++                child: Text(
++                  '${result.count} ${result.count == 1 ? "grão detectado" : "grãos detectados"}',
++                  style: CoffeFonts.primaryText,
++                  overflow: TextOverflow.ellipsis,
++                  maxLines: 1,
++                ),
+               ),
+-              const Spacer(),
+               GestureDetector(
+                 onTap: () => setState(() => _showConfidence = !_showConfidence),
+                 child: Icon(
+@@ -239,8 +243,14 @@ class _CapturePageState extends State<CapturePage> {
+       padding: const EdgeInsets.symmetric(vertical: 2),
+       child: Row(
+         children: [
+-          Text(label, style: style),
+-          const Spacer(),
++          Expanded(
++            child: Text(
++              label,
++              style: style,
++              overflow: TextOverflow.ellipsis,
++              maxLines: 1,
++            ),
++          ),
+           Text('${ms.toStringAsFixed(1)} ms', style: style),
+         ],
+       ),
+@@ -251,15 +261,19 @@ class _CapturePageState extends State<CapturePage> {
+     return Row(
+       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+       children: [
+-        ElevatedButton.icon(
+-          onPressed: _processing ? null : () => _pick(ImageSource.camera),
+-          icon: const Icon(Icons.camera_alt_outlined, size: 18),
+-          label: const Text('Capturar'),
++        Flexible(
++          child: ElevatedButton.icon(
++            onPressed: _processing ? null : () => _pick(ImageSource.camera),
++            icon: const Icon(Icons.camera_alt_outlined, size: 18),
++            label: const Text('Capturar', overflow: TextOverflow.ellipsis),
++          ),
+         ),
+-        OutlinedButton.icon(
+-          onPressed: _processing ? null : () => _pick(ImageSource.gallery),
+-          icon: const Icon(Icons.photo_library_outlined, size: 18),
+-          label: const Text('Galeria'),
++        Flexible(
++          child: OutlinedButton.icon(
++            onPressed: _processing ? null : () => _pick(ImageSource.gallery),
++            icon: const Icon(Icons.photo_library_outlined, size: 18),
++            label: const Text('Galeria', overflow: TextOverflow.ellipsis),
++          ),
+         ),
+       ],
+     );
+diff --git a/cafescan/lib/pages/HomePage.dart b/cafescan/lib/pages/HomePage.dart
+index 45040da..d2ebb0c 100644
+--- a/cafescan/lib/pages/HomePage.dart
++++ b/cafescan/lib/pages/HomePage.dart
+@@ -56,20 +56,29 @@ class _HomePageState extends State<HomePage> {
+         backgroundColor: CoffeColors.bg,
+         title: Row(
+           children: [
+-            Text(
+-              "Configuração",
+-              style: CoffeFonts.primaryText.copyWith(fontSize: 20),
+-            ),
+-            const Spacer(),
+-            Container(
+-              padding: const EdgeInsets.all(6),
+-              decoration: BoxDecoration(
+-                borderRadius: BorderRadius.circular(30),
+-                border: Border.all(color: CoffeColors.accent, width: 1.5),
+-              ),
++            Expanded(
+               child: Text(
+-                "${DetectionConfig.totalConfigurations} combinações",
+-                style: TextStyle(fontSize: 12, color: CoffeColors.accent),
++                "Configuração",
++                style: CoffeFonts.primaryText.copyWith(fontSize: 20),
++                overflow: TextOverflow.ellipsis,
++                maxLines: 1,
++              ),
++            ),
++            const SizedBox(width: 8),
++            ConstrainedBox(
++              constraints: const BoxConstraints(maxWidth: 140),
++              child: Container(
++                padding: const EdgeInsets.all(6),
++                decoration: BoxDecoration(
++                  borderRadius: BorderRadius.circular(30),
++                  border: Border.all(color: CoffeColors.accent, width: 1.5),
++                ),
++                child: Text(
++                  "${DetectionConfig.totalConfigurations} combinações",
++                  style: TextStyle(fontSize: 12, color: CoffeColors.accent),
++                  overflow: TextOverflow.ellipsis,
++                  maxLines: 1,
++                ),
+               ),
+             ),
+           ],
+diff --git a/cafescan/lib/pages/MetricsPage.dart b/cafescan/lib/pages/MetricsPage.dart
+index 76e041f..7901246 100644
+--- a/cafescan/lib/pages/MetricsPage.dart
++++ b/cafescan/lib/pages/MetricsPage.dart
+@@ -500,6 +500,7 @@ class _MetricsPageState extends State<MetricsPage> {
+               color: CoffeColors.neutral600,
+             ),
+             overflow: TextOverflow.ellipsis,
++            maxLines: 1,
+           ),
+         ],
+       ),
+@@ -522,6 +523,7 @@ class _MetricsPageState extends State<MetricsPage> {
+                 color: CoffeColors.neutral600,
+               ),
+               overflow: TextOverflow.ellipsis,
++              maxLines: 1,
+             ),
+           ),
+           Expanded(
+diff --git a/cafescan/lib/pages/TestePage.dart b/cafescan/lib/pages/TestePage.dart
+index b4780a0..1be1245 100644
+--- a/cafescan/lib/pages/TestePage.dart
++++ b/cafescan/lib/pages/TestePage.dart
+@@ -23,6 +23,7 @@ class _TestePageState extends State<TestePage> {
+ 
+   void _print(String msg) {
+     debugPrint(msg);
++    if (!mounted) return;
+     setState(() => _log.add(msg));
+   }
+ 
+@@ -51,13 +52,14 @@ class _TestePageState extends State<TestePage> {
+       }
+     }
+ 
+-    setState(() => _busy = false);
++    if (mounted) setState(() => _busy = false);
+   }
+ 
+   /// Executa uma detecção sobre uma imagem escolhida.
+   Future<void> _detectar() async {
+     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+     if (picked == null) return;
++    if (!mounted) return;
+ 
+     setState(() {
+       _busy = true;
+@@ -104,7 +106,7 @@ class _TestePageState extends State<TestePage> {
+       _print('$s');
+     } finally {
+       await _service.dispose();
+-      setState(() => _busy = false);
++      if (mounted) setState(() => _busy = false);
+     }
+   }
+ 
+diff --git a/cafescan/lib/widgets/ButtonDelegate.dart b/cafescan/lib/widgets/ButtonDelegate.dart
+index 61ff14c..e9783a5 100644
+--- a/cafescan/lib/widgets/ButtonDelegate.dart
++++ b/cafescan/lib/widgets/ButtonDelegate.dart
+@@ -62,12 +62,16 @@ class ButtonDelegate extends StatelessWidget {
+                 color: selected ? CoffeColors.bg : CoffeColors.neutral700,
+               ),
+               const SizedBox(width: 6),
+-              Text(
+-                label,
+-                style: TextStyle(
+-                  fontWeight: FontWeight.w700,
+-                  fontSize: 14,
+-                  color: selected ? CoffeColors.bg : CoffeColors.neutral700,
++              Flexible(
++                child: Text(
++                  label,
++                  overflow: TextOverflow.ellipsis,
++                  maxLines: 1,
++                  style: TextStyle(
++                    fontWeight: FontWeight.w700,
++                    fontSize: 14,
++                    color: selected ? CoffeColors.bg : CoffeColors.neutral700,
++                  ),
+                 ),
+               ),
+             ],
+diff --git a/cafescan/lib/widgets/ButtonModels.dart b/cafescan/lib/widgets/ButtonModels.dart
+index 53d1356..6787593 100644
+--- a/cafescan/lib/widgets/ButtonModels.dart
++++ b/cafescan/lib/widgets/ButtonModels.dart
+@@ -52,10 +52,16 @@ class _ButtonModelsState extends State<ButtonModels> {
+         spacing: sizeOf.height * 0.01,
+         children: [
+           Row(
+-            mainAxisSize: MainAxisSize.min,
+             children: [
+-              Text(widget.model, style: CoffeFonts.primaryText),
+-              Spacer(),
++              Expanded(
++                child: Text(
++                  widget.model,
++                  style: CoffeFonts.primaryText,
++                  overflow: TextOverflow.ellipsis,
++                  maxLines: 1,
++                ),
++              ),
++              const SizedBox(width: 8),
+               RadioGroup<String>(
+                 onChanged: (String? value) {
+                   if (value != null) {
+diff --git a/cafescan/lib/widgets/ModalHelp.dart b/cafescan/lib/widgets/ModalHelp.dart
+index 68411a7..1e1baea 100644
+--- a/cafescan/lib/widgets/ModalHelp.dart
++++ b/cafescan/lib/widgets/ModalHelp.dart
+@@ -9,6 +9,7 @@ class ModalHelp {
+       builder: (BuildContext context) {
+         return AlertDialog(
+           backgroundColor: CoffeColors.bg,
++          scrollable: true,
+           title: Text(
+             'Como usar o CaféScan',
+             style: CoffeFonts.primaryText.copyWith(fontSize: 20),
+-- 
+2.43.0
+
