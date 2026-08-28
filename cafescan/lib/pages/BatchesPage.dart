@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// Execução em lote sobre um conjunto de imagens selecionadas.
 ///
 /// Constitui o instrumento de coleta das métricas previstas no protocolo
-/// experimental, registrando latência, estabilidade, consumo de memória,
-/// consumo energético e número de detecções para cada configuração avaliada.
+/// experimental.
 class BatchesPage extends StatefulWidget {
   const BatchesPage({super.key});
 
@@ -30,9 +30,9 @@ class _BatchesPageState extends State<BatchesPage> {
   BatchRunner? _runner;
   List<File> _files = [];
 
-  /// Quantidade de inferências descartadas antes do início das medições.
   int _warmupCount = 3;
 
+  bool _picking = false;
   bool _running = false;
   int _processed = 0;
   int _totalSteps = 0;
@@ -43,39 +43,108 @@ class _BatchesPageState extends State<BatchesPage> {
   BatchResult? _result;
   String? _error;
 
-  /// Seleciona as imagens que comporão o lote.
-  Future<void> _selectImages() async {
-    final picked = await ImagePicker().pickMultiImage();
-    if (picked.isEmpty) return;
+  @override
+  void dispose() {
+    WakelockPlus.disable();
+    super.dispose();
+  }
 
-    setState(() {
-      _files = picked.map((x) => File(x.path)).toList();
-      _result = null;
-      _error = null;
-      _processed = 0;
-    });
+  /// Seleciona as imagens que comporão o lote.
+  ///
+  /// O indicador de carregamento evita chamadas concorrentes, situação que
+  /// resulta em erro do seletor de imagens quando o conjunto é extenso.
+  Future<void> _selectImages() async {
+    if (_picking || _running) return;
+
+    setState(() => _picking = true);
+
+    try {
+      final picked = await ImagePicker().pickMultiImage();
+      if (picked.isEmpty) return;
+
+      if (!mounted) return;
+      setState(() {
+        _files = picked.map((x) => File(x.path)).toList();
+        _result = null;
+        _error = null;
+        _processed = 0;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _error = 'Falha ao selecionar imagens: $e');
+    } finally {
+      if (mounted) setState(() => _picking = false);
+    }
+  }
+
+  /// Verifica as condições do dispositivo e solicita confirmação quando
+  /// houver situação que comprometa a comparabilidade das medições.
+  Future<bool> _confirmConditions(BatchRunner runner) async {
+    final conditions = await runner.checkConditions();
+    if (!conditions.hasWarnings) return true;
+    if (!mounted) return false;
+
+    final proceed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Condições do dispositivo'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final w in conditions.warnings)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(w, style: const TextStyle(fontSize: 13)),
+              ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Executar mesmo assim'),
+          ),
+        ],
+      ),
+    );
+
+    return proceed ?? false;
   }
 
   /// Executa a inferência sobre todas as imagens selecionadas.
   Future<void> _start() async {
     if (_files.isEmpty) return;
 
-    setState(() {
-      _running = true;
-      _processed = 0;
-      _totalSteps = _files.length + _warmupCount.clamp(0, _files.length);
-      _result = null;
-      _error = null;
-    });
-
     try {
       await _store.ensureLoaded();
 
       if (_store.error != null) {
-        throw StateError(_store.error!);
+        setState(() => _error = _store.error);
+        return;
       }
 
       final runner = BatchRunner(_store.service);
+
+      if (!await _confirmConditions(runner)) return;
+
+      if (!mounted) return;
+      setState(() {
+        _running = true;
+        _processed = 0;
+        _totalSteps = _files.length + _warmupCount.clamp(0, _files.length);
+        _result = null;
+        _error = null;
+      });
+
+      // Mantém a tela ativa durante a execução. A suspensão do processo
+      // pelo sistema operacional produz medições de latência incompatíveis
+      // com o desempenho real do modelo.
+      await WakelockPlus.enable();
+
       _runner = runner;
 
       final result = await runner.run(
@@ -102,6 +171,7 @@ class _BatchesPageState extends State<BatchesPage> {
       if (!mounted) return;
       setState(() => _error = e.toString());
     } finally {
+      await WakelockPlus.disable();
       if (mounted) setState(() => _running = false);
       _runner = null;
     }
@@ -130,8 +200,6 @@ class _BatchesPageState extends State<BatchesPage> {
         ramMB: s.peakMemoryMB,
         totalDetections: s.totalDetections,
         batteryUsedPct: result.batteryUsed?.toString(),
-        // A temperatura do dispositivo não é acessível pelas interfaces
-        // disponibilizadas ao ambiente de execução.
         tempC: null,
         tempDelta: null,
       ),
@@ -179,34 +247,9 @@ class _BatchesPageState extends State<BatchesPage> {
       backgroundColor: CoffeColors.bg,
       appBar: AppBar(
         backgroundColor: CoffeColors.bg,
-        title: Row(
-          children: [
-            Expanded(
-              child: Text(
-                "Execução em lote",
-                style: CoffeFonts.primaryText.copyWith(fontSize: 20),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
-            const SizedBox(width: 8),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 140),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: CoffeColors.accent100,
-                ),
-                child: Text(
-                  _store.config.label,
-                  style: TextStyle(fontSize: 11, color: CoffeColors.accent800),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-            ),
-          ],
+        title: Text(
+          'Execução em lote',
+          style: CoffeFonts.primaryText.copyWith(fontSize: 20),
         ),
         actions: [
           GestureDetector(
@@ -220,7 +263,7 @@ class _BatchesPageState extends State<BatchesPage> {
                   border: Border.all(color: CoffeColors.divider, width: 1),
                 ),
                 child: Text(
-                  "?",
+                  '?',
                   style: CoffeFonts.primaryText.copyWith(
                     fontSize: 20,
                     color: Colors.black,
@@ -236,6 +279,8 @@ class _BatchesPageState extends State<BatchesPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _configBadge(),
+            const SizedBox(height: 12),
             _selectionCard(),
             const SizedBox(height: 16),
             if (_running) ...[_progressCard(pct), const SizedBox(height: 16)],
@@ -249,6 +294,32 @@ class _BatchesPageState extends State<BatchesPage> {
         ),
       ),
       bottomNavigationBar: const NavBar(currentIndex: 2),
+    );
+  }
+
+  /// Exibe a configuração ativa em largura integral, evitando o
+  /// transbordamento observado quando apresentada na barra superior.
+  Widget _configBadge() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      decoration: BoxDecoration(
+        color: CoffeColors.accent100,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.tune_rounded, size: 15, color: CoffeColors.accent600),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              _store.config.label,
+              style: TextStyle(fontSize: 13, color: CoffeColors.accent800),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -281,10 +352,19 @@ class _BatchesPageState extends State<BatchesPage> {
             ),
           ),
           const SizedBox(height: 12),
-          OutlinedButton.icon(
-            onPressed: _running ? null : _selectImages,
-            icon: const Icon(Icons.photo_library_outlined, size: 18),
-            label: const Text('Selecionar imagens'),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: (_running || _picking) ? null : _selectImages,
+              icon: _picking
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.photo_library_outlined, size: 18),
+              label: Text(_picking ? 'Carregando...' : 'Selecionar imagens'),
+            ),
           ),
           Divider(color: CoffeColors.divider, height: 24),
           Row(
@@ -317,6 +397,7 @@ class _BatchesPageState extends State<BatchesPage> {
 
   Widget _stepper() {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
           onPressed: _running || _warmupCount == 0
@@ -324,10 +405,16 @@ class _BatchesPageState extends State<BatchesPage> {
               : () => setState(() => _warmupCount--),
           icon: const Icon(Icons.remove_circle_outline, size: 20),
           visualDensity: VisualDensity.compact,
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
         ),
-        Text(
-          '$_warmupCount',
-          style: CoffeFonts.primaryText.copyWith(fontSize: 15),
+        SizedBox(
+          width: 26,
+          child: Text(
+            '$_warmupCount',
+            textAlign: TextAlign.center,
+            style: CoffeFonts.primaryText.copyWith(fontSize: 15),
+          ),
         ),
         IconButton(
           onPressed: _running || _warmupCount >= 10
@@ -335,6 +422,8 @@ class _BatchesPageState extends State<BatchesPage> {
               : () => setState(() => _warmupCount++),
           icon: const Icon(Icons.add_circle_outline, size: 20),
           visualDensity: VisualDensity.compact,
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
         ),
       ],
     );
@@ -402,13 +491,29 @@ class _BatchesPageState extends State<BatchesPage> {
               _currentFile!,
               style: TextStyle(fontSize: 12, color: CoffeColors.accent700),
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
             ),
           if (!_isWarmup)
             Text(
               'Última latência: ${_lastLatency.toStringAsFixed(1)} ms',
               style: TextStyle(fontSize: 12, color: CoffeColors.accent700),
             ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Icon(
+                Icons.lightbulb_outline,
+                size: 13,
+                color: CoffeColors.accent600,
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  'Mantenha o aplicativo em primeiro plano durante a execução.',
+                  style: TextStyle(fontSize: 11, color: CoffeColors.accent600),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -422,9 +527,22 @@ class _BatchesPageState extends State<BatchesPage> {
         color: Colors.red[50],
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Text(
-        _error!,
-        style: TextStyle(fontSize: 13, color: Colors.red[900]),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.error_outline, size: 18, color: Colors.red[900]),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              _error!,
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.red[900],
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -443,7 +561,9 @@ class _BatchesPageState extends State<BatchesPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Execução concluída',
+            result.wasCancelled
+                ? 'Execução interrompida'
+                : 'Execução concluída',
             style: CoffeFonts.primaryText.copyWith(fontSize: 16),
           ),
           const SizedBox(height: 2),
@@ -455,6 +575,27 @@ class _BatchesPageState extends State<BatchesPage> {
               color: CoffeColors.neutral600,
             ),
           ),
+          if (s.outliersExcluded > 0) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: CoffeColors.neutral200,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '${s.outliersExcluded} ${s.outliersExcluded == 1 ? "medição foi excluída" : "medições foram excluídas"} '
+                'por apresentar latência incompatível com a distribuição '
+                'observada. Os valores permanecem registrados no arquivo '
+                'exportado.',
+                style: TextStyle(
+                  fontSize: 11.5,
+                  color: CoffeColors.neutral700,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ],
           const SizedBox(height: 14),
           _row('Latência média', '${s.meanTotalMs.toStringAsFixed(1)} ms'),
           _row('Desvio padrão', '${s.stdDevTotalMs.toStringAsFixed(1)} ms'),
@@ -509,6 +650,7 @@ class _BatchesPageState extends State<BatchesPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Text(
@@ -517,10 +659,9 @@ class _BatchesPageState extends State<BatchesPage> {
                 fontSize: 13,
                 color: CoffeColors.neutral700,
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
             ),
           ),
+          const SizedBox(width: 8),
           Text(
             value,
             style: CoffeFonts.normalText.copyWith(

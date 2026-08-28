@@ -41,6 +41,7 @@ dependencies:
   tflite_flutter: ^0.12.1
   image: ^4.9.1
   battery_plus: ^6.2.1
+  wakelock_plus: ^1.2.8
 
 dev_dependencies:
   flutter_test:
