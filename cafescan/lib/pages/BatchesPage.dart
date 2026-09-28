@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cafescan/services/BatchRunner.dart';
+import 'package:cafescan/services/Imageselectionservice.dart';
 import 'package:cafescan/theme/ConfigStore.dart';
 import 'package:cafescan/theme/CoffeColors.dart';
 import 'package:cafescan/theme/CoffeFonts.dart';
@@ -8,7 +9,6 @@ import 'package:cafescan/theme/MetricsStore.dart';
 import 'package:cafescan/widgets/ModalHelp.dart';
 import 'package:cafescan/widgets/NavBar.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -28,7 +28,7 @@ class _BatchesPageState extends State<BatchesPage> {
   final _store = ConfigStore.instance;
 
   BatchRunner? _runner;
-  List<File> _files = [];
+  ImageSelection? _selection;
 
   int _warmupCount = 3;
 
@@ -43,31 +43,51 @@ class _BatchesPageState extends State<BatchesPage> {
   BatchResult? _result;
   String? _error;
 
+  List<File> get _files => _selection?.files ?? const [];
+
   @override
   void dispose() {
     WakelockPlus.disable();
     super.dispose();
   }
 
-  /// Seleciona as imagens que comporão o lote.
-  ///
-  /// O indicador de carregamento evita chamadas concorrentes, situação que
-  /// resulta em erro do seletor de imagens quando o conjunto é extenso.
+  /// Solicita a seleção das imagens que comporão o lote.
   Future<void> _selectImages() async {
     if (_picking || _running) return;
 
-    setState(() => _picking = true);
+    setState(() {
+      _picking = true;
+      _error = null;
+    });
 
     try {
-      final picked = await ImagePicker().pickMultiImage();
-      if (picked.isEmpty) return;
+      final selection = await ImageSelectionService.pick();
+      if (selection == null) return;
 
       if (!mounted) return;
+
+      if (selection.isEmpty) {
+        setState(() {
+          _error =
+              'Nenhuma imagem pôde ser lida. Verifique se os arquivos '
+              'estão armazenados na memória do dispositivo.';
+          _selection = null;
+        });
+        return;
+      }
+
       setState(() {
-        _files = picked.map((x) => File(x.path)).toList();
+        _selection = selection;
         _result = null;
-        _error = null;
         _processed = 0;
+
+        if (selection.unresolved > 0) {
+          _error =
+              '${selection.unresolved} '
+              '${selection.unresolved == 1 ? "arquivo não pôde ser lido" : "arquivos não puderam ser lidos"}. '
+              'Arquivos mantidos em serviços de armazenamento remoto não '
+              'são acessíveis à aplicação.';
+        }
       });
     } catch (e) {
       if (!mounted) return;
@@ -297,8 +317,6 @@ class _BatchesPageState extends State<BatchesPage> {
     );
   }
 
-  /// Exibe a configuração ativa em largura integral, evitando o
-  /// transbordamento observado quando apresentada na barra superior.
   Widget _configBadge() {
     return Container(
       width: double.infinity,
@@ -324,7 +342,7 @@ class _BatchesPageState extends State<BatchesPage> {
   }
 
   Widget _selectionCard() {
-    final total = _files.length;
+    final selection = _selection;
 
     return Container(
       width: double.infinity,
@@ -337,17 +355,19 @@ class _BatchesPageState extends State<BatchesPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            total == 0
+            selection == null
                 ? 'Nenhuma imagem selecionada'
-                : '$total ${total == 1 ? "imagem selecionada" : "imagens selecionadas"}',
+                : '${selection.length} '
+                      '${selection.length == 1 ? "imagem selecionada" : "imagens selecionadas"}',
             style: CoffeFonts.primaryText.copyWith(fontSize: 16),
           ),
           const SizedBox(height: 4),
           Text(
-            'Selecione as imagens do conjunto de teste que serão '
-            'processadas com a configuração ativa.',
+            selection?.commonDirectory ??
+                'Selecione as imagens do conjunto de teste. Utilize a opção '
+                    'de seleção múltipla do gerenciador de arquivos.',
             style: CoffeFonts.normalText.copyWith(
-              fontSize: 13,
+              fontSize: 12,
               color: CoffeColors.neutral600,
             ),
           ),
@@ -363,7 +383,13 @@ class _BatchesPageState extends State<BatchesPage> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.photo_library_outlined, size: 18),
-              label: Text(_picking ? 'Carregando...' : 'Selecionar imagens'),
+              label: Text(
+                _picking
+                    ? 'Carregando...'
+                    : selection == null
+                    ? 'Selecionar imagens'
+                    : 'Trocar seleção',
+              ),
             ),
           ),
           Divider(color: CoffeColors.divider, height: 24),
