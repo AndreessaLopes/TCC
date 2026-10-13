@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:cafescan/models/DetectionConfig.dart';
 import 'package:cafescan/services/BatchRunner.dart';
 import 'package:cafescan/services/Imageselectionservice.dart';
 import 'package:cafescan/theme/ConfigStore.dart';
 import 'package:cafescan/theme/CoffeColors.dart';
 import 'package:cafescan/theme/CoffeFonts.dart';
 import 'package:cafescan/theme/MetricsStore.dart';
+import 'package:cafescan/widgets/ButtonDelegate.dart';
 import 'package:cafescan/widgets/ModalHelp.dart';
 import 'package:cafescan/widgets/NavBar.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,21 @@ class _BatchesPageState extends State<BatchesPage> {
 
   BatchResult? _result;
   String? _error;
+
+  /// Estado da varredura automática por todas as configurações.
+  ///
+  /// A coleta em aparelhos de terceiros exige que todas as configurações
+  /// sejam percorridas na mesma ordem e sobre o mesmo conjunto de imagens.
+  /// Deixar essa repetição a cargo de quem opera o aparelho multiplica o
+  /// tempo gasto e abre margem para omissões que só seriam percebidas na
+  /// análise.
+  bool _sweeping = false;
+  bool _sweepCancelled = false;
+  int _sweepIndex = 0;
+  int _sweepTotal = 0;
+  String? _sweepConfigLabel;
+  final List<BatchResult> _sweepResults = [];
+  final List<String> _sweepFailures = [];
 
   List<File> get _files => _selection?.files ?? const [];
 
@@ -197,8 +214,156 @@ class _BatchesPageState extends State<BatchesPage> {
     }
   }
 
+  /// Percorre todas as configurações previstas sobre o mesmo conjunto de
+  /// imagens, na ordem em que são declaradas.
+  ///
+  /// Configurações que o aparelho não suporta são registradas e a
+  /// varredura prossegue. A indisponibilidade é, ela própria, resultado de
+  /// interesse: o suporte às operações exigidas pelos modelos varia
+  /// conforme o fornecedor do processador gráfico.
+  Future<void> _startAll() async {
+    if (_files.isEmpty || _running) return;
+
+    final configs = <DetectionConfig>[
+      for (final variant in ModelVariant.all)
+        for (final delegate in Delegate.values)
+          DetectionConfig(variant: variant, delegate: delegate),
+    ];
+
+    final runner = BatchRunner(_store.service);
+    if (!await _confirmConditions(runner)) return;
+    if (!mounted) return;
+
+    setState(() {
+      _running = true;
+      _sweeping = true;
+      _sweepCancelled = false;
+      _sweepIndex = 0;
+      _sweepTotal = configs.length;
+      _sweepResults.clear();
+      _sweepFailures.clear();
+      _result = null;
+      _error = null;
+    });
+
+    await WakelockPlus.enable();
+    _runner = runner;
+
+    try {
+      for (var i = 0; i < configs.length; i++) {
+        if (_sweepCancelled) break;
+
+        final config = configs[i];
+
+        if (!mounted) return;
+        setState(() {
+          _sweepIndex = i + 1;
+          _sweepConfigLabel = config.label;
+          _processed = 0;
+          _totalSteps = _files.length + _warmupCount.clamp(0, _files.length);
+        });
+
+        await _store.selectConfig(config.variant, config.delegate);
+
+        if (_store.error != null) {
+          _sweepFailures.add('${config.label}: ${_store.error}');
+          continue;
+        }
+
+        try {
+          final result = await runner.run(
+            files: _files,
+            config: config,
+            warmupCount: _warmupCount,
+            onProgress: (processed, total, isWarmup, latency, fileName) {
+              if (!mounted) return;
+              setState(() {
+                _processed = processed;
+                _totalSteps = total;
+                _isWarmup = isWarmup;
+                _currentFile = fileName;
+                if (!isWarmup) _lastLatency = latency;
+              });
+            },
+          );
+
+          if (result.wasCancelled) {
+            _sweepCancelled = true;
+            break;
+          }
+
+          _sweepResults.add(result);
+          _saveRun(result);
+          if (mounted) setState(() => _result = result);
+        } catch (e) {
+          _sweepFailures.add('${config.label}: $e');
+        }
+      }
+    } finally {
+      await WakelockPlus.disable();
+      _runner = null;
+      if (mounted) {
+        setState(() {
+          _running = false;
+          _sweeping = false;
+          _sweepConfigLabel = null;
+          if (_sweepFailures.isNotEmpty) {
+            _error =
+                'Configurações não executadas neste aparelho:\n'
+                '${_sweepFailures.join("\n")}';
+          }
+        });
+      }
+    }
+
+    if (mounted && _sweepResults.isNotEmpty) await _exportAll();
+  }
+
+  /// Exporta, em uma única ação, todos os arquivos produzidos na varredura.
+  Future<void> _exportAll() async {
+    if (_sweepResults.isEmpty) return;
+
+    try {
+      final dir = await getTemporaryDirectory();
+      final arquivos = <XFile>[];
+
+      for (final result in _sweepResults) {
+        final stamp = result.startedAt.millisecondsSinceEpoch;
+        final name = result.config.label
+            .replaceAll(' · ', '_')
+            .replaceAll(' ', '');
+
+        final file = File('${dir.path}/lote_${name}_$stamp.csv');
+        await file.writeAsString(result.toCsv());
+        arquivos.add(XFile(file.path));
+      }
+
+      await SharePlus.instance.share(
+        ShareParams(
+          files: arquivos,
+          text:
+              'Medições do CaféScan — ${_sweepResults.length} '
+              'de $_sweepTotal configurações',
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Falha ao exportar: $e')));
+    }
+  }
+
   void _cancel() {
     _runner?.cancel();
+
+    // Na varredura, encerrar exige também interromper o laço entre
+    // configurações; o estado de execução é limpo pelo próprio laço.
+    if (_sweeping) {
+      setState(() => _sweepCancelled = true);
+      return;
+    }
+
     setState(() => _running = false);
   }
 
@@ -466,6 +631,23 @@ class _BatchesPageState extends State<BatchesPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (_sweeping && _sweepConfigLabel != null) ...[
+            Text(
+              'Configuração $_sweepIndex de $_sweepTotal',
+              style: CoffeFonts.normalText.copyWith(
+                fontSize: 12,
+                color: CoffeColors.accent800,
+              ),
+            ),
+            Text(
+              _sweepConfigLabel!,
+              style: CoffeFonts.primaryText.copyWith(
+                fontSize: 15,
+                color: CoffeColors.accent800,
+              ),
+            ),
+            const SizedBox(height: 8),
+          ],
           Row(
             children: [
               Text(
@@ -707,18 +889,31 @@ class _BatchesPageState extends State<BatchesPage> {
         child: OutlinedButton.icon(
           onPressed: _cancel,
           icon: const Icon(Icons.stop_outlined, size: 18),
-          label: const Text('Cancelar'),
+          label: Text(_sweepCancelled ? 'Encerrando...' : 'Cancelar'),
         ),
       );
     }
 
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        onPressed: _files.isEmpty ? null : _start,
-        icon: const Icon(Icons.play_arrow_rounded, size: 20),
-        label: Text(_result == null ? 'Iniciar' : 'Executar novamente'),
-      ),
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: _files.isEmpty ? null : _start,
+            icon: const Icon(Icons.play_arrow_rounded, size: 20),
+            label: Text(_result == null ? 'Iniciar' : 'Executar novamente'),
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            onPressed: _files.isEmpty ? null : _startAll,
+            icon: const Icon(Icons.playlist_play_rounded, size: 20),
+            label: const Text('Rodar todas as configurações'),
+          ),
+        ),
+      ],
     );
   }
 }

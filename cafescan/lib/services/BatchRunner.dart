@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:cafescan/models/DetectionConfig.dart';
 import 'package:cafescan/services/DetectionService.dart';
+import 'package:cafescan/services/DispositivoInfo.dart';
 
 /// Medição individual referente ao processamento de uma imagem.
 class BatchSample {
@@ -235,6 +236,9 @@ class BatchResult {
     final buffer = StringBuffer();
     final s = statistics;
 
+    for (final linha in DispositivoInfo.linhasCsv()) {
+      buffer.writeln(linha);
+    }
     buffer.writeln('# Configuracao: ${config.label}');
     buffer.writeln('# Modelo: ${config.variant.fileName}');
     buffer.writeln('# Delegate: ${config.delegateLabel}');
@@ -353,6 +357,10 @@ class BatchRunner {
     onProgress,
   }) async {
     _cancelled = false;
+
+    // Lido antes da execução para que o cabeçalho identifique o aparelho.
+    // A leitura só ocorre de fato na primeira vez.
+    await DispositivoInfo.carregar();
 
     final samples = <BatchSample>[];
     final startedAt = DateTime.now();

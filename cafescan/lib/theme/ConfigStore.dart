@@ -46,6 +46,18 @@ class ConfigStore extends ChangeNotifier {
     await _reload();
   }
 
+  /// Seleciona variante e delegate em conjunto, com uma única carga.
+  ///
+  /// A varredura automática percorre as doze configurações previstas. Usar
+  /// `selectVariant` seguido de `selectDelegate` recarregaria o serviço
+  /// duas vezes a cada passo, o que dobraria o tempo gasto em carga sem
+  /// necessidade.
+  Future<void> selectConfig(ModelVariant variant, Delegate delegate) async {
+    _variant = variant;
+    _delegate = delegate;
+    await _reload();
+  }
+
   /// Garante que o serviço esteja carregado com a configuração atual.
   ///
   /// Deve ser invocado antes da primeira inferência, uma vez que a seleção

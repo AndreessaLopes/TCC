@@ -185,7 +185,7 @@ class _CapturePageState extends State<CapturePage> {
             children: [
               Expanded(
                 child: Text(
-                  '${result.count} ${result.count == 1 ? "grão detectado" : "grãos detectados"}',
+                  '${result.count} ${result.count == 1 ? "fruto detectado" : "frutos detectados"}',
                   style: CoffeFonts.primaryText,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

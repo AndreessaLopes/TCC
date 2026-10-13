@@ -35,6 +35,15 @@ class DetectionService {
   double nmsThreshold = 0.7;
   int maxDetections = 300;
 
+  /// Parâmetros do redimensionamento com preenchimento aplicado à última
+  /// imagem processada. São necessários na decodificação, pois o modelo
+  /// devolve coordenadas normalizadas pelo quadrado de entrada, e não pela
+  /// imagem.
+  int _preenchimentoX = 0;
+  int _preenchimentoY = 0;
+  int _larguraEscalada = ModelVariant.inputSize;
+  int _alturaEscalada = ModelVariant.inputSize;
+
   DetectionConfig? get config => _config;
   bool get isReady => _interpreter != null;
 
@@ -163,9 +172,11 @@ class DetectionService {
     // --- Decodificação ---
     final postprocessWatch = Stopwatch()..start();
 
-    final detections = config.variant.architecture == Architecture.yolov8n
-        ? _decodeYolov8(outputBuffer, outputShape)
-        : _decodeYolov10(outputBuffer, outputShape);
+    final detections = _removerPreenchimento(
+      config.variant.architecture == Architecture.yolov8n
+          ? _decodeYolov8(outputBuffer, outputShape)
+          : _decodeYolov10(outputBuffer, outputShape),
+    );
 
     postprocessWatch.stop();
 
@@ -198,6 +209,11 @@ class DetectionService {
 
     final padX = ((size - scaledWidth) / 2).floor();
     final padY = ((size - scaledHeight) / 2).floor();
+
+    _preenchimentoX = padX;
+    _preenchimentoY = padY;
+    _larguraEscalada = scaledWidth;
+    _alturaEscalada = scaledHeight;
 
     final resized = img.copyResize(
       source,
@@ -261,6 +277,40 @@ class DetectionService {
     }
 
     return _nonMaximumSuppression(candidates);
+  }
+
+  /// Converte as coordenadas do quadrado de entrada para a imagem.
+  ///
+  /// O pré-processamento insere bordas de preenchimento para levar a
+  /// imagem ao formato quadrado exigido pelo modelo, e as coordenadas
+  /// devolvidas estão normalizadas em relação a esse quadrado. Usá-las
+  /// diretamente sobre a imagem desloca as caixas, tanto mais quanto mais
+  /// afastada do centro estiver a caixa e quanto mais distante de um
+  /// quadrado for a proporção da foto.
+  ///
+  /// A conversão é aplicada depois da supressão não máxima, de modo que a
+  /// seleção das caixas permaneça idêntica: apenas as coordenadas mudam.
+  List<Detection> _removerPreenchimento(List<Detection> detections) {
+    if (detections.isEmpty) return detections;
+
+    const size = ModelVariant.inputSize;
+
+    double emX(double v) =>
+        ((v * size - _preenchimentoX) / _larguraEscalada).clamp(0.0, 1.0);
+    double emY(double v) =>
+        ((v * size - _preenchimentoY) / _alturaEscalada).clamp(0.0, 1.0);
+
+    return [
+      for (final deteccao in detections)
+        Detection(
+          left: emX(deteccao.left),
+          top: emY(deteccao.top),
+          right: emX(deteccao.right),
+          bottom: emY(deteccao.bottom),
+          confidence: deteccao.confidence,
+          classIndex: deteccao.classIndex,
+        ),
+    ];
   }
 
   /// Supressão não máxima.

@@ -33,7 +33,7 @@ class StartPage extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    'Ferramenta de campo para comparar modelos de detecção de maturação de grãos de café.',
+                    'Ferramenta de campo para comparar modelos de detecção de maturação de frutos de café.',
                     style: TextStyle(fontSize: 14),
                   ),
                 ],

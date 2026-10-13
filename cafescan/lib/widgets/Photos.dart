@@ -105,7 +105,7 @@ class _PhotosState extends State<Photos> {
           Icon(Icons.image_outlined, size: 34, color: CoffeColors.neutral500),
           const SizedBox(height: 10),
           Text(
-            'Escolha uma foto da galeria de grãos de café ou toque em Capturar para tirar uma foto.',
+            'Escolha uma foto da galeria de frutos de café ou toque em Capturar para tirar uma foto.',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12.5, color: CoffeColors.neutral600),
           ),

@@ -21,7 +21,7 @@ class Detection {
   /// Confiança associada à predição, no intervalo [0, 1].
   final double confidence;
 
-  /// Índice da classe. O conjunto de dados utiliza classe única (`graos`),
+  /// Índice da classe. O conjunto de dados utiliza classe única (`frutos`),
   /// de modo que o valor é sempre 0 nesta etapa da pesquisa.
   final int classIndex;
 

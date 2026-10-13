@@ -32,7 +32,7 @@ class ModalHelp {
                 ),
                 TextSpan(
                   text:
-                      " tire uma foto ou escolha da galeria. Os grãos detectados aparecem com caixas coloridas: terracota = cereja, verde = verde, marrom = seco.\n\n",
+                      " tire uma foto ou escolha da galeria. Os frutos detectados aparecem com caixas coloridas: terracota = cereja, verde = verde, marrom = seco.\n\n",
                 ),
                 TextSpan(
                   text: "Lote —",
