@@ -1,0 +1,89 @@
+% =====================================================================
+% Figura 1 — Relação entre os conceitos do referencial teórico.
+%
+% Substitui pipeline_referencial_sem_margem.png (981x560 px, 166 dpi).
+% Desenhada em TikZ: saída vetorial, nítida em qualquer ampliação e
+% editável diretamente no fonte.
+%
+% O painel 5 foi corrigido: a versão anterior listava o NNAPI entre os
+% delegates avaliados, o que não corresponde ao escopo do trabalho.
+%
+% REQUER no preâmbulo (já presentes em artigo.tex):
+%   \usepackage{tikz}
+%   \usetikzlibrary{positioning, arrows.meta}
+% =====================================================================
+
+\begin{figure}[H]
+    \centering
+    \caption{Relação entre os principais conceitos abordados no referencial teórico}
+    \label{fig:pipeline_referencial}
+
+    \begin{tikzpicture}[
+        painel/.style={
+            rectangle, rounded corners=3pt, draw=black!40, line width=0.5pt,
+            text width=3.75cm, inner sep=7pt, align=left,
+            minimum height=4.0cm, anchor=north, font=\scriptsize
+        },
+        cabeca/.style={
+            font=\scriptsize\bfseries, align=center,
+            text width=4.80cm, anchor=south, inner sep=2pt,
+            % hifenização desligada apenas nos títulos em caixa alta
+            execute at begin node={\hyphenpenalty=10000 \exhyphenpenalty=10000 }
+        },
+        seta/.style={-{Stealth[length=5pt,width=3.5pt]},
+                     draw=black!55, line width=0.7pt}
+    ]
+
+    \def\lx{5.00}   % passo horizontal entre colunas
+    \def\ly{5.45}   % passo vertical entre linhas
+
+    % ---------------------------------------------------------- linha 1
+    \node[painel] (p1) at (0,0) {%
+        Relevância econômica da cafeicultura brasileira.\par\smallskip
+        Inspeção visual sujeita a variação de iluminação e a oclusão por folhas.\par\smallskip
+        Detecção automática como apoio à decisão de colheita.\par};
+    \node[cabeca, above=3pt of p1.north] {CAFEICULTURA E\\VISÃO COMPUTACIONAL};
+
+    \node[painel] (p2) at (\lx,0) {%
+        Detecção em estágio único, adequada a tempo real.\par\smallskip
+        YOLOv8n, variante compacta para ambientes restritos.\par\smallskip
+        YOLOv10n, arquitetura sem supressão não máxima.\par};
+    \node[cabeca, above=3pt of p2.north] {DETECÇÃO DE OBJETOS\\COM YOLO};
+
+    \node[painel] (p3) at (2*\lx,0) {%
+        Execução local, sem dependência de conectividade.\par\smallskip
+        Restrições de processamento, memória e energia.\par\smallskip
+        Exigência de modelos de custo computacional reduzido.\par};
+    \node[cabeca, above=3pt of p3.north] {INFERÊNCIA EM\\DISPOSITIVOS MÓVEIS};
+
+    % ---------------------------------------------------------- linha 2
+    \node[painel] (p4) at (0,-\ly) {%
+        Formato otimizado para inferência embarcada.\par\smallskip
+        Quantização pós-treinamento em FP16 e INT8.\par\smallskip
+        Redução do tamanho do arquivo e da latência.\par};
+    \node[cabeca, above=3pt of p4.north] {TENSORFLOW LITE};
+
+    \node[painel] (p5) at (\lx,-\ly) {%
+        Avaliação restrita aos \textit{delegates} de CPU e GPU.\par\smallskip
+        NNAPI depreciada a partir do Android~15.\par\smallskip
+        O suporte a operações varia conforme o acelerador.\par};
+    \node[cabeca, above=3pt of p5.north] {\textit{DELEGATES}\\E ACELERAÇÃO};
+
+    \node[painel] (p6) at (2*\lx,-\ly) {%
+        Latência de inferência e latência total.\par\smallskip
+        Estabilidade pelo coeficiente de variação.\par\smallskip
+        Memória, consumo energético e tamanho do modelo.\par};
+    \node[cabeca, above=3pt of p6.north] {MÉTRICAS DE AVALIAÇÃO};
+
+    % ---------------------------------------------------------- ligações
+    % altura fixa, para que as setas não se inclinem caso os painéis
+    % tenham alturas ligeiramente diferentes
+    \draw[seta] ([yshift=-2.0cm]p1.north east) -- ([yshift=-2.0cm]p2.north west);
+    \draw[seta] ([yshift=-2.0cm]p2.north east) -- ([yshift=-2.0cm]p3.north west);
+    \draw[seta] ([yshift=-2.0cm]p4.north east) -- ([yshift=-2.0cm]p5.north west);
+    \draw[seta] ([yshift=-2.0cm]p5.north east) -- ([yshift=-2.0cm]p6.north west);
+
+    \end{tikzpicture}
+
+    \legend{Elaborada pela autora (2026).}
+\end{figure}
