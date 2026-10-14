@@ -1,0 +1,58 @@
+# Fabricante: samsung
+# Aparelho: SM-S921B
+# Codinome: e1s
+# Placa: s5e9945
+# Hardware: s5e9945
+# Android: 16
+# Nivel de API: 36
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv8n · FP32 · GPU
+# Modelo: yolov8n_fp32.tflite
+# Delegate: GPU
+# Inicio: 2026-10-13T20:38:27.082931
+# Imagens medidas: 29
+# Medicoes descartadas: 1
+# Inferencias de aquecimento: 10
+# Duracao total: 46 s
+# Latencia media: 1484.83 ms
+# Desvio padrao: 376.18 ms
+# Coeficiente de variacao: 25.33 %
+# Inferencia media: 57.99 ms
+# Desvio inferencia: 14.09 ms
+# Memoria de pico: 607 MB
+# Bateria inicial: 97 %
+# Bateria final: 97 %
+# Bateria consumida: 0 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1010.jpg,1,459.08,56.02,0.19,515.29,373,0
+test_1041.jpg,35,3207.49,57.49,0.17,3265.15,414,1
+test_1070.jpg,12,1405.15,52.94,0.30,1458.39,419,0
+test_1111.jpg,2,1382.45,49.66,0.06,1432.17,399,0
+test_1155.jpg,3,1320.87,48.51,0.06,1369.43,398,0
+test_1199.jpg,9,1655.13,59.94,0.26,1715.33,603,0
+test_1205.jpg,3,1541.85,52.02,0.07,1593.93,409,0
+test_1216.jpg,10,1598.12,51.66,0.08,1649.86,602,0
+test_1244.jpg,8,1685.20,52.74,0.24,1738.19,463,0
+test_1260.jpg,13,1669.38,67.82,0.12,1737.33,603,0
+test_1343.jpg,3,1456.18,62.85,0.07,1519.10,422,0
+test_1562.jpg,2,1289.94,55.25,0.06,1345.25,420,0
+test_159.jpg,5,2234.79,57.88,0.16,2292.83,424,0
+test_1622.jpg,9,1363.25,49.74,0.19,1413.17,418,0
+test_1751.jpg,12,1344.43,48.23,0.15,1392.81,544,0
+test_1949.jpg,11,1252.18,53.16,0.61,1305.96,413,0
+test_211.jpg,4,1429.54,101.67,0.07,1531.27,427,0
+test_326.jpg,10,655.37,76.52,0.09,731.97,398,0
+test_331.jpg,13,1498.95,84.41,0.09,1583.46,421,0
+test_341.jpg,2,641.35,87.75,0.07,729.17,393,0
+test_362.jpg,8,1285.74,72.62,0.08,1358.44,595,0
+test_394.jpg,8,1375.55,57.40,0.08,1433.04,409,0
+test_430.jpg,10,1445.25,44.00,0.09,1489.34,434,0
+test_456.jpg,51,1505.73,45.61,0.27,1551.61,434,0
+test_468.jpg,26,1470.13,48.52,0.49,1519.14,412,0
+test_527.jpg,1,1426.87,46.98,0.19,1474.03,419,0
+test_651.jpg,11,2113.06,48.22,0.09,2161.38,438,0
+test_73.jpg,8,1314.38,47.10,0.23,1361.71,418,0
+test_817.jpg,10,2075.03,55.74,0.24,2131.01,607,0
+test_970.jpg,2,1478.46,46.87,0.07,1525.41,420,0
