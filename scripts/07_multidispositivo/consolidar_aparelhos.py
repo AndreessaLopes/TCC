@@ -23,16 +23,21 @@ ORDEM_PRECISAO = {"FP32": 0, "FP16": 1, "INT8": 2}
 
 
 def ler(caminho):
-    cab, linhas = {}, []
+    # A tabela consolidada costuma ficar na mesma pasta dos lotes. Como ela
+    # nao tem cabecalho comentado nem a coluna "arquivo" na primeira
+    # posicao, so se lem as linhas que vem depois do cabecalho de medicao.
+    cab, linhas, no_corpo = {}, [], False
     with open(caminho, encoding="utf-8", errors="replace") as f:
         for linha in f:
             if linha.startswith("#"):
                 m = re.match(r"# ([^:]+): (.+)", linha.strip())
                 if m:
                     cab[m.group(1)] = m.group(2).strip()
-            elif linha.strip() and not linha.startswith("arquivo"):
+            elif linha.startswith("arquivo,"):
+                no_corpo = True
+            elif no_corpo and linha.strip():
                 c = linha.strip().split(",")
-                if len(c) >= 8 and c[7] != "1":
+                if len(c) >= 8:
                     linhas.append({
                         "arquivo": c[0],
                         "deteccoes": int(c[1]),
@@ -41,8 +46,15 @@ def ler(caminho):
                         "pos": float(c[4]),
                         "tot": float(c[5]),
                         "mem": int(c[6]),
+                        "descartada": c[7] == "1",
                     })
+    # As descartadas ficam na lista para que a comparacao entre aparelhos
+    # saiba quais imagens foram tentadas; as estatisticas usam so as validas.
     return cab, linhas
+
+
+def validas(linhas):
+    return [l for l in linhas if not l["descartada"]]
 
 
 registros = []
@@ -51,7 +63,7 @@ for raiz, _, arquivos in os.walk(entrada):
         if not nome.lower().endswith(".csv"):
             continue
         cab, linhas = ler(os.path.join(raiz, nome))
-        if "Configuracao" not in cab or not linhas:
+        if "Configuracao" not in cab or not validas(linhas):
             print("ignorado (sem medicoes): %s" % nome)
             continue
         registros.append((cab, linhas, nome))
@@ -72,9 +84,13 @@ alertas = []
 linhas_saida = []
 
 for (fab, apar, placa), itens in sorted(por_aparelho.items()):
+    # Compara as imagens tentadas. Uma medicao descartada nao muda o
+    # conjunto sobre o qual a configuracao rodou, so reduz a amostra.
     conjuntos = {tuple(sorted(l["arquivo"] for l in linhas))
                  for _, linhas, _ in itens}
     n_imgs = sorted({len(linhas) for _, linhas, _ in itens})
+    descartes = [(c["Configuracao"], sum(1 for l in linhas if l["descartada"]))
+                 for c, linhas, _ in itens]
 
     print("%s %s (placa %s) — Android %s — %d configuracoes"
           % (fab, apar, placa,
@@ -83,6 +99,11 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
     if len(conjuntos) > 1:
         alertas.append("%s %s: as configuracoes nao rodaram sobre o mesmo "
                        "conjunto de imagens (%s)" % (fab, apar, n_imgs))
+
+    for config, n in descartes:
+        if n:
+            alertas.append("%s %s / %s: %d medicao(oes) descartada(s)"
+                           % (fab, apar, config, n))
 
     for cab, linhas, nome in sorted(
             itens, key=lambda t: (t[0]["Configuracao"].split(" · ")[0],
@@ -96,8 +117,9 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
                            % (fab, apar, cab["Configuracao"]))
 
         bateria = cab.get("Bateria inicial", "").replace(" %", "")
-        if bateria.isdigit() and int(bateria) < 80:
-            alertas.append("%s %s / %s: iniciada com %s%% de bateria"
+        if bateria.isdigit() and int(bateria) < 20:
+            alertas.append("%s %s / %s: iniciada com %s%% de bateria, nivel "
+                           "em que o sistema costuma limitar o desempenho"
                            % (fab, apar, cab["Configuracao"], bateria))
 
         linhas_saida.append({
@@ -108,18 +130,26 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
             "arquitetura": arq,
             "precisao": prec,
             "delegate": deleg,
-            "imagens": len(linhas),
-            "latencia_media_ms": round(st.mean(l["tot"] for l in linhas), 2),
+            "imagens": len(validas(linhas)),
+            "latencia_media_ms": round(st.mean(l["tot"] for l in validas(linhas)), 2),
             "latencia_desvio_ms": round(
-                st.pstdev(l["tot"] for l in linhas), 2),
-            "inferencia_media_ms": round(st.mean(l["inf"] for l in linhas), 2),
-            "preprocessamento_ms": round(st.mean(l["pre"] for l in linhas), 2),
-            "posprocessamento_ms": round(st.mean(l["pos"] for l in linhas), 2),
-            "memoria_pico_mb": max(l["mem"] for l in linhas),
-            "deteccoes_total": sum(l["deteccoes"] for l in linhas),
+                st.pstdev(l["tot"] for l in validas(linhas)), 2),
+            "inferencia_media_ms": round(st.mean(l["inf"] for l in validas(linhas)), 2),
+            "preprocessamento_ms": round(st.mean(l["pre"] for l in validas(linhas)), 2),
+            "posprocessamento_ms": round(st.mean(l["pos"] for l in validas(linhas)), 2),
+            "memoria_pico_mb": max(l["mem"] for l in validas(linhas)),
+            "deteccoes_total": sum(l["deteccoes"] for l in validas(linhas)),
             "bateria_consumida": cab.get("Bateria consumida", ""),
             "arquivo": nome,
         })
+
+    # O protocolo pede 80% no inicio. Durante o varrimento a bateria cai,
+    # e cobrar 80% de cada configuracao acusaria toda coleta completa.
+    primeira = min(itens, key=lambda t: t[0].get("Inicio", ""))[0]
+    inicial = primeira.get("Bateria inicial", "").replace(" %", "")
+    if inicial.isdigit() and int(inicial) < 80:
+        alertas.append("%s %s: a coleta comecou com %s%% de bateria"
+                       % (fab, apar, inicial))
 
     # Configuracoes ausentes, que nao executaram no aparelho.
     presentes = {c["Configuracao"] for c, _, _ in itens}

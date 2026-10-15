@@ -1,0 +1,58 @@
+# Fabricante: Xiaomi
+# Aparelho: M2003J15SC
+# Codinome: merlin
+# Placa: merlin
+# Hardware: mt6768
+# Android: 12
+# Nivel de API: 31
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv8n · INT8 · CPU
+# Modelo: yolov8n_int8.tflite
+# Delegate: CPU
+# Inicio: 2026-10-14T20:49:11.834369
+# Imagens medidas: 30
+# Medicoes descartadas: 0
+# Inferencias de aquecimento: 10
+# Duracao total: 156 s
+# Latencia media: 5199.72 ms
+# Desvio padrao: 1179.95 ms
+# Coeficiente de variacao: 22.69 %
+# Inferencia media: 682.66 ms
+# Desvio inferencia: 39.19 ms
+# Memoria de pico: 501 MB
+# Bateria inicial: 82 %
+# Bateria final: 81 %
+# Bateria consumida: 1 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1010.jpg,1,999.77,726.25,0.16,1726.18,338,0
+test_1041.jpg,52,6288.17,721.65,0.51,7010.33,338,0
+test_1070.jpg,15,4729.00,732.40,0.24,5461.64,324,0
+test_1111.jpg,2,4232.02,687.22,0.18,4919.42,422,0
+test_1155.jpg,3,4247.41,635.09,0.17,4882.67,303,0
+test_1199.jpg,9,5112.73,672.18,0.21,5785.12,501,0
+test_1205.jpg,4,4896.32,654.10,0.16,5550.58,337,0
+test_1216.jpg,10,5067.42,713.80,0.25,5781.47,320,0
+test_1244.jpg,9,5447.35,713.88,0.21,6161.44,305,0
+test_1260.jpg,14,5061.32,698.29,0.30,5759.92,313,0
+test_1343.jpg,3,4672.49,666.73,0.17,5339.39,328,0
+test_1562.jpg,2,4192.09,617.67,0.15,4809.91,321,0
+test_159.jpg,6,6468.32,686.06,0.19,7154.57,327,0
+test_1622.jpg,8,4136.71,708.13,0.23,4845.07,322,0
+test_1751.jpg,13,4287.30,673.79,0.19,4961.29,326,0
+test_1949.jpg,12,3810.64,680.66,0.22,4491.51,426,0
+test_211.jpg,4,4378.61,676.23,0.14,5054.97,370,0
+test_326.jpg,9,2056.14,672.79,0.27,2729.20,298,0
+test_331.jpg,16,4761.14,724.94,0.20,5486.28,363,0
+test_341.jpg,2,2060.84,709.33,0.13,2770.30,307,0
+test_362.jpg,7,4485.95,580.99,0.18,5067.12,311,0
+test_394.jpg,11,4311.31,690.25,0.22,5001.77,494,0
+test_430.jpg,9,4805.70,681.80,0.23,5487.73,332,0
+test_456.jpg,68,4696.68,748.12,0.76,5445.56,495,0
+test_468.jpg,33,4561.81,669.76,0.37,5231.95,334,0
+test_527.jpg,1,4498.52,667.12,0.13,5165.78,331,0
+test_651.jpg,14,6131.47,700.56,0.22,6832.24,343,0
+test_73.jpg,8,4107.30,684.79,0.22,4792.31,326,0
+test_817.jpg,6,6314.51,584.38,0.16,6899.05,317,0
+test_970.jpg,2,4685.89,700.71,0.15,5386.75,321,0
