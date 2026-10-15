@@ -77,3 +77,5 @@ saida.log
 *.run.xml
 *.synctex.gz
 *.toc
+# PDF de entrega, gerado a partir do artigo.tex
+monografia/TCC_*.pdf
