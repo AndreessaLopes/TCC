@@ -290,7 +290,7 @@ A Figura~\ref{fig:topicos} apresenta o número de registros recuperados por tóp
     \label{fig:topicos}
 \end{figure}
 
-A Figura~\ref{fig:keywords} apresenta os quinze termos mais frequentes nos títulos dos 3.401 registros distintos recuperados pelas cinco consultas, contados pelo número de títulos em que cada termo ocorre. As primeiras posições reproduzem a própria expressão de busca, caso de \textit{detection}, \textit{network}, \textit{deep}, \textit{learning} e \textit{neural}, e por isso pouco informam sobre o conteúdo. Abaixo delas, \textit{lightweight}, em 422 títulos, e \textit{real-time}, em 376, revelam a procura por modelos de menor custo computacional e por execução em tempo real, enquanto \textit{edge}, \textit{mobile} e \textit{embedded}, entre 247 e 268 títulos, situam a tarefa no contexto de execução local em dispositivos com restrição de recursos. Os termos ligados à aplicação agrícola ocupam faixa inferior à das quinze posições exibidas: \textit{fruit} ocorre em 215 títulos, \textit{disease} em 147 e \textit{defect} em 127, ao passo que \textit{ripeness} e \textit{maturity} ocorrem em 88 e em 81. A predominância da detecção de defeitos e de doenças sobre a avaliação do estágio de maturação delimita a lacuna de que trata este trabalho.
+A Figura~\ref{fig:keywords} apresenta os quinze termos mais frequentes nos títulos dos 3.401 registros distintos recuperados pelas cinco consultas, contados pelo número de títulos em que cada termo ocorre. As primeiras posições reproduzem a própria expressão de busca, caso de \textit{detection}, \textit{network}, \textit{deep}, \textit{learning} e \textit{neural}, e por isso pouco informam sobre o conteúdo. Abaixo delas, \textit{lightweight}, em 422 títulos, e \textit{real-time}, em 376, revelam a procura por modelos de menor custo computacional e por execução em tempo real, enquanto \textit{edge}, \textit{mobile} e \textit{embedded}, entre 247 e 268 títulos, situam a tarefa no contexto de execução local em dispositivos com restrição de recursos. Os termos ligados à aplicação agrícola ocupam faixa inferior à das quinze posições exibidas, com \textit{fruit} em 215 títulos, \textit{disease} em 147 e \textit{defect} em 127, ao passo que \textit{ripeness} e \textit{maturity} ocorrem em 88 e em 81. A predominância da detecção de defeitos e de doenças sobre a avaliação do estágio de maturação delimita a lacuna de que trata este trabalho.
 
 \begin{figure}[H]
     \centering
@@ -621,16 +621,13 @@ De forma geral, o estudo compreende a construção e organização do conjunto d
 
 A construção de um conjunto de dados representativo constitui uma das etapas mais importantes para o desenvolvimento de modelos de visão computacional, uma vez que a capacidade de generalização está diretamente relacionada à diversidade das amostras utilizadas durante o treinamento. Dessa forma, foi construído um conjunto de imagens próprio no âmbito de um projeto de Iniciação Científica financiado pelo Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq) e desenvolvido no Instituto Federal de Minas Gerais (IFMG), \textit{Campus} Bambuí.
 
-A aquisição das imagens foi realizada entre novembro de 2023 e fevereiro de 2024 em lavouras cafeeiras localizadas no município de Bambuí, Minas Gerais. As fotografias foram obtidas diretamente em campo utilizando diferentes dispositivos móveis, incluindo \textit{smartphones} Android, \textit{smartphones} Apple e \textit{tablets}. Durante essa etapa buscou-se representar as condições normalmente encontradas em ambientes reais de cultivo, contemplando diferentes níveis de iluminação natural, ângulos de captura, distâncias entre câmera e planta, densidade de frutos e oclusões provocadas por folhas e galhos.
+A aquisição das imagens foi realizada entre novembro de 2023 e fevereiro de 2024 em lavouras cafeeiras localizadas no município de Bambuí, Minas Gerais. As fotografias foram obtidas diretamente em campo utilizando diferentes dispositivos móveis, incluindo \textit{smartphones} Android, \textit{smartphones} Apple e \textit{tablets}. Durante essa etapa buscou-se representar as condições normalmente encontradas em ambientes reais de cultivo, contemplando diferentes níveis de iluminação natural, ângulos de captura, distâncias entre câmera e planta, densidade de frutos e oclusões provocadas por folhas e galhos. A Figura~\ref{fig:mapa_bambui} apresenta a localização da região onde foi realizada a aquisição.
+
+\input{figuras/fig_mapa_bambui.tex}
 
 O conjunto bruto foi composto por aproximadamente 5.000 imagens contendo frutos das cultivares vermelha e amarela. Após as etapas de anotação, validação estrutural e curadoria das imagens, o conjunto passou por um processo de eliminação de amostras redundantes utilizando o algoritmo \textit{Perceptual Hashing} (pHash), resultando em um conjunto final composto por 2.168 imagens únicas destinadas às etapas experimentais da pesquisa.
 
 Posteriormente, as imagens foram organizadas em subconjuntos destinados ao treinamento, validação e teste dos modelos, mantendo uma divisão fixa ao longo de todos os experimentos realizados neste trabalho.
-
-
-\input{figuras/fig_mapa_bambui.tex}
-
-A Figura~\ref{fig:mapa_bambui} apresenta a localização da região onde foi realizada a aquisição das imagens utilizadas na construção do conjunto de dados.
 
 \begin{figure}[H]
     \centering
@@ -649,7 +646,7 @@ Concluída a etapa de aquisição, as imagens foram organizadas e submetidas ao 
 
 As anotações foram realizadas utilizando a plataforma MakeSense.ai \cite{Makesense2024}. Inicialmente, os rótulos foram produzidos no formato COCO JSON, adotado durante as primeiras etapas do projeto de iniciação científica. Posteriormente, todo o conjunto foi convertido para o formato YOLO, utilizado pela biblioteca Ultralytics e empregado nos experimentos desenvolvidos neste trabalho.
 
-Durante o processo de construção do conjunto de dados foram consideradas duas estratégias de anotação. A primeira utilizou duas classes distintas, correspondentes aos frutos vermelhos e amarelos. Na segunda estratégia, adotada para os experimentos de detecção, todos os frutos passaram a ser representados por uma única classe denominada ``frutos''. Essa abordagem permite concentrar o modelo na localização dos frutos, deixando a classificação do estágio de maturação para uma etapa posterior da pesquisa.
+Durante o processo de construção do conjunto de dados foram consideradas duas estratégias de anotação. A primeira utilizou duas classes distintas, correspondentes aos frutos vermelhos e amarelos. Na segunda estratégia, adotada para os experimentos de detecção, todos os frutos passaram a ser representados por uma única classe denominada ``frutos''. Essa abordagem permite concentrar o modelo na localização dos frutos, deixando a classificação do estágio de maturação para uma etapa posterior da pesquisa. A Figura~\ref{fig:anotacao} apresenta um exemplo de imagem do conjunto com as caixas resultantes da anotação manual, e a Figura~\ref{fig:comparacao_classes} compara as duas estratégias.
 
 \begin{figure}[H]
     \centering
@@ -658,8 +655,6 @@ Durante o processo de construção do conjunto de dados foram consideradas duas 
     \figuraVertical{figuras/exemplo_anotacao.jpg}
     \legend{Elaborada pela autora (2026), a partir da imagem \texttt{train\_1048} do subconjunto de treinamento.}
 \end{figure}
-
-A Figura~\ref{fig:anotacao} apresenta um exemplo de imagem do conjunto com as caixas resultantes da anotação manual, enquanto a Figura~\ref{fig:comparacao_classes} ilustra as duas estratégias de anotação consideradas durante o desenvolvimento do conjunto de dados.
 
 \begin{figure}[H]
     \centering
@@ -737,7 +732,7 @@ reorganização foram realizadas verificações para assegurar que uma mesma ima
 não estivesse presente em mais de um subconjunto, preservando a independência
 entre as partições utilizadas ao longo dos experimentos.
 
-Além da validação estrutural, foi realizada uma etapa de curadoria destinada à identificação de imagens visualmente redundantes. Embora diferentes arquivos possam possuir nomes distintos, imagens adquiridas em sequência frequentemente representam praticamente a mesma cena, reduzindo a variabilidade efetiva do conjunto de treinamento e favorecendo a ocorrência de sobreajuste dos modelos.
+Além da validação estrutural, foi realizada uma etapa de curadoria destinada à identificação de imagens visualmente redundantes. Embora diferentes arquivos possam possuir nomes distintos, imagens adquiridas em sequência frequentemente representam a mesma cena, reduzindo a variabilidade efetiva do conjunto de treinamento e favorecendo a ocorrência de sobreajuste dos modelos.
 
 Para minimizar esse problema, foi empregado o algoritmo \textit{Perceptual Hashing} (pHash), capaz de representar cada imagem por meio de uma assinatura perceptual baseada em suas características visuais. Inicialmente, as imagens foram convertidas para escala de cinza e redimensionadas para uma resolução padronizada. Em seguida, foi aplicada a \ac{DCT}, utilizando-se as componentes de baixa frequência para a geração do \textit{hash} perceptual. A similaridade entre as imagens foi então determinada por meio da distância de Hamming entre os respectivos \textit{hashes}. A Figura~\ref{fig:fluxo_phash} resume o fluxo adotado para identificação de imagens redundantes utilizando o algoritmo pHash.
 
@@ -787,7 +782,7 @@ seta/.style={-Latex, thick}
 
 A análise de redundância incidiu sobre as 2.511 imagens que haviam sido anotadas e aprovadas na validação estrutural, e não sobre o conjunto bruto. Para a identificação de imagens redundantes foi adotado um limiar de similaridade de 90\%. Os pares cuja similaridade atingiu ou ultrapassou esse valor foram considerados candidatos à redundância e submetidos à inspeção visual antes da remoção definitiva do conjunto de dados.
 
-O procedimento registrou 426 pares acima do limiar, envolvendo 614 imagens distintas, organizadas em 271 grupos de redundância. Em 412 desses pares a similaridade atingiu 100\%, o que corresponde a assinaturas perceptuais idênticas; os 14 restantes situam-se em 96,88\%, 93,75\% e 90,62\%, valores que decorrem da natureza discreta da distância de Hamming sobre um \textit{hash} de 64 bits. A preservação de uma imagem por grupo corresponde às 343 remoções apresentadas na Tabela~\ref{tab:phash}.
+O procedimento registrou 426 pares acima do limiar, envolvendo 614 imagens distintas, organizadas em 271 grupos de redundância. Em 412 desses pares a similaridade atingiu 100\%, o que corresponde a assinaturas perceptuais idênticas; os 14 restantes situam-se em 96,88\%, 93,75\% e 90,62\%, valores que decorrem da natureza discreta da distância de Hamming sobre um \textit{hash} de 64~bits. A preservação de uma imagem por grupo corresponde às 343 remoções apresentadas na Tabela~\ref{tab:phash}.
 
 \begin{figure}[H]
 \centering
@@ -1436,8 +1431,8 @@ arquitetura sobre a outra, considerando que os experimentos foram conduzidos em
 execução única por modelo. Na métrica \ac{mAP}@0,50--0,95, que considera limiares
 progressivos de interseção sobre união, o YOLOv10n apresentou valor superior em
 0,015, indicando maior precisão no ajuste das caixas delimitadoras. O YOLOv10n
-também apresentou precisão superior, enquanto os valores de revocação foram
-praticamente idênticos.
+também apresentou precisão superior, enquanto os valores de revocação
+diferem em 0,001.
 
 No que se refere ao custo computacional, o YOLOv10n apresentou vantagem em todos
 os indicadores medidos. A arquitetura utiliza 24,6\% menos parâmetros e 19,8\%
@@ -1458,16 +1453,20 @@ maior, hipótese verificada durante a avaliação experimental em
 na Subseção~\ref{sec:decomposicao_latencia}.
 
 A Figura~\ref{fig:curvas_treinamento} apresenta a evolução do treinamento das
-duas arquiteturas. A perda de treinamento decresce de forma contínua em ambas.
-A perda de validação do YOLOv10n acompanha esse decréscimo até a época final,
-ao passo que a do YOLOv8n atinge o mínimo na época 41 e, a partir dali,
-oscila em patamar cerca de 4\% superior, o que indica que o prolongamento
-do treinamento não traria ganho. As métricas de avaliação confirmam essa
-leitura. No YOLOv8n o \ac{mAP}@0,50 estabiliza por volta da época 45, com
-variação média por época praticamente nula a partir desse ponto, enquanto no
-YOLOv10n o crescimento prossegue em ritmo reduzido até o encerramento. Esse
-comportamento fundamentou a interrupção do treinamento antes das 120 épocas
-inicialmente previstas.
+duas arquiteturas. A perda de caixa em treinamento decresce ao longo de todo o
+período em ambas, com oscilações entre épocas consecutivas. Em validação, a do
+YOLOv10n acompanha esse decréscimo até a época 70, ao passo que a do YOLOv8n
+atinge o mínimo de 1,4139 na época 41 e passa a oscilar em patamar 2,5\% acima
+desse valor, encerrando 3,8\% acima. As métricas de avaliação acompanham essa
+leitura, ainda que de forma menos regular do que as perdas. A partir da época
+45, a variação média do \ac{mAP}@0,50 entre épocas consecutivas é de 0,015 no
+YOLOv8n e de 0,007 no YOLOv10n, de modo que o que cessa no YOLOv8n é a
+melhoria, não a oscilação. Pelo critério de seleção de pesos, o melhor
+desempenho em validação do YOLOv8n ocorreu na época 44, e o treinamento
+prosseguiu por 30 épocas sem superá-lo, o que acionou a parada antecipada na
+época 74. No YOLOv10n o melhor desempenho ocorreu na época 79, de 80
+executadas, de modo que esse modelo ainda apresentava melhoria quando o
+treinamento foi encerrado.
  
 \begin{figure}[H]
     \centering
@@ -1601,7 +1600,7 @@ YOLOv10n & $-$0,0005 & $-$0,0024 \\
 
 A quantização \ac{FP16} apresentou impacto desprezível sobre o desempenho de detecção em ambas as arquiteturas, com variações inferiores a 0,001 no \ac{mAP}@0,50 e valores idênticos de \ac{mAP}@0,50--0,95 em relação às respectivas versões em \ac{FP32}. Considerando a redução de 50\% no tamanho do arquivo, essa estratégia apresenta relação favorável entre compressão e preservação da qualidade da detecção.
 
-A quantização \ac{INT8} apresentou comportamento distinto entre as arquiteturas. No YOLOv8n, observou-se redução de 0,0391 no \ac{mAP}@0,50, correspondente a 6,1\% do valor obtido em \ac{FP32}. Essa degradação concentrou-se na revocação, que passou de 0,6128 para 0,5698, indicando que a redução de precisão numérica afetou principalmente a detecção de instâncias associadas a menores níveis de confiança. No YOLOv10n, a redução foi de 0,0024, correspondente a 0,4\% do valor de referência, com revocação praticamente preservada.
+A quantização \ac{INT8} apresentou comportamento distinto entre as arquiteturas. No YOLOv8n, observou-se redução de 0,0391 no \ac{mAP}@0,50, correspondente a 6,1\% do valor obtido em \ac{FP32}. Essa degradação concentrou-se na revocação, que passou de 0,6128 para 0,5698, indicando que a redução de precisão numérica afetou principalmente a detecção de instâncias associadas a menores níveis de confiança. No YOLOv10n, a redução foi de 0,0024, correspondente a 0,4\% do valor de referência, e a revocação passou de 0,6215 para 0,6115, redução de 1,6\% contra os 7,0\% observados no YOLOv8n.
 
 A diferença de sensibilidade entre as arquiteturas constitui achado relevante para o objetivo deste trabalho. Enquanto o YOLOv8n apresentou degradação aproximadamente dezesseis vezes superior sob quantização \ac{INT8}, o YOLOv10n manteve desempenho equivalente ao da versão em ponto flutuante. Considerando que a variante YOLOv10n em \ac{INT8} corresponde ao menor arquivo gerado, com 2,82~MB, essa configuração apresenta relação favorável entre compressão e qualidade de detecção. Registre-se, contudo, que essa avaliação considera exclusivamente o tamanho do arquivo e a qualidade da detecção, enquanto a Subseção~\ref{sec:v10n_gpu} demonstra que essa combinação específica não é executável com \textit{delegate} \ac{GPU}, o que a inviabiliza no cenário de maior interesse prático.
 
@@ -1699,7 +1698,7 @@ A implicação é prática e vai além do caso medido, uma vez que a propriedade
 \subsubsection{Efeito da quantização sobre as detecções}
 \label{sec:efeito_quantizacao}
 
-A Tabela~\ref{tab:deteccoes_dispositivo} apresenta o número total de detecções produzidas por cada configuração sobre as mesmas 285 imagens.
+A Tabela~\ref{tab:deteccoes_dispositivo} apresenta o número total de detecções produzidas por cada configuração sobre as mesmas 285 imagens. A quantização \ac{FP16} preserva a saída dos modelos. No YOLOv8n em \ac{CPU}, \ac{FP32} e \ac{FP16} produziram exatamente o mesmo total de 2.413 detecções; no YOLOv10n, 2.308 contra 2.309, diferença de uma única detecção em 285 imagens. Considerando que o arquivo \ac{FP16} ocupa metade do espaço do \ac{FP32}, conforme a Tabela~\ref{tab:tamanhos_tflite}, a conversão para meia precisão apresenta-se como escolha sem contrapartida observável neste conjunto.
 
 \begin{table}[H]
 \centering
@@ -1727,8 +1726,6 @@ YOLOv10n \ac{INT8} & \ac{CPU} & 2.325 & 8,16 \\
 \end{table}
 
 \FloatBarrier
-
-A quantização \ac{FP16} preserva a saída dos modelos. No YOLOv8n em \ac{CPU}, \ac{FP32} e \ac{FP16} produziram exatamente o mesmo total de 2.413 detecções; no YOLOv10n, 2.308 contra 2.309, diferença de uma única detecção em 285 imagens. Considerando que o arquivo \ac{FP16} ocupa metade do espaço do \ac{FP32}, conforme a Tabela~\ref{tab:tamanhos_tflite}, a conversão para meia precisão apresenta-se como escolha sem contrapartida observável neste conjunto.
 
 A quantização inteira, em contrapartida, altera a saída. O YOLOv8n \ac{INT8} produziu 2.536 detecções, 5,1\% acima do \ac{FP32}, e o YOLOv10n \ac{INT8} produziu 0,7\% a mais. O acréscimo no número de detecções, desacompanhado de qualquer alteração no conjunto de imagens, sugere a introdução de falsos positivos pelo erro de quantização, o que é compatível com a redução de revocação observada na Tabela~\ref{tab:validacao_tflite} e com o fato de a calibração ter sido realizada sobre o subconjunto de validação. Avaliar essa hipótese exigiria confrontar as detecções com as anotações de referência, o que não foi conduzido neste trabalho.
 
