@@ -8,6 +8,13 @@ Verifica tambem o que pode invalidar uma comparacao: aparelhos que nao
 rodaram o mesmo conjunto de imagens, execucoes interrompidas e medicoes
 iniciadas com bateria baixa.
 
+Um mesmo aparelho pode ser medido mais de uma vez. Cada varredura e uma
+sessao, identificada pela subpasta em que os arquivos estao: em
+<aparelho>/sessao_1, <aparelho>/sessao_2 e assim por diante. Arquivos
+soltos na pasta do aparelho contam como sessao unica. Sem essa
+separacao, tres varreduras do mesmo aparelho seriam lidas como um
+aparelho com trinta e tres execucoes.
+
 Uso: python3 -I consolidar_aparelhos.py <pasta com os csv> <saida.csv>
 """
 import csv
@@ -57,6 +64,13 @@ def validas(linhas):
     return [l for l in linhas if not l["descartada"]]
 
 
+def sessao_de(raiz):
+    """A subpasta abaixo da pasta do aparelho nomeia a sessao."""
+    rel = os.path.relpath(raiz, entrada)
+    partes = [x for x in rel.split(os.sep) if x not in (".", "")]
+    return partes[1] if len(partes) > 1 else "unica"
+
+
 registros = []
 for raiz, _, arquivos in os.walk(entrada):
     for nome in sorted(arquivos):
@@ -66,6 +80,7 @@ for raiz, _, arquivos in os.walk(entrada):
         if "Configuracao" not in cab or not validas(linhas):
             print("ignorado (sem medicoes): %s" % nome)
             continue
+        cab["_sessao"] = sessao_de(raiz)
         registros.append((cab, linhas, nome))
 
 if not registros:
@@ -75,15 +90,17 @@ if not registros:
 por_aparelho = defaultdict(list)
 for cab, linhas, nome in registros:
     chave = (cab.get("Fabricante", "?"), cab.get("Aparelho", "?"),
-             cab.get("Placa", "?"))
+             cab.get("Placa", "?"), cab["_sessao"])
     por_aparelho[chave].append((cab, linhas, nome))
 
-print("aparelhos encontrados: %d\n" % len(por_aparelho))
+aparelhos_distintos = {c[:3] for c in por_aparelho}
+print("aparelhos encontrados: %d, em %d sessao(oes)\n"
+      % (len(aparelhos_distintos), len(por_aparelho)))
 
 alertas = []
 linhas_saida = []
 
-for (fab, apar, placa), itens in sorted(por_aparelho.items()):
+for (fab, apar, placa, sessao), itens in sorted(por_aparelho.items()):
     # Compara as imagens tentadas. Uma medicao descartada nao muda o
     # conjunto sobre o qual a configuracao rodou, so reduz a amostra.
     conjuntos = {tuple(sorted(l["arquivo"] for l in linhas))
@@ -92,13 +109,13 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
     descartes = [(c["Configuracao"], sum(1 for l in linhas if l["descartada"]))
                  for c, linhas, _ in itens]
 
-    print("%s %s (placa %s) — Android %s — %d configuracoes"
-          % (fab, apar, placa,
+    print("%s %s (placa %s, sessao %s) — Android %s — %d configuracoes"
+          % (fab, apar, placa, sessao,
              itens[0][0].get("Android", "?"), len(itens)))
 
     if len(conjuntos) > 1:
-        alertas.append("%s %s: as configuracoes nao rodaram sobre o mesmo "
-                       "conjunto de imagens (%s)" % (fab, apar, n_imgs))
+        alertas.append("%s, %s: as configuracoes nao rodaram sobre o "
+                       "mesmo conjunto de imagens (%s)" % ("%s %s" % (fab, apar), "sessao " + sessao, n_imgs))
 
     for config, n in descartes:
         if n:
@@ -126,6 +143,7 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
             "fabricante": fab,
             "aparelho": apar,
             "placa": placa,
+            "sessao": sessao,
             "hardware": cab.get("Hardware", ""),
             "android": cab.get("Android", ""),
             "arquitetura": arq,
@@ -162,6 +180,7 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
         print("   nao executou: %s" % falta)
         linhas_saida.append({
             "fabricante": fab, "aparelho": apar, "placa": placa,
+            "sessao": sessao,
             "hardware": itens[0][0].get("Hardware", ""),
             "android": itens[0][0].get("Android", ""),
             "arquitetura": falta.split(" · ")[0],
