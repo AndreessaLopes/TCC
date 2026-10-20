@@ -1001,12 +1001,18 @@ critério principal de seleção.
 Tamanho de entrada & 960~$\times$~960~pixels \\
 Otimizador & AdamW \\
 Taxa de aprendizado inicial & 0,003 \\
+Fator da taxa final & 0,01, com decaimento linear \\
+Decaimento de pesos & 0,0005 \\
+Momento & 0,937 \\
+Épocas de aquecimento & 3 \\
 Tamanho do lote & 8 \\
-Épocas (YOLOv10n) & 80 \\
-Épocas (YOLOv8n) & 74 \\
+Épocas configuradas & 120 (YOLOv8n) e 80 (YOLOv10n) \\
+Épocas executadas & 74 (YOLOv8n) e 80 (YOLOv10n) \\
+Paciência da parada antecipada & 30 épocas \\
+Semente & 0, em modo determinístico \\
 Pesos iniciais & Pré-treinados em COCO \\
 Precisão mista & Desabilitada \\
-Classe & Grãos \\
+Classe & ``frutos'' \\
 Critério de seleção & mAP@0,50 (validação) \\
 \bottomrule
 \end{tabular}
@@ -1365,7 +1371,7 @@ Instâncias anotadas (treinamento) & 11.288 \\
 Instâncias anotadas (validação) & 3.972 \\
 Instâncias anotadas (teste) & 2.399 \\
 Classes & 1 \\
-Classe utilizada & Grãos \\
+Classe utilizada & ``frutos'' \\
 \bottomrule
 \end{tabular}
 \legend{Elaborada pela autora (2026).}
@@ -1567,7 +1573,7 @@ Cada variante convertida foi avaliada sobre o subconjunto de teste, composto por
 \label{tab:validacao_tflite}
 \begin{tabular}{llcccc}
 \toprule
-\textbf{Modelo} & \textbf{Precisão} & \textbf{\ac{mAP}@0,50} &
+\textbf{Modelo} & \textbf{Variante} & \textbf{\ac{mAP}@0,50} &
 \textbf{\ac{mAP}@0,50--0,95} & \textbf{Precisão} & \textbf{Revocação} \\
 \midrule
 YOLOv8n  & \ac{FP32} & 0,6455 & 0,3609 & 0,6336 & 0,6128 \\
