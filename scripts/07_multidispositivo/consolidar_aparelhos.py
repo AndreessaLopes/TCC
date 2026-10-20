@@ -126,6 +126,7 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
             "fabricante": fab,
             "aparelho": apar,
             "placa": placa,
+            "hardware": cab.get("Hardware", ""),
             "android": cab.get("Android", ""),
             "arquitetura": arq,
             "precisao": prec,
@@ -161,6 +162,7 @@ for (fab, apar, placa), itens in sorted(por_aparelho.items()):
         print("   nao executou: %s" % falta)
         linhas_saida.append({
             "fabricante": fab, "aparelho": apar, "placa": placa,
+            "hardware": itens[0][0].get("Hardware", ""),
             "android": itens[0][0].get("Android", ""),
             "arquitetura": falta.split(" · ")[0],
             "precisao": falta.split(" · ")[1],
