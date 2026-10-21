@@ -28,6 +28,10 @@ entrada, saida = sys.argv[1], sys.argv[2]
 
 ORDEM_PRECISAO = {"FP32": 0, "FP16": 1, "INT8": 2}
 
+# Valor do protocolo de coleta, descrito no COMO_TESTAR.md distribuido
+# junto com o aplicativo.
+AQUECIMENTO_PADRAO = 10
+
 
 def ler(caminho):
     # A tabela consolidada costuma ficar na mesma pasta dos lotes. Como ela
@@ -132,6 +136,16 @@ for (fab, apar, placa, sessao), itens in sorted(por_aparelho.items()):
         if "ATENCAO" in " ".join(cab.keys()):
             alertas.append("%s %s / %s: execucao interrompida"
                            % (fab, apar, cab["Configuracao"]))
+
+        # O aquecimento descarta as primeiras inferencias, antes de medir.
+        # Um aparelho que aqueceu menos que os demais nao e comparavel na
+        # mesma tabela, porque parte da subida de relogio entra na media.
+        aquec = cab.get("Inferencias de aquecimento", "")
+        if aquec.isdigit() and int(aquec) != AQUECIMENTO_PADRAO:
+            alertas.append("%s %s / %s: %s inferencias de aquecimento, "
+                           "contra %d das demais"
+                           % (fab, apar, cab["Configuracao"], aquec,
+                              AQUECIMENTO_PADRAO))
 
         bateria = cab.get("Bateria inicial", "").replace(" %", "")
         if bateria.isdigit() and int(bateria) < 20:
