@@ -1,0 +1,58 @@
+# Fabricante: motorola
+# Aparelho: moto g15
+# Codinome: lamu
+# Placa: lamu
+# Hardware: mt6768
+# Android: 15
+# Nivel de API: 35
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv8n · FP16 · GPU
+# Modelo: yolov8n_fp16.tflite
+# Delegate: GPU
+# Inicio: 2026-10-16T09:06:15.126364
+# Imagens medidas: 30
+# Medicoes descartadas: 0
+# Inferencias de aquecimento: 10
+# Duracao total: 160 s
+# Latencia media: 5318.25 ms
+# Desvio padrao: 1218.55 ms
+# Coeficiente de variacao: 22.91 %
+# Inferencia media: 615.59 ms
+# Desvio inferencia: 2.00 ms
+# Memoria de pico: 629 MB
+# Bateria inicial: 52 %
+# Bateria final: 52 %
+# Bateria consumida: 0 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1010.jpg,1,1025.02,620.39,0.18,1645.59,443,0
+test_1041.jpg,35,6413.62,614.03,0.39,7028.03,441,0
+test_1070.jpg,12,4923.71,616.92,0.38,5541.02,446,0
+test_1111.jpg,2,4426.13,616.17,0.14,5042.44,552,0
+test_1155.jpg,3,4250.31,613.22,0.16,4863.69,426,0
+test_1199.jpg,9,5439.12,614.27,0.19,6053.57,439,0
+test_1205.jpg,3,5042.71,614.02,0.32,5657.05,629,0
+test_1216.jpg,10,5348.12,612.81,0.19,5961.13,442,0
+test_1244.jpg,8,5466.72,616.26,0.19,6083.18,439,0
+test_1260.jpg,13,5453.70,617.55,0.28,6071.52,439,0
+test_1343.jpg,3,4914.99,614.91,0.15,5530.06,448,0
+test_1562.jpg,2,4340.50,617.91,0.21,4958.63,447,0
+test_159.jpg,5,6780.09,616.41,0.23,7396.73,452,0
+test_1622.jpg,9,4436.27,613.61,0.19,5050.06,449,0
+test_1751.jpg,12,4426.12,617.45,0.20,5043.77,448,0
+test_1949.jpg,11,4080.70,612.11,0.19,4693.00,550,0
+test_211.jpg,4,4632.94,615.12,0.15,5248.21,471,0
+test_326.jpg,10,2218.25,616.67,0.18,2835.10,439,0
+test_331.jpg,13,4855.23,614.29,0.19,5469.71,454,0
+test_341.jpg,2,2132.41,613.42,0.13,2745.97,423,0
+test_362.jpg,8,4558.03,619.52,0.18,5177.74,461,0
+test_394.jpg,8,4550.51,614.55,0.20,5165.26,463,0
+test_430.jpg,10,4801.38,614.08,0.33,5415.79,442,0
+test_456.jpg,51,4864.58,615.37,0.64,5480.59,440,0
+test_468.jpg,26,5005.32,614.80,0.40,5620.51,440,0
+test_527.jpg,1,4579.46,616.13,0.20,5195.79,449,0
+test_651.jpg,11,6397.69,617.68,0.20,7015.57,446,0
+test_73.jpg,8,4340.31,615.12,0.17,4955.60,450,0
+test_817.jpg,10,6431.84,618.39,0.20,7050.42,443,0
+test_970.jpg,2,4937.13,614.58,0.14,5551.85,448,0

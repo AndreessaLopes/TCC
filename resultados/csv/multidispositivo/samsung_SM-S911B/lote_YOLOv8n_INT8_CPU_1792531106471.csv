@@ -1,0 +1,58 @@
+# Fabricante: samsung
+# Aparelho: SM-S911B
+# Codinome: dm1q
+# Placa: kalama
+# Hardware: qcom
+# Android: 16
+# Nivel de API: 36
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv8n · INT8 · CPU
+# Modelo: yolov8n_int8.tflite
+# Delegate: CPU
+# Inicio: 2026-10-20T18:18:26.471647
+# Imagens medidas: 30
+# Medicoes descartadas: 0
+# Inferencias de aquecimento: 3
+# Duracao total: 62 s
+# Latencia media: 2074.77 ms
+# Desvio padrao: 520.92 ms
+# Coeficiente de variacao: 25.11 %
+# Inferencia media: 327.19 ms
+# Desvio inferencia: 27.97 ms
+# Memoria de pico: 473 MB
+# Bateria inicial: 79 %
+# Bateria final: 79 %
+# Bateria consumida: 0 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1010.jpg,1,326.65,322.76,0.08,649.49,301,0
+test_1041.jpg,52,2519.38,318.44,0.23,2838.05,288,0
+test_1070.jpg,15,1793.02,319.60,0.12,2112.75,293,0
+test_1111.jpg,2,1688.58,321.55,0.09,2010.21,390,0
+test_1155.jpg,3,1569.72,313.69,0.09,1883.50,389,0
+test_1199.jpg,9,1966.24,320.71,0.11,2287.06,284,0
+test_1205.jpg,4,1821.66,307.64,0.09,2129.39,301,0
+test_1216.jpg,10,1946.44,300.86,0.11,2247.40,458,0
+test_1244.jpg,9,2084.91,313.18,0.10,2398.19,301,0
+test_1260.jpg,14,2031.51,304.25,0.13,2335.89,468,0
+test_1343.jpg,3,1694.25,316.24,0.09,2010.58,308,0
+test_1562.jpg,2,1502.32,311.79,0.08,1814.19,295,0
+test_159.jpg,6,2348.69,301.00,0.09,2649.78,292,0
+test_1622.jpg,8,1542.24,313.43,0.11,1855.78,287,0
+test_1751.jpg,13,1546.45,312.45,0.11,1859.02,311,0
+test_1949.jpg,12,1540.46,320.38,0.12,1860.96,265,0
+test_211.jpg,4,1662.55,313.52,0.07,1976.14,287,0
+test_326.jpg,9,715.78,424.17,0.08,1140.03,258,0
+test_331.jpg,16,1582.92,284.49,0.09,1867.51,277,0
+test_341.jpg,2,739.24,293.62,0.07,1032.93,247,0
+test_362.jpg,7,1394.66,315.62,0.14,1710.42,276,0
+test_394.jpg,11,1705.80,358.78,0.12,2064.70,461,0
+test_430.jpg,9,1822.60,344.48,0.12,2167.20,289,0
+test_456.jpg,68,1857.03,345.18,0.38,2202.59,277,0
+test_468.jpg,33,1949.90,363.95,0.21,2314.07,300,0
+test_527.jpg,1,1895.79,356.52,0.09,2252.40,287,0
+test_651.jpg,14,2816.61,354.74,0.12,3171.47,284,0
+test_73.jpg,8,1763.65,364.49,0.12,2128.26,287,0
+test_817.jpg,6,2695.69,343.63,0.09,3039.41,473,0
+test_970.jpg,2,1899.07,334.44,0.09,2233.61,312,0

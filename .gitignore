@@ -79,3 +79,6 @@ saida.log
 *.toc
 # PDF de entrega, gerado a partir do artigo.tex
 monografia/TCC_*.pdf
+
+# Zip exportado do Drive, material de entrada ja descompactado
+cafescan_resultados-*.zip

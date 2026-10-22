@@ -1,0 +1,58 @@
+# Fabricante: samsung
+# Aparelho: SM-A156M
+# Codinome: a15x
+# Placa: a15x
+# Hardware: mt6835
+# Android: 16
+# Nivel de API: 36
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv10n · INT8 · CPU
+# Modelo: yolov10n_int8.tflite
+# Delegate: CPU
+# Inicio: 2026-10-15T20:18:25.611937
+# Imagens medidas: 30
+# Medicoes descartadas: 0
+# Inferencias de aquecimento: 3
+# Duracao total: 110 s
+# Latencia media: 3651.29 ms
+# Desvio padrao: 798.02 ms
+# Coeficiente de variacao: 21.86 %
+# Inferencia media: 722.44 ms
+# Desvio inferencia: 36.85 ms
+# Memoria de pico: 572 MB
+# Bateria inicial: 88 %
+# Bateria final: 87 %
+# Bateria consumida: 1 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1751.jpg,3,2678.10,749.43,0.01,3427.54,388,0
+test_1070.jpg,11,3153.86,689.58,0.01,3843.45,386,0
+test_651.jpg,8,4018.53,830.24,0.01,4848.78,572,0
+test_1041.jpg,37,3963.97,694.35,0.01,4658.33,380,0
+test_1562.jpg,2,2652.12,695.42,0.01,3347.55,385,0
+test_456.jpg,48,2960.67,710.23,0.02,3670.92,376,0
+test_331.jpg,4,3094.23,733.55,0.01,3827.79,396,0
+test_1205.jpg,4,3265.79,677.80,0.01,3943.60,371,0
+test_1260.jpg,15,3338.76,721.33,0.01,4060.11,567,0
+test_527.jpg,0,2896.17,690.06,0.00,3586.23,405,0
+test_468.jpg,27,2941.66,691.11,0.02,3632.79,382,0
+test_211.jpg,6,2947.61,726.74,0.01,3674.36,402,0
+test_430.jpg,9,2918.45,700.65,0.01,3619.11,394,0
+test_1622.jpg,8,2754.59,748.76,0.01,3503.35,398,0
+test_1343.jpg,4,3110.34,768.71,0.01,3879.07,405,0
+test_1111.jpg,2,2687.54,695.29,0.01,3382.84,488,0
+test_1199.jpg,12,3404.36,700.99,0.01,4105.36,385,0
+test_1949.jpg,5,2483.99,718.66,0.01,3202.66,362,0
+test_1216.jpg,12,3261.40,756.08,0.01,4017.49,376,0
+test_1010.jpg,0,527.14,701.54,0.00,1228.68,392,0
+test_970.jpg,3,3119.90,676.21,0.01,3796.12,383,0
+test_73.jpg,8,2655.34,717.15,0.01,3372.50,381,0
+test_341.jpg,3,1356.41,714.07,0.01,2070.49,364,0
+test_1244.jpg,8,3463.10,727.97,0.01,4191.08,398,0
+test_159.jpg,5,4397.13,749.72,0.01,5146.86,388,0
+test_362.jpg,7,2745.71,817.57,0.01,3563.29,371,0
+test_1155.jpg,4,2636.64,690.57,0.01,3327.22,385,0
+test_394.jpg,8,3027.86,720.47,0.01,3748.33,378,0
+test_817.jpg,4,4032.27,750.01,0.01,4782.29,569,0
+test_326.jpg,21,1371.54,709.06,0.01,2080.61,369,0

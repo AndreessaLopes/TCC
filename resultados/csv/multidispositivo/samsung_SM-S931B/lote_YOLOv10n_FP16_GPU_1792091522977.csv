@@ -1,0 +1,58 @@
+# Fabricante: samsung
+# Aparelho: SM-S931B
+# Codinome: pa1q
+# Placa: sun
+# Hardware: qcom
+# Android: 17
+# Nivel de API: 37
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv10n · FP16 · GPU
+# Modelo: yolov10n_fp16.tflite
+# Delegate: GPU
+# Inicio: 2026-10-15T16:12:02.977789
+# Imagens medidas: 30
+# Medicoes descartadas: 0
+# Inferencias de aquecimento: 10
+# Duracao total: 57 s
+# Latencia media: 1909.07 ms
+# Desvio padrao: 446.89 ms
+# Coeficiente de variacao: 23.41 %
+# Inferencia media: 343.77 ms
+# Desvio inferencia: 14.06 ms
+# Memoria de pico: 605 MB
+# Bateria inicial: 79 %
+# Bateria final: 79 %
+# Bateria consumida: 0 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1010.jpg,0,322.45,332.58,0.00,655.03,443,0
+test_1041.jpg,35,2085.72,339.73,0.02,2425.46,448,0
+test_1070.jpg,12,1451.18,371.90,0.01,1823.09,427,0
+test_1111.jpg,2,1483.24,339.41,0.01,1822.67,405,0
+test_1155.jpg,4,1522.84,328.60,0.01,1851.45,420,0
+test_1199.jpg,12,1867.92,349.57,0.01,2217.50,417,0
+test_1205.jpg,4,1745.04,342.04,0.01,2087.09,605,0
+test_1216.jpg,13,1846.13,344.66,0.02,2190.81,430,0
+test_1244.jpg,8,2042.13,368.62,0.01,2410.77,443,0
+test_1260.jpg,15,1876.15,335.25,0.01,2211.42,431,0
+test_1343.jpg,3,1667.65,339.90,0.01,2007.56,432,0
+test_1562.jpg,2,1507.12,344.86,0.01,1851.99,425,0
+test_159.jpg,5,2343.64,326.64,0.01,2670.29,429,0
+test_1622.jpg,8,1524.41,324.30,0.01,1848.73,425,0
+test_1751.jpg,3,1484.35,337.36,0.01,1821.73,423,0
+test_1949.jpg,5,1311.20,346.55,0.01,1657.76,440,0
+test_211.jpg,6,1447.89,336.31,0.01,1784.22,431,0
+test_326.jpg,19,664.63,357.90,0.01,1022.55,401,0
+test_331.jpg,4,1550.88,334.70,0.01,1885.59,426,0
+test_341.jpg,2,657.69,354.35,0.01,1012.05,398,0
+test_362.jpg,7,1388.68,389.51,0.01,1778.19,417,0
+test_394.jpg,7,1418.58,334.21,0.01,1752.81,417,0
+test_430.jpg,11,1476.86,335.99,0.01,1812.86,438,0
+test_456.jpg,49,1536.65,336.50,0.02,1873.17,600,0
+test_468.jpg,25,1523.57,332.09,0.02,1855.68,467,0
+test_527.jpg,0,1492.40,340.44,0.00,1832.84,433,0
+test_651.jpg,8,2248.00,341.34,0.01,2589.36,419,0
+test_73.jpg,9,1488.84,351.47,0.01,1840.32,421,0
+test_817.jpg,4,2324.07,341.39,0.01,2665.47,417,0
+test_970.jpg,3,1658.66,354.84,0.01,2013.51,548,0
