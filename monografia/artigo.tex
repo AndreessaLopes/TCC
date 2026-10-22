@@ -1255,6 +1255,48 @@ YOLOv10n & INT8 & GPU & Não executável \\
 
 O Quadro~\ref{quad:configuracoes_experimentos} resume todas as combinações de arquitetura, estratégia de quantização e \textit{delegate} consideradas na avaliação experimental. A combinação YOLOv10n/\ac{INT8}/\ac{GPU} não é executável, pois as operações exigidas pela arquitetura não são suportadas pelo \textit{delegate} \ac{GPU}, conforme discutido na Subseção~\ref{sec:v10n_gpu}. A comparação entre as demais permite identificar o impacto individual e combinado de cada fator sobre o desempenho dos modelos executados em \textit{smartphones} Android.
 
+\subsection{Coleta em Múltiplos Dispositivos}
+\label{sec:coleta_multidispositivo}
+
+A disponibilidade e o comportamento dos \textit{delegates} dependem do
+fornecedor do \ac{SoC} e da versão do \textit{driver} gráfico, de modo que
+medições obtidas em um único aparelho não se transferem a outras plataformas
+sem verificação. Para examinar se as diferenças observadas entre configurações
+se mantêm fora do aparelho descrito na Subseção~\ref{sec:dispositivo}, a
+aplicação foi distribuída a voluntários e executada em aparelhos de
+fabricantes, faixas de preço e versões de sistema distintas.
+
+O arquivo de instalação é o mesmo em todos os aparelhos, inclusive no de
+referência, de modo que nenhuma diferença entre as medições decorre da versão
+da aplicação. Os modelos convertidos acompanham esse arquivo e não são obtidos
+pela rede, o que mantém idênticos também os pesos executados.
+
+Medir as 285 imagens da partição de teste em doze configurações exigiria de
+cada voluntário tempo incompatível com uma contribuição espontânea. Foi
+definido um subconjunto de 30 imagens da mesma partição, que abrange de 1,2 a
+16,1~megapixels e de 1 a 45 caixas anotadas, perfazendo 271 instâncias, e que
+preserva a faixa de resolução e de densidade de anotação do conjunto completo.
+As mesmas 30 imagens, nos arquivos originais, foram distribuídas junto com a
+aplicação.
+
+O protocolo entregue aos voluntários requer carga acima de 80\% e fora do
+carregador, aparelho em repouso térmico, aplicações em segundo plano
+encerradas e aplicação em primeiro plano durante toda a execução. Cada
+configuração é precedida de dez inferências de aquecimento descartadas da
+apuração, como na avaliação do aparelho de referência.
+
+A aplicação executa as doze configurações em sequência, sem intervenção entre
+elas, e grava ao final um arquivo por configuração. Cada arquivo registra o
+fabricante, o modelo, o identificador do \textit{hardware}, a versão do
+Android, o nível de carga no início e no fim da execução e as medições
+individuais por imagem, o que permite verificar o cumprimento do protocolo a
+partir dos próprios dados, sem depender do relato de quem executou.
+
+No aparelho de referência a varredura foi repetida em três sessões realizadas
+na mesma noite, com intervalos de 40 e 46~minutos entre elas e carga entre
+99\% e 83\%, com a finalidade de estimar a variação entre execuções de uma
+mesma configuração.
+
 \subsection{Métricas de Avaliação}
 
 A comparação entre as diferentes configurações dos modelos foi realizada por meio de métricas relacionadas à qualidade da detecção e ao desempenho computacional durante a execução em dispositivos móveis. A utilização desses dois grupos de indicadores permite avaliar não apenas a capacidade dos modelos em detectar corretamente os frutos de café, mas também sua viabilidade para aplicações embarcadas em \textit{smartphones} Android. O Quadro~\ref{quad:metricas_avaliacao} apresenta um resumo das métricas consideradas nesta pesquisa, bem como suas respectivas unidades de medida e finalidade na avaliação experimental.
@@ -1831,6 +1873,125 @@ Para a aplicação proposta, a configuração recomendada é \textbf{YOLOv8n \ac
 
 \FloatBarrier
 
+\subsection{Desempenho em Múltiplos Dispositivos}
+\label{sec:multidispositivo}
+
+A Tabela~\ref{tab:aparelhos} apresenta os sete aparelhos em que foi conduzida
+a coleta descrita na Subseção~\ref{sec:coleta_multidispositivo}. O conjunto
+abrange os três fornecedores de \ac{SoC} presentes no mercado Android, cobre
+da faixa de entrada ao segmento superior e reúne cinco versões do sistema
+operacional, do Android~12 ao Android~17. Dois pares de aparelhos compartilham
+o mesmo identificador de \textit{hardware} ou o mesmo fornecedor com modelos
+distintos, o que permite distinguir o que decorre do fornecedor do que decorre
+do aparelho.
+
+\input{tabelas/aparelhos.tex}
+
+A latência média de inferência de cada configuração em cada aparelho consta da
+Tabela~\ref{tab:inferencia_dispositivos}. Na mesma configuração, a distância
+entre o aparelho mais rápido e o mais lento alcança uma ordem de grandeza, o
+que corresponde à diferença entre as plataformas avaliadas.
+
+\input{tabelas/inferencia.tex}
+
+O resultado de maior interesse não está nos valores absolutos, e sim na razão
+entre a execução em \ac{CPU} e em \ac{GPU}, apresentada na
+Tabela~\ref{tab:ganho_gpu_dispositivos}. O sentido do efeito do
+\textit{delegate} \ac{GPU} é o mesmo nos sete aparelhos. O YOLOv8n é acelerado
+em todas as plataformas, por fator entre 1,48 e 7,28, ao passo que no YOLOv10n
+o \textit{delegate} não produz ganho em nenhuma delas, com razões entre 0,58 e
+0,97. A combinação YOLOv10n/\ac{INT8}/\ac{GPU} não executou em aparelho algum.
+
+\input{tabelas/ganho_gpu.tex}
+
+A única exceção ao ganho do YOLOv8n ocorre no moto~g15 na precisão \ac{INT8},
+com razão de 0,87. A magnitude do ganho varia por fator superior a quatro
+entre o maior e o menor valor observado e acompanha a faixa de desempenho do
+aparelho, de modo que o ganho do \textit{delegate} \ac{GPU} constitui
+resultado de plataforma, e não propriedade fixa do modelo. A direção do
+efeito, por outro lado, não depende do fornecedor nem da versão do sistema, o
+que sustenta a interpretação apresentada na Subseção~\ref{sec:v10n_gpu},
+segundo a qual a incompatibilidade do YOLOv10n decorre da cobertura de
+operações do \textit{delegate} e não de característica do aparelho de
+referência.
+
+\subsubsection{Estabilidade das detecções entre aparelhos}
+\label{sec:estabilidade_deteccoes}
+
+A comparação das saídas verifica se o mesmo modelo produz as mesmas detecções
+em plataformas distintas. Em dez das onze configurações executáveis, o número
+de detecções coincide em todos os aparelhos, imagem por imagem, perfazendo 310
+concordâncias em 321 comparações.
+
+A exceção é o YOLOv8n em \ac{INT8} com \textit{delegate} \ac{GPU}, em que 11
+das 26 imagens comuns aos sete aparelhos apresentam contagens distintas, com
+diferença de uma ou duas detecções. Trata-se da única configuração que reúne
+quantização inteira e execução em \ac{GPU}, e a divergência é compatível com a
+variação da implementação dos núcleos quantizados entre fornecedores, uma vez
+que a mesma quantização executada em \ac{CPU} produz contagens idênticas nos
+sete aparelhos.
+
+Registre-se que o total acumulado nessas 26 imagens é de 275 detecções em
+todos os sete aparelhos, pois as diferenças individuais se compensam. A
+leitura por totais indicaria concordância completa, e apenas a comparação
+imagem a imagem revela a divergência, o que recomenda cautela no uso de
+indicadores agregados para verificar equivalência de saída.
+
+\subsubsection{Variação entre execuções de uma mesma configuração}
+\label{sec:repetibilidade}
+
+A variação da latência de inferência entre as três sessões realizadas no
+aparelho de referência consta da Tabela~\ref{tab:sessoes}. A amplitude entre a
+maior e a menor média obtidas para a mesma configuração corresponde a 18,6\%
+da média na mediana das onze configurações e alcança 32,1\% no YOLOv8n em
+\ac{INT8} com \textit{delegate} \ac{GPU}.
+
+\input{tabelas/sessoes.tex}
+
+As configurações executadas em \ac{CPU} apresentam amplitude entre 2,3\% e
+24,2\%, ao passo que as executadas em \ac{GPU} situam-se entre 7,3\% e 32,1\%,
+o que é coerente com a menor estabilidade do \textit{delegate} \ac{GPU}
+registrada na Subseção~\ref{sec:estabilidade}.
+
+Essa medida define a resolução do experimento. Diferenças de latência
+inferiores a cerca de 20\% entre duas configurações não se distinguem da
+variação observada em repetições de uma mesma configuração, de modo que as
+comparações deste capítulo que recaem nessa faixa devem ser lidas como
+equivalência, e não como ordenação. As razões entre \ac{CPU} e \ac{GPU}
+discutidas nesta subseção situam-se fora dessa faixa no YOLOv8n, em que a
+menor delas corresponde a redução de 32\% da latência. No YOLOv10n as razões
+próximas da unidade indicam ausência de ganho, afirmação que não depende de
+ordenar configurações dentro da faixa de equivalência.
+
+\subsubsection{Desvios de protocolo e seus efeitos}
+\label{sec:desvios_protocolo}
+
+Dois desvios em relação ao protocolo foram identificados nos arquivos
+recebidos. O efeito de cada um foi medido antes da decisão de manter os dados
+correspondentes.
+
+No Galaxy A15 5G e no Galaxy S23 as execuções foram precedidas de três
+inferências de aquecimento, e não de dez. Caso o aquecimento fosse
+insuficiente, as primeiras medições de cada execução seriam superiores às
+demais. A média das três primeiras medições fica 1,0\% abaixo da média das
+restantes nesses dois aparelhos, contra 0,6\% abaixo nos cinco que executaram
+dez inferências de aquecimento, valor situado dentro da faixa observada entre
+os próprios aparelhos que cumpriram o protocolo. O aquecimento reduzido não
+deslocou as médias.
+
+No moto~g15 a coleta iniciou com 54\% de carga, abaixo dos 80\% previstos, e a
+carga decresceu até 47\% ao longo da varredura. As três configurações do
+YOLOv10n em \ac{CPU}, medidas a 51\%, 49\% e 48\% de carga, apresentaram
+1.058,76, 1.061,50 e 1.060,32~ms de inferência, com dispersão de 0,26\% entre
+elas. Redução de frequência por nível de carga produziria valores crescentes
+ao longo da sessão, comportamento que não se observa.
+
+Ambos os desvios permanecem registrados na Subseção~\ref{sec:limitacoes}, uma
+vez que a ausência de efeito mensurável nas medições disponíveis não equivale
+a garantia de ausência de efeito.
+
+\FloatBarrier
+
 \subsection{Limitações}
 \label{sec:limitacoes}
 
@@ -1838,13 +1999,15 @@ Os resultados apresentados estão condicionados por um conjunto de limitações 
 
 \subsubsection{Limitações do protocolo experimental}
 
-\textbf{Dispositivo único.} Todas as medições foram conduzidas em um único aparelho, pelas razões expostas na Subseção~\ref{sec:dispositivo}. A disponibilidade e o comportamento dos \textit{delegates} dependem do fornecedor do \textit{chipset} e da versão do \textit{driver} gráfico, de modo que os resultados relativos entre \textit{delegates} não são transferíveis a outras plataformas sem verificação. Em particular, a incompatibilidade entre o YOLOv10n e o \textit{delegate} \ac{GPU}, descrita na Subseção~\ref{sec:v10n_gpu}, decorre da ausência de suporte a operações específicas na implementação do \ac{TFLite}, e não de característica do aparelho utilizado; ainda assim, a magnitude da penalidade observada é específica desta plataforma.
+\textbf{Aparelho único na avaliação sobre o conjunto completo.} A avaliação sobre as 285 imagens da partição de teste foi conduzida em um único aparelho, pelas razões expostas na Subseção~\ref{sec:dispositivo}. A coleta descrita na Subseção~\ref{sec:coleta_multidispositivo} estendeu a avaliação a sete aparelhos, porém sobre o subconjunto de 30 imagens, de modo que os valores absolutos de latência reportados nas tabelas da Subseção~\ref{sec:resultados_movel} permanecem condicionados a uma plataforma. O que a coleta posterior sustenta é o sentido do efeito do \textit{delegate}, verificado nos sete aparelhos, e não a magnitude registrada naquelas tabelas, que varia por fator superior a quatro entre as plataformas avaliadas.
 
-\textbf{Execução única por configuração.} Cada configuração foi executada uma única vez sobre as 285 imagens do conjunto de teste. A ausência de repetições impede separar a variabilidade atribuível ao sistema operacional e ao estado do dispositivo daquela própria da configuração avaliada. As diferenças de maior magnitude reportadas, notadamente o contraste entre arquiteturas quanto ao efeito do \textit{delegate} \ac{GPU}, superam por larga margem a dispersão observada dentro de cada execução, mas diferenças de pequena magnitude entre configurações próximas devem ser interpretadas com reserva.
+\textbf{Execução única sobre o conjunto completo.} Cada configuração foi executada uma única vez sobre as 285 imagens da partição de teste. A repetição conduzida sobre o subconjunto de 30 imagens, relatada na Subseção~\ref{sec:repetibilidade}, fornece a ordem de grandeza da variação entre execuções de uma mesma configuração, que é de 18,6\% na mediana das onze configurações e alcança 32,1\%. Esse valor foi obtido no aparelho de referência e sobre o subconjunto, e seu transporte para as medições sobre o conjunto completo e para os demais aparelhos constitui suposição, não verificação. Diferenças entre configurações próximas permanecem, portanto, sujeitas a reserva.
 
 \textbf{Estado térmico não controlado.} As execuções foram distribuídas em dois dias e em horários distintos, sem padronização do intervalo de repouso entre elas nem verificação da temperatura inicial do aparelho. A análise de deriva apresentada na Subseção~\ref{sec:estabilidade} indica que o estado térmico afeta o desempenho em \ac{GPU} de forma desigual, uma vez que três execuções apresentaram degradação superior a 40\% e duas não apresentaram degradação alguma. Essa variação não foi controlada e constitui a limitação mais relevante do protocolo quanto às medidas de estabilidade.
 
-\textbf{Nível de carga não padronizado.} O nível de bateria no início das execuções variou entre 49\% e 94\%. Sistemas Android podem reduzir a frequência de operação em níveis baixos de carga, ainda que o modo de economia de energia esteja desativado. A influência desse fator sobre as medições não foi isolada.
+\textbf{Nível de carga não padronizado na avaliação principal.} Na avaliação sobre o conjunto completo o nível de bateria no início das execuções variou entre 49\% e 94\%. Sistemas Android podem reduzir a frequência de operação em níveis baixos de carga, ainda que o modo de economia de energia esteja desativado. A influência desse fator sobre essas medições não foi isolada. A coleta em múltiplos dispositivos adotou limiar fixo de 80\%, cumprido em seis dos sete aparelhos.
+
+\textbf{Desvios de protocolo na coleta em múltiplos dispositivos.} Dois aparelhos executaram com três inferências de aquecimento, e não com dez, e um iniciou a coleta com 54\% de carga. Os efeitos foram medidos e estão relatados na Subseção~\ref{sec:desvios_protocolo}, sem que se tenha observado deslocamento das médias em nenhum dos dois casos. A ausência de efeito mensurável nas medições disponíveis não equivale, contudo, a garantia de ausência de efeito, e os aparelhos foram mantidos no conjunto analisado com essa ressalva.
 
 \subsubsection{Limitações das medidas}
 

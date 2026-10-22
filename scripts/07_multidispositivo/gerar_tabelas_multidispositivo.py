@@ -189,6 +189,7 @@ for cod in codigos:
 
 gravar("aparelhos.tex", """\\begin{table}[H]
 \\centering
+\\small
 \\caption{Aparelhos empregados na avaliação multidispositivo}
 \\label{tab:aparelhos}
 \\begin{tabular}{lllccc}
@@ -222,6 +223,7 @@ for a in ("YOLOv8n", "YOLOv10n"):
 
 gravar("ganho_gpu.tex", """\\begin{table}[H]
 \\centering
+\\small
 \\caption{Razão entre a inferência em processador e em processador
 gráfico, por aparelho}
 \\label{tab:ganho_gpu_dispositivos}
@@ -250,6 +252,7 @@ for i, (a, p, d) in enumerate(CONFIGS):
 
 gravar("inferencia.tex", """\\begin{table}[H]
 \\centering
+\\small
 \\caption{Latência média de inferência, em milissegundos, por
 configuração e aparelho}
 \\label{tab:inferencia_dispositivos}
@@ -298,6 +301,7 @@ if repetidos:
                      * len(repetidos))
     gravar("sessoes.tex", """\\begin{table}[H]
 \\centering
+\\small
 \\caption{Variação da latência de inferência entre sessões repetidas do
 mesmo aparelho, em milissegundos}
 \\label{tab:sessoes}
