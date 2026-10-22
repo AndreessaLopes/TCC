@@ -180,23 +180,28 @@ for cod in codigos:
     executadas = sum(1 for c in CONFIGS
                      if any(x.get("imagens") not in (None, "", "0")
                             for x in dado.get((cod,) + c, [])))
-    linhas_tab.append("%s & %s & %s & %d & %d \\\\" % (
-        nome_longo(cod), soc(r), r["android"], executadas,
-        len(sessoes_de[cod])))
+    # O identificador e o que o proprio aparelho informou; o nome
+    # comercial vem da especificacao do fabricante para aquele modelo.
+    # Manter os dois deixa a atribuicao conferivel por quem le.
+    linhas_tab.append("%s & %s & \\texttt{%s} & %s & %d & %d \\\\" % (
+        nome_longo(cod), soc(r), r.get("hardware", "") or "--",
+        r["android"], executadas, len(sessoes_de[cod])))
 
 gravar("aparelhos.tex", """\\begin{table}[H]
 \\centering
 \\caption{Aparelhos empregados na avaliação multidispositivo}
 \\label{tab:aparelhos}
-\\begin{tabular}{llccc}
+\\begin{tabular}{lllccc}
 \\toprule
-\\textbf{Aparelho} & \\textbf{\\ac{SoC}} & \\textbf{Android} &
-\\textbf{Configurações} & \\textbf{Sessões} \\\\
+\\textbf{Aparelho} & \\textbf{\\ac{SoC}} & \\textbf{Identificador} &
+\\textbf{Android} & \\textbf{Configurações} & \\textbf{Sessões} \\\\
 \\midrule
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026).}
+\\legend{Elaborada pela autora (2026). O identificador é o informado
+pelo próprio aparelho e registrado em cada arquivo de medição; o nome
+do \\ac{SoC} corresponde à especificação do fabricante para o modelo.}
 \\end{table}
 """ % "\n".join(linhas_tab))
 
