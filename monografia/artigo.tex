@@ -1126,7 +1126,7 @@ dispensando o procedimento de supressão.
  
 \subsubsection{Funcionalidades}
  
-A aplicação organiza-se em quatro funcionalidades principais.
+A aplicação organiza-se em quatro funcionalidades principais, cujas telas constam da Figura~\ref{fig:telas_aplicacao}.
  
 A primeira permite selecionar a configuração experimental, combinando uma das
 seis variantes de modelo com um dos dois \textit{delegates} disponíveis. A
@@ -1149,6 +1149,17 @@ comparação entre as configurações avaliadas e a exportação dos dados em fo
 de valores separados por vírgula, com registro individual por imagem
 processada.
  
+\begin{figure}[H]
+    \centering
+    \caption{Telas da aplicação: (a) escolha da configuração experimental;
+    (b) detecção sobre imagem individual; (c) execução em lote; (d) métricas
+    agregadas das execuções}
+    \label{fig:telas_aplicacao}
+    \figuraHorizontal{figuras/telas_aplicacao.jpg}
+    \legend{Elaborada pela autora (2026), a partir de capturas de tela do
+    aparelho descrito na Subseção~\ref{sec:dispositivo}.}
+\end{figure}
+
 \subsubsection{Métricas coletadas}
  
 Durante a execução em lote, a aplicação registra, para cada imagem, o tempo de
@@ -1867,7 +1878,7 @@ A segunda é que esse ganho não se estende ao YOLOv10n. As operações que impl
 
 A terceira é que a quantização \ac{FP16} preserva a saída dos modelos pela metade do espaço em disco, enquanto a quantização \ac{INT8} introduz variação no número de detecções, com indício de falsos positivos.
 
-A quarta é que as configurações mais rápidas são as menos estáveis, e que as execuções em \ac{GPU} estão sujeitas a degradação progressiva por limitação térmica, com perda de até 57\% de desempenho ao longo de uma sessão de poucos minutos.
+A quarta é que, neste aparelho, as configurações mais rápidas são as menos estáveis, e as execuções em \ac{GPU} apresentaram degradação progressiva ao longo da sessão, com perda de até 57\% de desempenho em poucos minutos. A coleta relatada na Subseção~\ref{sec:dispersao_multidispositivo} mostra que a maior dispersão em \ac{GPU} não se reproduz nos demais aparelhos sobre execuções mais curtas, de modo que essa conclusão permanece circunscrita à plataforma avaliada.
 
 Para a aplicação proposta, a configuração recomendada é \textbf{YOLOv8n \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à do modelo em precisão plena e o menor pico de memória entre todas as configurações medidas.
 
@@ -1900,7 +1911,15 @@ Tabela~\ref{tab:ganho_gpu_dispositivos}. O sentido do efeito do
 \textit{delegate} \ac{GPU} é o mesmo nos sete aparelhos. O YOLOv8n é acelerado
 em todas as plataformas, por fator entre 1,48 e 7,28, ao passo que no YOLOv10n
 o \textit{delegate} não produz ganho em nenhuma delas, com razões entre 0,58 e
-0,97. A combinação YOLOv10n/\ac{INT8}/\ac{GPU} não executou em aparelho algum.
+0,97. A combinação YOLOv10n/\ac{INT8}/\ac{GPU} não executou em aparelho algum. A Figura~\ref{fig:razao_delegates} dispõe essas razões em escala logarítmica, em que reduzir à metade e dobrar guardam a mesma distância da unidade, e torna visível a separação entre as duas arquiteturas.
+
+\begin{figure}[H]
+    \centering
+    \caption{Razão entre a inferência em processador e em processador gráfico, por aparelho, arquitetura e precisão}
+    \label{fig:razao_delegates}
+    \figuraHorizontal{figuras/razao_delegates.pdf}
+    \legend{Elaborada pela autora (2026). Os aparelhos aparecem ordenados pela latência de inferência do YOLOv8n \ac{FP32} em \ac{CPU}, do mais lento ao mais rápido. A faixa sombreada reúne as razões inferiores à unidade.}
+\end{figure}
 
 \input{tabelas/ganho_gpu.tex}
 
@@ -1936,6 +1955,40 @@ todos os sete aparelhos, pois as diferenças individuais se compensam. A
 leitura por totais indicaria concordância completa, e apenas a comparação
 imagem a imagem revela a divergência, o que recomenda cautela no uso de
 indicadores agregados para verificar equivalência de saída.
+
+\subsubsection{Dispersão dentro da execução}
+\label{sec:dispersao_multidispositivo}
+
+A Subseção~\ref{sec:estabilidade} registrou, no aparelho de referência,
+coeficiente de variação superior nas execuções em \ac{GPU}. A
+Figura~\ref{fig:dispersao_execucao} apresenta esse coeficiente em cada
+configuração, com um ponto por aparelho, e mostra que a associação não se
+repete fora daquela plataforma.
+
+\begin{figure}[H]
+    \centering
+    \caption{Coeficiente de variação da latência de inferência dentro de cada
+    execução, por configuração, com um ponto por aparelho}
+    \label{fig:dispersao_execucao}
+    \figuraHorizontal{figuras/dispersao_execucao.pdf}
+    \legend{Elaborada pela autora (2026).}
+\end{figure}
+
+Considerada a mediana das configurações de cada aparelho, a dispersão em
+\ac{GPU} supera a observada em \ac{CPU} apenas no aparelho de referência,
+com 9,9\% contra 7,8\%. Nos seis demais a relação se inverte, com valores
+entre 0,9\% e 4,2\% em \ac{GPU} contra 1,7\% e 8,9\% em \ac{CPU}. A
+maior dispersão em \ac{GPU} não constitui, portanto, propriedade do
+\textit{delegate}.
+
+Essa comparação não refuta a deriva relatada na
+Subseção~\ref{sec:estabilidade}, e sim delimita o que dela se pode
+generalizar. As execuções desta coleta percorrem 30 imagens, contra as 285 da
+avaliação no aparelho de referência, e a deriva ali documentada se acumula ao
+longo da execução, de modo que uma execução dez vezes mais curta oferece menos
+oportunidade para que ela se manifeste. Verificar se a deriva ocorre nos demais
+aparelhos exigiria execuções de duração comparável, o que não foi solicitado
+aos voluntários.
 
 \subsubsection{Variação entre execuções de uma mesma configuração}
 \label{sec:repetibilidade}
