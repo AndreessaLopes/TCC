@@ -62,7 +62,7 @@
 % \membrobanca{Ciclano de Tal}{Instituição do Ciclano de Tal}
 
 \resumo{
-    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,650 e 0,644 no conjunto de teste, respectivamente, com custo computacional inferior no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade, com degradação de até 57\% ao longo de uma sessão. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
+    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,650 e 0,644 no conjunto de teste, respectivamente, com custo computacional inferior no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a sete aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
 }
 \abstract{\foreignlanguage{english}{%
     Coffee production is economically and socially relevant to Brazil, and
@@ -92,8 +92,15 @@
     precision and cancels the advantage in the remaining ones. FP16
     quantisation preserved the models' output at half the file size, while
     INT8 changed the number of detections. Runs on the GPU were less
-    stable, degrading by up to 57\% over a single session. The
-    configuration recommended for the application is YOLOv8n in FP16 with
+    stable on that device, with degradation of up to 57\% over a single
+    session. The evaluation was then extended to seven devices from three
+    System on Chip vendors, from entry level to flagship, over a subset of
+    30 images. The direction of the delegate effect holds on all of them,
+    with YOLOv8n accelerated by a factor between 1.48 and 7.28 and no gain
+    for YOLOv10n, whereas the magnitude varies by a factor greater than
+    four across platforms. In ten of the eleven executable configurations
+    the number of detections matches on every device, image by image. The
+    recommended configuration for the application is YOLOv8n in FP16 with
     the GPU delegate.}
 }
 \keywords{Computer vision.
@@ -1748,7 +1755,7 @@ O contraste é sistemático e de magnitude incompatível com variação de condi
 
 A causa do comportamento descrito está na arquitetura do YOLOv10n. A supressão da etapa de \ac{NMS}, que constitui sua principal contribuição \cite{Wang2024YOLOv10}, é obtida por meio de uma seleção de candidatos realizada no próprio grafo computacional, o que introduz as operações \texttt{TOPK\_V2} e \texttt{GATHER\_ND}, além de conversões de tipo para \texttt{INT64}.
 
-Nenhuma dessas operações é suportada pelo \textit{delegate} \ac{GPU} do \ac{TFLite}. O \textit{delegate} particiona então o grafo, de modo que executa em \ac{GPU} os segmentos que suporta e devolve os demais à \ac{CPU}, com transferência de dados entre as duas memórias a cada fronteira. No modelo \ac{INT8} a fragmentação é acentuada, com apenas 13 das 345 operações do grafo delegadas, e a execução termina em erro antes de produzir saída, com a mensagem \texttt{Batch size mismatch, expected 1 but got 900}.
+Nenhuma dessas operações é suportada pelo \textit{delegate} \ac{GPU} do \ac{TFLite}. O \textit{delegate} particiona então o grafo, de modo que executa em \ac{GPU} os segmentos que suporta e devolve os demais à \ac{CPU}, com transferência de dados entre as duas memórias a cada fronteira. Esse comportamento está previsto na documentação do \textit{delegate}, segundo a qual operações não suportadas levam à execução parcial do grafo e o custo de sincronização entre os dois processadores torna o resultado, com frequência, mais lento do que a execução integral em \ac{CPU} \cite{GoogleAIEdge2026GPU}. O que se observa aqui, portanto, não é particularidade do aparelho, e sim o caso previsto pela própria implementação. No modelo \ac{INT8} a fragmentação é acentuada, com apenas 13 das 345 operações do grafo delegadas, e a execução termina em erro antes de produzir saída, com a mensagem \texttt{Batch size mismatch, expected 1 but got 900}.
 
 Nas precisões \ac{FP32} e \ac{FP16} a execução completa, mas o custo das transferências entre \ac{CPU} e \ac{GPU} anula o ganho obtido nos segmentos delegados, resultando no desempenho igual ou inferior ao da execução integralmente em \ac{CPU}.
 
@@ -2068,7 +2075,7 @@ Os resultados apresentados estão condicionados por um conjunto de limitações 
 
 \textbf{Consumo energético.} A resolução de 1\% da interface de bateria do Android é insuficiente para discriminar entre configurações em sessões da duração empregada. Os valores reportados indicam apenas a ordem de grandeza do consumo e não sustentam comparação. Uma avaliação energética adequada exigiria instrumentação externa.
 
-\textbf{Temperatura.} Não foi possível incorporar a temperatura do dispositivo ao conjunto de métricas coletadas automaticamente, conforme registrado na Subseção~\ref{sec:aplicacao_android}. A degradação térmica foi, portanto, inferida indiretamente a partir da deriva da latência, e não medida.
+\textbf{Temperatura.} Não foi possível incorporar a temperatura do dispositivo ao conjunto de métricas coletadas automaticamente, conforme registrado na Subseção~\ref{sec:aplicacao_android}. A degradação térmica foi, portanto, inferida indiretamente a partir da deriva da latência, e não medida. Protocolos de avaliação de inferência em dispositivos móveis recorrem à fixação das frequências de operação e ao resfriamento ativo do aparelho para conter esse efeito \cite{Li2024Benchmark}, recursos incompatíveis com uma coleta conduzida por terceiros em aparelhos próprios.
 
 \subsubsection{Limitações do conjunto de dados}
 
@@ -2082,7 +2089,7 @@ Os resultados apresentados estão condicionados por um conjunto de limitações 
 
 \textbf{Pré-processamento não otimizado.} Conforme demonstrado na Subseção~\ref{sec:decomposicao_latencia}, a preparação da imagem responde pela maior parte da latência total. A implementação adotada reproduz o procedimento utilizado no treinamento e não foi objeto de otimização, uma vez que o objeto do trabalho é a comparação entre \textit{delegates}. Os valores de latência total aqui reportados não devem ser lidos como limite da plataforma.
 
-\textbf{\textit{Delegate} NNAPI não avaliado.} A \ac{NNAPI}, que direciona a inferência a aceleradores dedicados do \ac{SoC}, foi depreciada a partir do Android~15. Como o dispositivo utilizado executa Android~16, a avaliação restringiu-se aos \textit{delegates} de \ac{CPU} e \ac{GPU}. O acesso a unidades de processamento neural em versões recentes do Android depende de bibliotecas específicas de cada fornecedor, cuja avaliação extrapola o escopo deste trabalho.
+\textbf{\textit{Delegate} NNAPI não avaliado.} A \ac{NNAPI}, que direciona a inferência a aceleradores dedicados do \ac{SoC}, foi depreciada a partir do Android~15, e a própria documentação recomenda a migração para o \ac{TFLite} \cite{Android2026NNAPI}. Como o dispositivo utilizado executa Android~16, a avaliação restringiu-se aos \textit{delegates} de \ac{CPU} e \ac{GPU}. O acesso a unidades de processamento neural em versões recentes do Android depende de bibliotecas específicas de cada fornecedor, cuja avaliação extrapola o escopo deste trabalho.
 
 \textbf{Classificação do estágio de maturação.} A detecção dos frutos foi conduzida com classe única, transferindo a determinação do estágio de maturação para etapa subsequente. A implementação e a avaliação dessa etapa não integram os resultados aqui reportados.
 
@@ -2106,7 +2113,7 @@ A causa está na própria arquitetura. A supressão da etapa de \ac{NMS}, que co
 
 Quanto à quantização, as duas estratégias apresentaram comportamento distinto. A precisão \ac{FP16} preservou a saída dos modelos, pois no YOLOv8n em \ac{CPU} as variantes \ac{FP32} e \ac{FP16} produziram exatamente o mesmo número de detecções sobre as 285 imagens, pela metade do tamanho de arquivo. A precisão \ac{INT8} alterou a saída, com acréscimo de 5,1\% no número de detecções do YOLOv8n, compatível com a introdução de falsos positivos.
 
-Quanto à estabilidade, observou-se relação inversa à da latência, uma vez que as configurações mais rápidas apresentaram maior dispersão relativa. As execuções em \ac{GPU} apresentaram coeficiente de variação entre 19,5\% e 28,5\%, contra 10,6\% a 20,5\% em \ac{CPU}, e três delas degradaram entre 42\% e 57\% ao longo de uma única sessão, comportamento compatível com limitação térmica e ausente em todas as execuções em \ac{CPU}.
+Quanto à estabilidade, observou-se no aparelho de referência relação inversa à da latência, uma vez que as configurações mais rápidas apresentaram maior dispersão relativa. As execuções em \ac{GPU} apresentaram coeficiente de variação entre 19,5\% e 28,5\%, contra 10,6\% a 20,5\% em \ac{CPU}, e três delas degradaram entre 42\% e 57\% ao longo de uma única sessão, comportamento compatível com limitação térmica e ausente em todas as execuções em \ac{CPU}. Essa relação não se reproduziu nos demais aparelhos sobre execuções mais curtas, conforme a Subseção~\ref{sec:dispersao_multidispositivo}, de modo que permanece circunscrita à plataforma em que foi medida.
 
 \subsection{Quanto às Hipóteses Formuladas}
 
@@ -2116,6 +2123,8 @@ A primeira supunha que a vantagem do YOLOv10n no tempo de pós-processamento, de
 
 A segunda supunha que o menor custo computacional do YOLOv10n, com 24,6\% menos parâmetros e 19,8\% menos operações de ponto flutuante, o tornaria mais adequado à execução embarcada. O resultado foi o oposto. Na presença de \textit{delegate} \ac{GPU}, o YOLOv10n é a escolha mais lenta por margem ampla, e sua variante de menor arquivo não é executável.
 
+A extensão da avaliação a sete aparelhos, descrita na Subseção~\ref{sec:multidispositivo}, verificou o alcance desse resultado. O sentido do efeito do \textit{delegate} \ac{GPU} repete-se em todos eles, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, cuja variante \ac{INT8} não executa em aparelho algum. A magnitude, por outro lado, varia por fator superior a quatro entre as plataformas, de modo que o ganho constitui resultado de plataforma e não propriedade do modelo. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem.
+
 O exame conjunto dessas duas previsões sugere uma conclusão de alcance mais geral, segundo a qual os indicadores de custo computacional medidos em ambiente de desenvolvimento, como o número de parâmetros, as operações de ponto flutuante e o tempo de pós-processamento, não predizem o desempenho em dispositivo móvel quando há aceleração por \textit{hardware} envolvida. O fator determinante não é o volume de computação exigido pelo modelo, mas a compatibilidade entre as operações que ele emprega e aquelas que o acelerador implementa.
 
 \subsection{Recomendação}
@@ -2124,11 +2133,26 @@ Para a aplicação proposta, a configuração recomendada é o \textbf{YOLOv8n e
 
 Para dispositivos sem \textit{delegate} \ac{GPU} funcional, a recomendação passa ao YOLOv8n em \ac{FP32} com \textit{delegate} de \ac{CPU}, que apresentou a menor latência entre as execuções em processador central.
 
+\subsection{Quanto à Classificação do Estágio de Maturação}
+\label{sec:quanto_maturacao}
+
+A detecção foi conduzida com classe única, de modo que o trabalho localiza frutos e não determina o estágio de maturação de cada um. Cabe expor a razão dessa delimitação, uma vez que o problema de origem, enunciado na Seção~\ref{sec:introducao}, é a avaliação da maturação.
+
+A primeira razão está no conjunto de dados. A anotação em duas classes considerada durante a construção do conjunto, descrita na Subseção~\ref{sec:anotacao}, distingue cultivares de fruto vermelho e amarelo, e não estágios de maturação de um mesmo fruto. Classificar maturação exigiria reanotar as 17.659 instâncias segundo estágios, tarefa de natureza distinta da que foi executada e de porte comparável ao da construção do conjunto.
+
+A segunda razão está nos resultados de detecção. A revocação obtida é de 0,626 no YOLOv8n sobre o conjunto de teste, de modo que cerca de um terço dos frutos anotados não é localizado. Classificar o estágio de frutos que o detector não encontra não melhora a estimativa de maturação do talhão, e a precisão da localização constitui, portanto, a restrição que vincula o resultado final. Trabalhos que classificam maturação de frutos de café em campo partem de detectores ajustados a esse fim \cite{Ye2025ASD, Kazama2024Monitoring}, o que reforça a ordem adotada aqui.
+
+A terceira razão é de escopo. O objeto declarado deste trabalho é a comparação entre \textit{delegates} do \ac{TFLite} quanto a desempenho e estabilidade, e essa comparação não depende do número de classes do modelo. A classe única mantém o problema de detecção estável enquanto variam arquitetura, precisão numérica e mecanismo de aceleração, que são os fatores sob exame.
+
+A arquitetura de duas etapas, com detecção seguida de classificação dos recortes, permanece como caminho preparado. A detecção com classe única produz exatamente a entrada de que a etapa seguinte necessita.
+
 \subsection{Trabalhos Futuros}
 
 A continuidade natural da pesquisa é a classificação do estágio de maturação dos frutos detectados, etapa para a qual a detecção com classe única foi deliberadamente preparada.
 
-A avaliação em dispositivos adicionais, particularmente nos segmentos de entrada e intermediário, é necessária para que os resultados alcancem o contexto de uso previsto. A comparação entre fornecedores distintos de \textit{chipset} permitiria ainda verificar se a incompatibilidade observada entre o YOLOv10n e o \textit{delegate} \ac{GPU} se mantém em outras implementações.
+A avaliação em outros aparelhos, prevista como continuidade, foi conduzida e integra os resultados. Resta estendê-la em duas direções. A primeira é a medição sobre o conjunto de teste completo nos aparelhos de terceiros, uma vez que as execuções sobre 30 imagens não permitem observar a deriva ao longo da sessão, discutida na Subseção~\ref{sec:dispersao_multidispositivo}. A segunda é a inclusão de aparelhos com unidade de processamento neural acessível por biblioteca do fornecedor, caminho que a depreciação da \ac{NNAPI} tornou o único disponível para esse tipo de acelerador.
+
+A medição direta da temperatura do aparelho, ausente nesta coleta, permitiria substituir por verificação a atribuição da deriva a limitação térmica, hoje apenas compatível com os dados. A instrumentação necessária está descrita em protocolos de avaliação de inferência móvel \cite{Li2024Benchmark}.
 
 A otimização do pré-processamento, responsável pela maior parte da latência total, produziria ganho superior ao obtido pela substituição do \textit{delegate} e constitui a intervenção de maior efeito prático sobre a aplicação.
 
