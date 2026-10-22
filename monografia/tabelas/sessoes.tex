@@ -1,0 +1,29 @@
+\begin{table}[H]
+\centering
+\caption{Variação da latência de inferência entre sessões repetidas do
+mesmo aparelho, em milissegundos}
+\label{tab:sessoes}
+\begin{tabular}{llrrr}
+\toprule
+\textbf{Modelo} & \textbf{\textit{Delegate}} & \multicolumn{3}{c}{\textbf{S24}} \\
+ & & \textbf{Média} & \textbf{Amplitude} & \textbf{\%} \\
+\midrule
+YOLOv8n FP32 & \ac{CPU} & 285,4 & 21,4 & 7,5 \\
+YOLOv8n FP32 & \ac{GPU} & 56,0 & 4,1 & 7,3 \\
+YOLOv8n FP16 & \ac{CPU} & 387,5 & 76,9 & 19,8 \\
+YOLOv8n FP16 & \ac{GPU} & 81,2 & 15,2 & 18,7 \\
+YOLOv8n INT8 & \ac{CPU} & 394,4 & 9,2 & 2,3 \\
+YOLOv8n INT8 & \ac{GPU} & 109,5 & 35,1 & 32,1 \\
+\midrule
+YOLOv10n FP32 & \ac{CPU} & 393,3 & 95,3 & 24,2 \\
+YOLOv10n FP32 & \ac{GPU} & 538,7 & 92,8 & 17,2 \\
+YOLOv10n FP16 & \ac{CPU} & 404,0 & 75,1 & 18,6 \\
+YOLOv10n FP16 & \ac{GPU} & 536,8 & 132,7 & 24,7 \\
+YOLOv10n INT8 & \ac{CPU} & 554,2 & 95,2 & 17,2 \\
+\bottomrule
+\end{tabular}
+\legend{Elaborada pela autora (2026). Em S24, 3 sessões sobre Android 17. A amplitude é a diferença
+entre a maior e a menor média obtidas para a mesma configuração em
+sessões distintas, e a última coluna exprime essa amplitude como
+percentual da média.}
+\end{table}

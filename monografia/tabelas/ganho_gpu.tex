@@ -1,0 +1,22 @@
+\begin{table}[H]
+\centering
+\caption{Razão entre a inferência em processador e em processador
+gráfico, por aparelho}
+\label{tab:ganho_gpu_dispositivos}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Configuração} & \textbf{S24} & \textbf{Redmi 9} \\
+\midrule
+YOLOv8n FP32 & 5,10$\times$ & 2,09$\times$ \\
+YOLOv8n FP16 & 4,77$\times$ & 2,17$\times$ \\
+YOLOv8n INT8 & 3,60$\times$ & 1,22$\times$ \\
+\midrule
+YOLOv10n FP32 & 0,73$\times$ & 0,60$\times$ \\
+YOLOv10n FP16 & 0,75$\times$ & 0,58$\times$ \\
+YOLOv10n INT8 & -- & -- \\
+\bottomrule
+\end{tabular}
+\legend{Elaborada pela autora (2026). Valores acima da unidade indicam
+ganho do \textit{delegate} de processador gráfico. O traço assinala
+configuração que não executou.}
+\end{table}

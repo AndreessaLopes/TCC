@@ -1,0 +1,26 @@
+\begin{table}[H]
+\centering
+\caption{Latência média de inferência, em milissegundos, por
+configuração e aparelho}
+\label{tab:inferencia_dispositivos}
+\begin{tabular}{llrr}
+\toprule
+\textbf{Modelo} & \textbf{\textit{Delegate}} & \textbf{S24} & \textbf{Redmi 9} \\
+\midrule
+YOLOv8n FP32 & \ac{CPU} & 285,4 & 1.076,1 \\
+YOLOv8n FP32 & \ac{GPU} & 56,0 & 514,5 \\
+YOLOv8n FP16 & \ac{CPU} & 387,5 & 1.119,9 \\
+YOLOv8n FP16 & \ac{GPU} & 81,2 & 516,3 \\
+YOLOv8n INT8 & \ac{CPU} & 394,4 & 682,7 \\
+YOLOv8n INT8 & \ac{GPU} & 109,5 & 559,0 \\
+\midrule
+YOLOv10n FP32 & \ac{CPU} & 393,3 & 1.652,0 \\
+YOLOv10n FP32 & \ac{GPU} & 538,7 & 2.760,7 \\
+YOLOv10n FP16 & \ac{CPU} & 404,0 & 1.562,1 \\
+YOLOv10n FP16 & \ac{GPU} & 536,8 & 2.701,6 \\
+YOLOv10n INT8 & \ac{CPU} & 554,2 & 1.330,5 \\
+YOLOv10n INT8 & \ac{GPU} & -- & -- \\
+\bottomrule
+\end{tabular}
+\legend{Elaborada pela autora (2026).}
+\end{table}
