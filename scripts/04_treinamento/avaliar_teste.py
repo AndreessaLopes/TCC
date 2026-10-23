@@ -2,9 +2,12 @@
 
 A Tabela 5 do trabalho reporta mAP, precisao, revocacao e tempos das duas
 arquiteturas. Os valores publicados vieram das pastas val2 e val3 de 28
-de julho, que guardam apenas graficos, sem registro das configuracoes da
-execucao. Este script grava resultado e configuracoes no mesmo arquivo,
-de modo que a tabela passa a ter procedencia conferivel.
+de julho, que guardam apenas graficos. O conferir_origem_tabela5.py
+identificou a configuracao daquela medicao, o conjunto de teste com
+rect=True, que e o padrao da biblioteca. Este script adota rect=False,
+que preenche a imagem ate o quadrado, pela razao exposta no texto, e
+grava resultado e configuracoes no mesmo arquivo, de modo que a tabela
+passa a ter procedencia conferivel.
 
 Os indicadores de qualidade nao dependem de repeticao, pois a inferencia
 e deterministica. Os tempos dependem, porque variam com o estado da

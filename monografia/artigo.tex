@@ -1485,7 +1485,7 @@ Tempo de pós-processamento (ms) & 1,9 & 0,3 \\
 \bottomrule
 \end{tabular}
 \legend{Elaborada pela autora (2026). Os indicadores de detecção foram
-medidos sobre as 285 imagens do conjunto de teste, com entrada de
+medidos sobre as 285 imagens do conjunto de teste, com entrada quadrada de
 960~pixels, limiar de confiança de 0,001 e limiar de interseção sobre união
 de 0,700, conforme registro em \texttt{resultados/csv/metricas\_teste.csv}.}
 \end{table}
@@ -1498,8 +1498,22 @@ execução única por modelo. Na métrica \ac{mAP}@0,50--0,95, que considera lim
 progressivos de interseção sobre união, o YOLOv10n apresentou valor superior em
 0,0126, indicando maior precisão no ajuste das caixas delimitadoras. A precisão e a revocação
 distribuem-se de forma complementar entre as arquiteturas, com vantagem de
-0,0034 para o YOLOv8n na primeira e de 0,0083 para o YOLOv10n na segunda,
-diferenças da mesma ordem das anteriores.
+0,0034 para o YOLOv8n na primeira e de 0,0083 para o YOLOv10n na
+segunda, diferenças da mesma ordem das anteriores.
+
+Os indicadores acima foram obtidos com preenchimento das imagens até o
+quadrado de 960~pixels, e não com o agrupamento retangular por lote que a
+biblioteca de avaliação adota por padrão. A escolha tem duas razões. A
+primeira é que as variantes convertidas, avaliadas na
+Subseção~\ref{sec:validacao_convertidos}, operam com forma de entrada
+fixa, de modo que o agrupamento retangular não se aplica a elas, e medir
+ambas as tabelas sob o mesmo preenchimento é o que permite atribuir à
+conversão a diferença entre elas. A segunda é que o preenchimento
+quadrado reproduz o pré-processamento executado pela aplicação no
+aparelho, descrito na Subseção~\ref{sec:decomposicao_latencia}. Sob o
+agrupamento retangular, os mesmos pesos sobre o mesmo conjunto de teste
+resultam em \ac{mAP}@0,50 de 0,6497 no YOLOv8n e 0,6442 no YOLOv10n,
+diferença que decorre do preenchimento e não dos modelos.
 
 No que se refere ao custo computacional, o YOLOv10n apresentou vantagem em todos
 os indicadores medidos. A arquitetura utiliza 24,6\% menos parâmetros e 19,8\%
@@ -1623,6 +1637,7 @@ Em todas as precisões avaliadas, os arquivos do YOLOv10n apresentaram tamanho i
 O tempo demandado pelas conversões em \ac{INT8} foi superior ao das demais precisões, em razão da etapa de calibração, na qual as 473 imagens do subconjunto de validação são processadas na resolução de 960~$\times$~960~pixels. Trata-se, entretanto, de custo incorrido uma única vez em ambiente de desenvolvimento, sem impacto sobre a execução no dispositivo móvel.
 
 \subsection{Validação dos Modelos Convertidos}
+\label{sec:validacao_convertidos}
 
 Cada variante convertida foi avaliada sobre o subconjunto de teste, composto por 285 imagens e 2.399 instâncias anotadas, permitindo verificar a preservação do desempenho de detecção após a conversão e a quantização. A Tabela~\ref{tab:validacao_tflite} apresenta as métricas obtidas.
 
