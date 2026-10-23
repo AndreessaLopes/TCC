@@ -1,0 +1,3 @@
+modelo,pesos,map50,map50_95,precisao,revocacao,imgsz,batch,conf,iou,rect,split,workers,verbose
+YOLOv8n,runs\detect\runs_final\yolov8n_final_grao\weights\best.pt,0.6455,0.361,0.634,0.6132,960,8,0.001,0.7,False,test,0,False
+YOLOv10n,runs\detect\runs_final\yolov10n_final_grao\weights\best.pt,0.6419,0.3736,0.6306,0.6215,960,8,0.001,0.7,False,test,0,False

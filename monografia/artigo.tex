@@ -62,7 +62,7 @@
 % \membrobanca{Ciclano de Tal}{Instituição do Ciclano de Tal}
 
 \resumo{
-    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,650 e 0,644 no conjunto de teste, respectivamente, com custo computacional inferior no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a sete aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
+    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,646 e 0,642 no conjunto de teste, respectivamente, com custo computacional inferior no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a sete aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
 }
 \abstract{\foreignlanguage{english}{%
     Coffee production is economically and socially relevant to Brazil, and
@@ -80,7 +80,7 @@
     approximately 5,000 images, of which 2,168 unique images were used
     after annotation, validation and curation, totalling 17,659 annotated
     instances. The YOLOv8n and YOLOv10n models were trained on this set and
-    reached mAP@0.50 of 0.650 and 0.644 on the test set, respectively, with
+    reached mAP@0.50 of 0.646 and 0.642 on the test set, respectively, with
     lower computational cost for YOLOv10n. Conversion to TensorFlow Lite
     produced six variants in FP32, FP16 and INT8 precision, with file sizes
     between 2.82~MB and 11.96~MB. The eleven executable configurations were
@@ -498,7 +498,7 @@ dispositivos reais e métricas de estabilidade. \\
 \midrule
 2026 & \textbf{Este trabalho} & \textbf{YOLOv8n e YOLOv10n convertidos para
 \ac{TFLite}, aplicados a um conjunto próprio de 2.168 imagens
-coletadas em Bambuí.} & \textbf{Alcançou \ac{mAP}@0,50 de 0,650 e 0,644 no
+coletadas em Bambuí.} & \textbf{Alcançou \ac{mAP}@0,50 de 0,646 e 0,642 no
 conjunto de teste; \ac{GPU} acelera o YOLOv8n em 4,7$\times$ e não
 acelera o YOLOv10n, cuja variante \ac{INT8} não é executável nesse
 \textit{delegate}.} &
@@ -1473,10 +1473,10 @@ em ambiente de desenvolvimento.
 \toprule
 \textbf{Indicador} & \textbf{YOLOv8n} & \textbf{YOLOv10n} \\
 \midrule
-\ac{mAP}@0,50 & 0,650 & 0,644 \\
-\ac{mAP}@0,50--0,95 & 0,360 & 0,375 \\
-Precisão & 0,619 & 0,633 \\ 
-Revocação & 0,626 & 0,625 \\
+\ac{mAP}@0,50 & 0,6455 & 0,6419 \\
+\ac{mAP}@0,50--0,95 & 0,3610 & 0,3736 \\
+Precisão & 0,6340 & 0,6306 \\ 
+Revocação & 0,6132 & 0,6215 \\
 \midrule
 Parâmetros (milhões) & 3,01 & 2,27 \\
 GFLOPs & 8,1 & 6,5 \\
@@ -1484,18 +1484,22 @@ Tempo de inferência (ms) & 9,2 & 8,7 \\
 Tempo de pós-processamento (ms) & 1,9 & 0,3 \\
 \bottomrule
 \end{tabular}
-\legend{Elaborada pela autora (2026).}
+\legend{Elaborada pela autora (2026). Os indicadores de detecção foram
+medidos sobre as 285 imagens do conjunto de teste, com entrada de
+960~pixels, limiar de confiança de 0,001 e limiar de interseção sobre união
+de 0,700, conforme registro em \texttt{resultados/csv/metricas\_teste.csv}.}
 \end{table}
 
 Os resultados indicam desempenho de detecção equivalente entre as duas
-arquiteturas. A diferença observada no \ac{mAP}@0,50 foi de 0,006 em favor do
+arquiteturas. A diferença observada no \ac{mAP}@0,50 foi de 0,0036 em favor do
 YOLOv8n, magnitude insuficiente para caracterizar superioridade de uma
 arquitetura sobre a outra, considerando que os experimentos foram conduzidos em
 execução única por modelo. Na métrica \ac{mAP}@0,50--0,95, que considera limiares
 progressivos de interseção sobre união, o YOLOv10n apresentou valor superior em
-0,015, indicando maior precisão no ajuste das caixas delimitadoras. O YOLOv10n
-também apresentou precisão superior, enquanto os valores de revocação
-diferem em 0,001.
+0,0126, indicando maior precisão no ajuste das caixas delimitadoras. A precisão e a revocação
+distribuem-se de forma complementar entre as arquiteturas, com vantagem de
+0,0034 para o YOLOv8n na primeira e de 0,0083 para o YOLOv10n na segunda,
+diferenças da mesma ordem das anteriores.
 
 No que se refere ao custo computacional, o YOLOv10n apresentou vantagem em todos
 os indicadores medidos. A arquitetura utiliza 24,6\% menos parâmetros e 19,8\%
@@ -2098,7 +2102,7 @@ Foram conduzidas a construção e a curadoria de um conjunto de 2.168 imagens pr
 
 \subsection{Quanto aos Objetivos}
 
-Os modelos treinados apresentaram desempenho de detecção equivalente, com \ac{mAP}@0,50 de 0,650 para o YOLOv8n e 0,644 para o YOLOv10n sobre o conjunto de teste. A conversão preservou esse desempenho, com diferenças inferiores a 0,005 nas variantes em precisão plena.
+Os modelos treinados apresentaram desempenho de detecção equivalente, com \ac{mAP}@0,50 de 0,646 para o YOLOv8n e 0,642 para o YOLOv10n sobre o conjunto de teste. A conversão preservou esse desempenho, com diferenças inferiores a 0,002 nas variantes em precisão plena.
 
 A comparação entre \textit{delegates}, objetivo central do trabalho, produziu o resultado mais relevante. O \textit{delegate} \ac{GPU} reduziu a latência de inferência do YOLOv8n por fator entre 3,58 e 4,72, conforme a precisão. No YOLOv10n o mesmo \textit{delegate} não produziu ganho, pois em \ac{FP32} a latência aumentou em 47\%, em \ac{FP16} permaneceu equivalente à obtida em \ac{CPU} e na precisão \ac{INT8} a execução não é possível.
 
@@ -2133,7 +2137,7 @@ A detecção foi conduzida com classe única, de modo que o trabalho localiza fr
 
 A primeira razão está no conjunto de dados. A anotação em duas classes considerada durante a construção do conjunto, descrita na Subseção~\ref{sec:anotacao}, distingue cultivares de fruto vermelho e amarelo, e não estágios de maturação de um mesmo fruto. Classificar maturação exigiria reanotar as 17.659 instâncias segundo estágios, tarefa de natureza distinta da que foi executada e de porte comparável ao da construção do conjunto.
 
-A segunda razão está nos resultados de detecção. A revocação obtida é de 0,626 no YOLOv8n sobre o conjunto de teste, de modo que cerca de um terço dos frutos anotados não é localizado. Classificar o estágio de frutos que o detector não encontra não melhora a estimativa de maturação do talhão, e a precisão da localização constitui, portanto, a restrição que vincula o resultado final. Trabalhos que classificam maturação de frutos de café em campo partem de detectores ajustados a esse fim \cite{Ye2025ASD, Kazama2024Monitoring}, o que reforça a ordem adotada aqui.
+A segunda razão está nos resultados de detecção. A revocação obtida é de 0,6132 no YOLOv8n sobre o conjunto de teste, de modo que aproximadamente 39\% dos frutos anotados não são localizados. Classificar o estágio de frutos que o detector não encontra não melhora a estimativa de maturação do talhão, e a precisão da localização constitui, portanto, a restrição que vincula o resultado final. Trabalhos que classificam maturação de frutos de café em campo partem de detectores ajustados a esse fim \cite{Ye2025ASD, Kazama2024Monitoring}, o que reforça a ordem adotada aqui.
 
 A terceira razão é de escopo. O objeto declarado deste trabalho é a comparação entre \textit{delegates} do \ac{TFLite} quanto a desempenho e estabilidade, e essa comparação não depende do número de classes do modelo. A classe única mantém o problema de detecção estável enquanto variam arquitetura, precisão numérica e mecanismo de aceleração, que são os fatores sob exame.
 
