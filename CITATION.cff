@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: >-
+  Desempenho e Estabilidade de Modelos YOLO para Detecção de Frutos de
+  Café em Smartphones: comparação entre delegates TFLite
+message: >-
+  Se este material for utilizado, por favor cite-o conforme os campos
+  abaixo.
+type: software
+authors:
+  - given-names: Andressa Caroline
+    family-names: Lopes de Assis
+    affiliation: >-
+      Instituto Federal de Minas Gerais, Campus Bambuí
+abstract: >-
+  Código, aplicação Android, modelos convertidos e dados de medição do
+  Trabalho de Conclusão de Curso que compara configurações dos modelos
+  YOLOv8n e YOLOv10n convertidos para TensorFlow Lite, quanto a latência,
+  estabilidade de execução e consumo de memória, em sete aparelhos
+  Android de três fornecedores de System on Chip. Orientação do Prof. Dr.
+  Bruno Alberto Soares Oliveira. O conjunto de imagens foi construído em
+  projeto de Iniciação Científica financiado pelo CNPq.
+keywords:
+  - visão computacional
+  - detecção de objetos
+  - YOLO
+  - TensorFlow Lite
+  - inferência em dispositivos móveis
+  - cafeicultura
+license: AGPL-3.0-or-later
+repository-code: https://github.com/AndreessaLopes/TCC

@@ -1,0 +1,28 @@
+{
+  "title": "Desempenho e Estabilidade de Modelos YOLO para Detecção de Frutos de Café em Smartphones: comparação entre delegates TFLite",
+  "description": "<p>Código, aplicação Android, modelos convertidos para TensorFlow Lite e dados de medição do Trabalho de Conclusão de Curso em Engenharia de Computação do Instituto Federal de Minas Gerais, Campus Bambuí.</p><p>O trabalho compara configurações dos modelos YOLOv8n e YOLOv10n convertidos para TensorFlow Lite nas precisões FP32, FP16 e INT8, executados com os delegates de CPU e de GPU, quanto a latência de inferência, estabilidade de execução e consumo de memória. A avaliação foi conduzida em sete aparelhos Android de três fornecedores de System on Chip, da faixa de entrada ao segmento superior, e inclui repetições em sessões distintas no aparelho de referência.</p><p>O conjunto de imagens de lavoura não integra este depósito, por depender de autorização específica.</p>",
+  "upload_type": "software",
+  "language": "por",
+  "license": "AGPL-3.0-or-later",
+  "creators": [
+    {
+      "name": "Lopes de Assis, Andressa Caroline",
+      "affiliation": "Instituto Federal de Minas Gerais, Campus Bambuí"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Soares Oliveira, Bruno Alberto",
+      "type": "Supervisor",
+      "affiliation": "Instituto Federal de Minas Gerais, Campus Bambuí"
+    }
+  ],
+  "keywords": [
+    "visão computacional",
+    "detecção de objetos",
+    "YOLO",
+    "TensorFlow Lite",
+    "inferência em dispositivos móveis",
+    "cafeicultura"
+  ]
+}
