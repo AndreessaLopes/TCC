@@ -118,29 +118,37 @@ TensorFlow Lite.}
 \begin{document}
 
 % SIGLAS
-\acrodef{YOLO}[YOLO]{\textit{You Only Look Once}}
-\acrodef{CNN}[CNN]{\textit{Convolutional Neural Networks}}
-\acrodef{TFLite}[TFLite]{TensorFlow Lite}
-\acrodef{NNAPI}[NNAPI]{\textit{Android Neural Networks API}}
-\acrodef{NPU}[NPU]{\textit{Neural Processing Unit}}
-\acrodef{DSP}[DSP]{\textit{Digital Signal Processor}}
-\acrodef{DCT}[DCT]{\textit{Discrete Cosine Transform}}
-\acrodef{GPU}[GPU]{\textit{Graphics Processing Unit}}
-\acrodef{CPU}[CPU]{\textit{Central Processing Unit}}
-\acrodef{SoC}[SoC]{\textit{System on Chip}}
-\acrodef{FPS}[FPS]{\textit{Frames Per Second}}
-\acrodef{RAM}[RAM]{\textit{Random Access Memory}}
-\acrodef{INT8}[INT8]{\textit{Integer 8-bit}}
-\acrodef{FP32}[FP32]{\textit{Floating Point 32-bit}}
-\acrodef{FP16}[FP16]{\textit{Floating Point 16-bit}}
-\acrodef{mAP}[mAP]{\textit{mean Average Precision}}
-\acrodef{COCO}[COCO]{\textit{Common Objects in Context}}
-\acrodef{JSON}[JSON]{\textit{JavaScript Object Notation}}
-\acrodef{SIMD}[SIMD]{\textit{Single Instruction, Multiple Data}}
-\acrodef{NMS}[NMS]{\textit{Non-Maximum Suppression}}
-\acrodef{OpenCV}[OpenCV]{\textit{Open Source Computer Vision Library}}
 
 \maketitle
+\newpage
+
+\section*{LISTA DE SIGLAS}
+\addcontentsline{toc}{section}{LISTA DE SIGLAS}
+
+\begin{acronym}[OpenCV]
+    \acro{CNN}[CNN]{\textit{Convolutional Neural Networks}}
+    \acro{COCO}[COCO]{\textit{Common Objects in Context}}
+    \acro{CPU}[CPU]{\textit{Central Processing Unit}}
+    \acro{DCT}[DCT]{\textit{Discrete Cosine Transform}}
+    \acro{DSP}[DSP]{\textit{Digital Signal Processor}}
+    \acro{FP16}[FP16]{\textit{Floating Point 16-bit}}
+    \acro{FP32}[FP32]{\textit{Floating Point 32-bit}}
+    \acro{FPS}[FPS]{\textit{Frames Per Second}}
+    \acro{GPU}[GPU]{\textit{Graphics Processing Unit}}
+    \acro{INT8}[INT8]{\textit{Integer 8-bit}}
+    \acro{JSON}[JSON]{\textit{JavaScript Object Notation}}
+    \acro{mAP}[mAP]{\textit{mean Average Precision}}
+    \acro{NMS}[NMS]{\textit{Non-Maximum Suppression}}
+    \acro{NNAPI}[NNAPI]{\textit{Android Neural Networks API}}
+    \acro{NPU}[NPU]{\textit{Neural Processing Unit}}
+    \acro{OpenCV}[OpenCV]{\textit{Open Source Computer Vision Library}}
+    \acro{RAM}[RAM]{\textit{Random Access Memory}}
+    \acro{SIMD}[SIMD]{\textit{Single Instruction, Multiple Data}}
+    \acro{SoC}[SoC]{\textit{System on Chip}}
+    \acro{TFLite}[TFLite]{TensorFlow Lite}
+    \acro{YOLO}[YOLO]{\textit{You Only Look Once}}
+\end{acronym}
+
 \newpage
 \acresetall
 
@@ -168,7 +176,6 @@ O objetivo geral deste trabalho é comparar configurações dos modelos YOLOv8n 
 A realização deste estudo contribui para ampliar o conhecimento sobre a implantação de modelos de visão computacional em dispositivos móveis aplicados à cafeicultura, fornecendo subsídios para o desenvolvimento de ferramentas capazes de auxiliar produtores rurais na tomada de decisão em campo. Além disso, os resultados obtidos podem orientar a escolha de configurações que conciliem desempenho de detecção e eficiência computacional, aspecto relevante para aplicações embarcadas em ambientes com restrições de processamento e conectividade.
 
 Este trabalho está organizado em cinco seções. A Seção~\ref{sec:introducao} apresenta a contextualização, a lacuna de pesquisa e os objetivos; a Seção~\ref{sec:referencial_teorico} reúne os fundamentos teóricos e os trabalhos relacionados; a Seção~\ref{sec:metodologia} descreve os procedimentos metodológicos adotados; a Seção~\ref{sec:resultados} apresenta os resultados obtidos; e a Seção~\ref{sec:conclusao} sintetiza as conclusões, as limitações do estudo e as possibilidades de continuidade.
-
 
 \section{REFERENCIAL TEÓRICO}
 \label{sec:referencial_teorico}
@@ -504,7 +511,6 @@ acelera o YOLOv10n, cuja variante \ac{INT8} não é executável nesse
 \legend{Elaborada pela autora (2026).}
 \end{board}
 
-
 \FloatBarrier
 
 A análise dos trabalhos relacionados indica avanços na
@@ -543,13 +549,10 @@ Esta pesquisa caracteriza-se como aplicada, de abordagem quantitativa e natureza
 
 De forma geral, o estudo compreende a construção e organização do conjunto de dados, o treinamento de modelos da família YOLO, a conversão para o formato TensorFlow Lite, a integração em uma aplicação Android e a avaliação experimental considerando diferentes estratégias de quantização e mecanismos de aceleração por \textit{hardware}. As análises contemplam tanto métricas relacionadas à qualidade da detecção quanto indicadores associados ao desempenho computacional durante a inferência em \textit{smartphones}. A Figura~\ref{fig:fluxo_metodologia} apresenta uma visão geral das etapas que compõem o procedimento metodológico adotado nesta pesquisa, desde a aquisição das imagens até a comparação das configurações experimentais avaliadas.
 
-
 \begin{figure}[H]
 \centering
 \caption{Fluxo metodológico do trabalho}
 \label{fig:fluxo_metodologia}
-
-
 
 \makebox[\textwidth][c]{%
 \begin{adjustbox}{max width=\textwidth,max totalheight=0.88\textheight,center}
@@ -620,7 +623,6 @@ De forma geral, o estudo compreende a construção e organização do conjunto d
 
 \legend{Elaborada pela autora (2026).}
 \end{figure}
-
 
 \FloatBarrier
 
@@ -701,7 +703,6 @@ Total       & 2.168 & 2.168 & 100,00\% \\
 
 Após a redistribuição do conjunto de dados, foi realizada uma nova verificação utilizando o algoritmo pHash, com o objetivo de identificar imagens visualmente semelhantes entre os subconjuntos de treinamento, validação e teste. A verificação percorreu as três combinações possíveis, comparando cada uma das 1.410 imagens de treinamento com as 473 de validação e as 285 de teste, e estas últimas entre si, o que totaliza 1.203.585 comparações sob o mesmo limiar de 90\% adotado na curadoria. Nenhum par atingiu o limiar, o que afasta a ocorrência de vazamento de dados (\textit{data leakage}) por imagens visualmente semelhantes em partições distintas.
 
-
 \begin{figure}[H]
     \centering
     \caption{Distribuição das imagens entre os conjuntos de treinamento, validação e teste}
@@ -709,7 +710,6 @@ Após a redistribuição do conjunto de dados, foi realizada uma nova verificaç
     \figuraHorizontal{figuras/distribuicao_particoes.pdf}
     \legend{Elaborada pela autora (2026).}
 \end{figure}
-
 
 A Tabela~\ref{tab:distribuicao_dataset} e a Figura~\ref{fig:distribuicao_particoes}
 apresentam a distribuição final das imagens e dos arquivos de rótulo entre os
@@ -825,7 +825,6 @@ Concluída a etapa de curadoria, foram definidas as estratégias de aumento arti
 
 Entre as transformações consideradas encontram-se ajustes de brilho, saturação e matiz, espelhamento horizontal, pequenas rotações, translações e composição por mosaico (\textit{mosaic augmentation}). Essas operações contribuem para aumentar a capacidade de generalização dos modelos e reduzir efeitos associados ao sobreajuste (\textit{overfitting}) \cite{Shorten2019,Mumuni2022DataAugmentation}.
 
-
 \subsubsection{Identificação de inconsistências no critério de anotação}
 
 Após a conclusão da curadoria por pHash, foi conduzida uma análise da
@@ -923,7 +922,6 @@ uniformizado, estando apto à etapa de treinamento dos modelos de detecção. Os
 subconjuntos de treinamento, validação e teste foram mantidos fixos durante
 todos os experimentos, assegurando a comparabilidade dos resultados obtidos
 entre as diferentes arquiteturas e configurações avaliadas.
-
 
 \subsection{Ambiente Computacional}
 
@@ -1025,7 +1023,6 @@ Critério de seleção & mAP@0,50 (validação) \\
 \end{tabular}
 \legend{Elaborada pela autora (2026).}
 \end{board}
-
 
 \subsection{Conversão dos Modelos para TFLite}
 \label{sec:conversao_tflite}
@@ -1543,7 +1540,6 @@ treinamento foi encerrado.
 \end{figure}
  
 
-
 A Figura~\ref{fig:curvas_pr} apresenta as curvas de precisão e revocação dos
 dois modelos no conjunto de teste, traçadas de forma paramétrica no limiar de
 confiança. As curvas praticamente se sobrepõem, o que é coerente com a
@@ -1563,7 +1559,6 @@ no YOLOv10n, o que respalda o limiar de 0,25 adotado na aplicação.
     \legend{Elaborada pela autora (2026).}
 \end{figure}
  
-
 
 Os valores de revocação obtidos, próximos a 0,63, indicam que aproximadamente
 37\% das instâncias anotadas não foram detectadas. Três fatores contribuem para
@@ -1671,7 +1666,6 @@ A quantização \ac{INT8} apresentou comportamento distinto entre as arquitetura
 A diferença de sensibilidade entre as arquiteturas constitui achado relevante para o objetivo deste trabalho. Enquanto o YOLOv8n apresentou degradação aproximadamente dezesseis vezes superior sob quantização \ac{INT8}, o YOLOv10n manteve desempenho equivalente ao da versão em ponto flutuante. Considerando que a variante YOLOv10n em \ac{INT8} corresponde ao menor arquivo gerado, com 2,82~MB, essa configuração apresenta relação favorável entre compressão e qualidade de detecção. Registre-se, contudo, que essa avaliação considera exclusivamente o tamanho do arquivo e a qualidade da detecção, enquanto a Subseção~\ref{sec:v10n_gpu} demonstra que essa combinação específica não é executável com \textit{delegate} \ac{GPU}, o que a inviabiliza no cenário de maior interesse prático.
 
 A verificação da hipótese de que essa configuração constitui o melhor equilíbrio entre desempenho e custo computacional depende das medições de latência, estabilidade de execução e consumo de recursos conduzidas em dispositivo Android, apresentadas na Subseção~\ref{sec:resultados_movel}.
-
 
 \subsection{Desempenho em Dispositivo Móvel}
 \label{sec:resultados_movel}
@@ -2095,7 +2089,6 @@ Os resultados apresentados estão condicionados por um conjunto de limitações 
 
 \FloatBarrier
 
-
 \section{CONCLUSÃO}
 \label{sec:conclusao}
 
@@ -2157,7 +2150,6 @@ A medição direta da temperatura do aparelho, ausente nesta coleta, permitiria 
 A otimização do pré-processamento, responsável pela maior parte da latência total, produziria ganho superior ao obtido pela substituição do \textit{delegate} e constitui a intervenção de maior efeito prático sobre a aplicação.
 
 Por fim, a confrontação das detecções produzidas no dispositivo com as anotações de referência permitiria verificar a hipótese de introdução de falsos positivos pela quantização \ac{INT8}, aqui apenas sugerida pelo acréscimo no número de detecções.
-
 
 \section*{REFERÊNCIAS}
 
