@@ -62,7 +62,7 @@
 % \membrobanca{Ciclano de Tal}{Instituição do Ciclano de Tal}
 
 \resumo{
-    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,646 e 0,642 no conjunto de teste, respectivamente, com custo computacional inferior no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a sete aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
+    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,646 e 0,642 no conjunto de teste, respectivamente, com menor número de parâmetros e operações no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a sete aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
 }
 \abstract{\foreignlanguage{english}{%
     Coffee production is economically and socially relevant to Brazil, and
@@ -81,7 +81,7 @@
     after annotation, validation and curation, totalling 17,659 annotated
     instances. The YOLOv8n and YOLOv10n models were trained on this set and
     reached mAP@0.50 of 0.646 and 0.642 on the test set, respectively, with
-    lower computational cost for YOLOv10n. Conversion to TensorFlow Lite
+    fewer parameters and operations for YOLOv10n. Conversion to TensorFlow Lite
     produced six variants in FP32, FP16 and INT8 precision, with file sizes
     between 2.82~MB and 11.96~MB. The eleven executable configurations were
     evaluated on an Android device for latency, execution stability and
@@ -1480,21 +1480,22 @@ Revocação & 0,6132 & 0,6215 \\
 \midrule
 Parâmetros (milhões) & 3,01 & 2,27 \\
 GFLOPs & 8,1 & 6,5 \\
-Tempo de inferência (ms) & 9,2 & 8,7 \\
-Tempo de pós-processamento (ms) & 1,9 & 0,3 \\
+Tempo de inferência (ms) & 8,32 & 10,20 \\
+Tempo de pós-processamento (ms) & 1,95 & 0,48 \\
 \bottomrule
 \end{tabular}
 \legend{Elaborada pela autora (2026). Os indicadores de detecção foram
 medidos sobre as 285 imagens do conjunto de teste, com entrada quadrada de
 960~pixels, limiar de confiança de 0,001 e limiar de interseção sobre união
-de 0,700, conforme registro em \texttt{resultados/csv/metricas\_teste.csv}.}
+de 0,700, conforme registro em
+\texttt{resultados/csv/metricas\_teste.csv}. Os tempos são a média de três
+execuções, registradas em \texttt{resultados/csv/tempos\_teste.csv}.}
 \end{table}
 
 Os resultados indicam desempenho de detecção equivalente entre as duas
 arquiteturas. A diferença observada no \ac{mAP}@0,50 foi de 0,0036 em favor do
 YOLOv8n, magnitude insuficiente para caracterizar superioridade de uma
-arquitetura sobre a outra, considerando que os experimentos foram conduzidos em
-execução única por modelo. Na métrica \ac{mAP}@0,50--0,95, que considera limiares
+arquitetura sobre a outra, considerando que o treinamento foi conduzido em execução única por modelo. Na métrica \ac{mAP}@0,50--0,95, que considera limiares
 progressivos de interseção sobre união, o YOLOv10n apresentou valor superior em
 0,0126, indicando maior precisão no ajuste das caixas delimitadoras. A precisão e a revocação
 distribuem-se de forma complementar entre as arquiteturas, com vantagem de
@@ -1515,14 +1516,28 @@ agrupamento retangular, os mesmos pesos sobre o mesmo conjunto de teste
 resultam em \ac{mAP}@0,50 de 0,6497 no YOLOv8n e 0,6442 no YOLOv10n,
 diferença que decorre do preenchimento e não dos modelos.
 
-No que se refere ao custo computacional, o YOLOv10n apresentou vantagem em todos
-os indicadores medidos. A arquitetura utiliza 24,6\% menos parâmetros e 19,8\%
+No que se refere ao custo computacional, o YOLOv10n apresentou vantagem
+nos indicadores derivados da arquitetura e no pós-processamento, e
+desvantagem no tempo de inferência. A arquitetura utiliza 24,6\% menos parâmetros e 19,8\%
 menos operações de ponto flutuante que o YOLOv8n, mantendo desempenho de
-detecção equivalente. A maior diferença foi observada no tempo de
-pós-processamento, aproximadamente 6,3 vezes menor no YOLOv10n. Esse
+detecção equivalente. A maior diferença entre as
+vantagens foi observada no tempo de pós-processamento, em média 4,1 vezes
+menor no YOLOv10n. Esse
 comportamento é consistente com a proposta arquitetural descrita por
 \textcite{Wang2024YOLOv10}, na qual a remoção da etapa de supressão não máxima
 elimina o processamento associado à filtragem de detecções redundantes.
+
+O tempo de inferência não acompanha essa vantagem. As três execuções
+situam-se entre 7,56 e 8,94~ms no YOLOv8n e entre 9,90 e 10,54~ms no
+YOLOv10n, de modo que as faixas não se sobrepõem e a diferença entre as
+arquiteturas supera a variação entre execuções de cada uma. O resultado
+depende do preenchimento adotado, uma vez que sob o agrupamento retangular
+da biblioteca a ordem se inverte, com 8,7~ms no YOLOv8n e 7,7~ms no
+YOLOv10n. Como a aplicação no aparelho preenche a imagem até o quadrado, a
+medição com preenchimento quadrado é a que corresponde ao uso previsto.
+Trata-se, de todo modo, de medição em processador gráfico de ambiente de
+desenvolvimento, cuja relação com o comportamento em processador móvel
+constitui objeto da avaliação experimental.
 
 Considerando que o objetivo deste trabalho envolve a execução dos modelos em
 dispositivos com capacidade de processamento reduzida, a diferença observada no
@@ -1661,7 +1676,7 @@ YOLOv10n & \ac{INT8} & 0,6395 & 0,3706 & 0,6384 & 0,6115 \\
 \legend{Elaborada pela autora (2026).}
 \end{table}
 
-As variantes em \ac{FP32} apresentaram desempenho equivalente ao dos modelos originais em PyTorch, com diferenças de $-$0,0045 no YOLOv8n e $-$0,0021 no YOLOv10n para a métrica \ac{mAP}@0,50. Diferenças dessa magnitude são compatíveis com variações numéricas decorrentes do processo de conversão, indicando que a exportação preservou o comportamento dos modelos. A Tabela~\ref{tab:impacto_quantizacao} apresenta a variação de cada estratégia de quantização em relação à variante \ac{FP32} do respectivo modelo, isolando o efeito atribuível à redução de precisão numérica.
+As variantes em \ac{FP32} reproduziram o desempenho dos modelos originais em PyTorch, medidos sob o mesmo preenchimento, com diferença nula no \ac{mAP}@0,50 nas duas arquiteturas e de 0,0001 no YOLOv8n para o \ac{mAP}@0,50--0,95. A coincidência é compatível com a natureza da conversão em precisão plena, que não altera a representação numérica dos pesos, e indica que a exportação preservou o comportamento dos modelos. A Tabela~\ref{tab:impacto_quantizacao} apresenta a variação de cada estratégia de quantização em relação à variante \ac{FP32} do respectivo modelo, isolando o efeito atribuível à redução de precisão numérica.
 
 \begin{table}[H]
 \centering
@@ -2131,7 +2146,7 @@ Quanto à estabilidade, observou-se no aparelho de referência relação inversa
 
 Duas previsões formuladas a partir dos resultados de treinamento não se confirmaram na execução em dispositivo, e seu exame constitui parte do que o trabalho acrescenta.
 
-A primeira supunha que a vantagem do YOLOv10n no tempo de pós-processamento, de aproximadamente 6,3 vezes em ambiente de desenvolvimento, seria proporcionalmente maior em processadores móveis. A previsão não se verificou. O pós-processamento permaneceu abaixo de 1~ms em todas as onze configurações, inclusive naquelas que executam supressão não máxima, de modo que a vantagem existe, mas incide sobre uma parcela desprezível da latência total e não se traduz em benefício perceptível.
+A primeira supunha que a vantagem do YOLOv10n no tempo de pós-processamento, de aproximadamente 4,1 vezes em ambiente de desenvolvimento, seria proporcionalmente maior em processadores móveis. A previsão não se verificou. O pós-processamento permaneceu abaixo de 1~ms em todas as onze configurações, inclusive naquelas que executam supressão não máxima, de modo que a vantagem existe, mas incide sobre uma parcela desprezível da latência total e não se traduz em benefício perceptível.
 
 A segunda supunha que o menor custo computacional do YOLOv10n, com 24,6\% menos parâmetros e 19,8\% menos operações de ponto flutuante, o tornaria mais adequado à execução embarcada. O resultado foi o oposto. Na presença de \textit{delegate} \ac{GPU}, o YOLOv10n é a escolha mais lenta por margem ampla, e sua variante de menor arquivo não é executável.
 
