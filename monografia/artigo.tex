@@ -1460,6 +1460,7 @@ correspondentes à totalidade da imagem, conforme apresentado na
 Tabela~\ref{tab:distribuicao_bbox}.
 
 \subsection{Desempenho dos Modelos de Detecção}
+\label{sec:desempenho_deteccao}
 
 Os modelos YOLOv8n e YOLOv10n foram treinados sobre o conjunto consolidado,
 utilizando a configuração apresentada no Quadro~\ref{quad:config_treinamento}. A
@@ -2156,7 +2157,22 @@ A segunda supunha que o menor custo computacional do YOLOv10n, com 24,6\% menos 
 
 A extensão da avaliação a sete aparelhos, descrita na Subseção~\ref{sec:multidispositivo}, verificou o alcance desse resultado. O sentido do efeito do \textit{delegate} \ac{GPU} repete-se em todos eles, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, cuja variante \ac{INT8} não executa em aparelho algum. A magnitude, por outro lado, varia por fator superior a quatro entre as plataformas, de modo que o ganho constitui resultado de plataforma e não propriedade do modelo. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem.
 
-O exame conjunto dessas duas previsões sugere uma conclusão de alcance mais geral, segundo a qual os indicadores de custo computacional medidos em ambiente de desenvolvimento, como o número de parâmetros, as operações de ponto flutuante e o tempo de pós-processamento, não predizem o desempenho em dispositivo móvel quando há aceleração por \textit{hardware} envolvida. O fator determinante não é o volume de computação exigido pelo modelo, mas a compatibilidade entre as operações que ele emprega e aquelas que o acelerador implementa.
+O exame conjunto dessas duas previsões sugere uma conclusão de alcance mais geral, segundo a qual os indicadores de custo computacional medidos em ambiente de desenvolvimento, como o número de parâmetros, as operações de ponto flutuante e o tempo de pós-processamento, não predizem o desempenho em dispositivo móvel quando há aceleração por \textit{hardware} envolvida. O fator determinante não é o volume de computação exigido pelo modelo,
+mas a compatibilidade entre as operações que ele emprega e aquelas que o
+acelerador implementa.
+
+Uma terceira observação, de porte menor, aponta no mesmo sentido e antecede
+a saída do modelo do ambiente de treinamento. Conforme a
+Subseção~\ref{sec:desempenho_deteccao}, a ordem entre as duas arquiteturas
+quanto ao tempo de inferência depende do preenchimento aplicado às imagens.
+Sob o agrupamento retangular por lote, o YOLOv10n é mais rápido. Sob o
+preenchimento quadrado que a aplicação executa no aparelho, é mais lento, e
+as faixas das três execuções de cada arquitetura não se sobrepõem. A
+comparação entre arquiteturas não constitui, portanto, propriedade das
+arquiteturas tomadas isoladamente, e sim do conjunto formado por elas, pelo
+preenchimento da entrada e pelo processador que as executa. É a mesma
+dependência que a comparação entre \textit{delegates} evidencia, observável
+já dentro do ambiente de desenvolvimento.
 
 \subsection{Recomendação}
 
