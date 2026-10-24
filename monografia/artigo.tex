@@ -330,9 +330,9 @@ A análise bibliométrica evidencia crescimento recente das pesquisas relacionad
 
 Os trabalhos relacionados foram analisados considerando três eixos principais, correspondentes a aplicações de visão computacional na cafeicultura, variantes da arquitetura \ac{YOLO} e estratégias de inferência em dispositivos móveis. Essa organização permite comparar métodos, bases utilizadas, métricas reportadas e limitações associadas à execução em ambientes reais.
 
-Em 2021, \textcite{Bazame2021Detection}, a detecção da maturação de frutos de café
-foi tratada como uma tarefa de detecção, classificação e mapeamento durante a
-colheita. Os autores utilizaram YOLOv3-Tiny com pesos pré-treinados, aumento de
+Em 2021, \textcite{Bazame2021Detection} trataram a detecção da
+maturação de frutos de café como tarefa de detecção, classificação e mapeamento
+durante a colheita. Os autores utilizaram YOLOv3-Tiny com pesos pré-treinados, aumento de
 dados, anotações por caixas delimitadoras e três classes de maturação,
 correspondentes a frutos verdes, cereja e passa. O conjunto experimental foi composto por 400 imagens
 extraídas de vídeos de colheita, sendo 280 destinadas ao treinamento e 120 à
@@ -364,7 +364,7 @@ comportamento da inferência varia conforme o \ac{SoC}, o \textit{delegate} e as
 operações usadas pela rede, aspecto que reforça a necessidade de avaliar
 modelos em dispositivos reais, e não apenas em ambiente de desenvolvimento.
 
-Em 2023, \textcite{Menghani2023Efficient} discutem técnicas de eficiência
+Em 2023, \textcite{Menghani2023Efficient} discute técnicas de eficiência
 para modelos de aprendizado profundo, como quantização, poda, fatoração de
 matrizes, arquiteturas compactas e destilação de conhecimento. Por se tratar de
 uma revisão, o estudo não apresenta uma única taxa de precisão ou um único
@@ -544,17 +544,18 @@ O presente trabalho se distingue dos estudos anteriores por quatro aspectos. O
 primeiro é o uso de um conjunto de dados próprio, composto por aproximadamente
 5.000 imagens coletadas em lavouras de campo aberto na região de Bambuí, Minas Gerais, entre novembro de 2023 e fevereiro de 2024, período correspondente ao ciclo de maturação dos frutos de café na região. Os
 trabalhos analisados não reportam dados coletados nessa região ou com esse
-contexto de produção. O segundo é a orientação prática da classificação, cujo
-objetivo é fornecer ao produtor rural uma indicação sobre o momento adequado
-para a colheita, com base em estágios de maturação a serem definidos a partir de
-critérios agronômicos específicos para a região. O terceiro é a avaliação de
+contexto de produção. O segundo é a orientação prática da aplicação, que executa a
+detecção dos frutos diretamente no aparelho do produtor rural. A detecção com
+classe única constitui a etapa preparatória para a avaliação da maturação, cuja
+classificação por estágios não integra o escopo deste trabalho. O terceiro é a avaliação de
 duas estratégias de quantização pós-treinamento, \ac{INT8} e \ac{FP16},
-a serem aplicadas aos modelos YOLOv8n e YOLOv10n, permitindo comparar o impacto de cada abordagem
-sobre acurácia, tamanho do modelo e latência de inferência. O quarto é a
+aplicadas aos modelos YOLOv8n e YOLOv10n, que permitiram
+comparar o impacto de cada abordagem sobre acurácia, tamanho do modelo e
+latência de inferência. O quarto é a
 comparação sistemática dos \textit{delegates} de \ac{CPU} e \ac{GPU} do
 \ac{TFLite} em \textit{smartphones} Android reais de diferentes gerações e
-faixas de preço, medindo latência, estabilidade de execução e consumo
-energético. Enquanto \textcite{Hirsch2025Exploring} avaliam inferência móvel
+faixas de preço, com medição de latência e de estabilidade de
+execução e registro do consumo energético na resolução disponível. Enquanto \textcite{Hirsch2025Exploring} avaliam inferência móvel
 sem uso de \ac{YOLO} e \textcite{Chu2023nnPerf} investigam
 \textit{profiling} sem aplicação à cafeicultura, o presente trabalho integra
 essas duas dimensões em um único experimento aplicado ao contexto real da
@@ -2004,10 +2005,17 @@ referência.
 \subsubsection{Estabilidade das detecções entre aparelhos}
 \label{sec:estabilidade_deteccoes}
 
-A comparação das saídas verifica se o mesmo modelo produz as mesmas detecções
-em plataformas distintas. Em dez das onze configurações executáveis, o número
-de detecções coincide em todos os aparelhos, imagem por imagem, perfazendo 310
-concordâncias em 321 comparações.
+A comparação das saídas verifica se o mesmo modelo produz o mesmo número
+de detecções em plataformas distintas. Em dez das onze configurações
+executáveis, o número de detecções coincide em todos os aparelhos, imagem por
+imagem, perfazendo 310 concordâncias em 321 comparações.
+
+A medida é de concordância de quantidade. O registro produzido pela aplicação
+contém o número de detecções por imagem e não as coordenadas das caixas
+delimitadoras, de modo que a coincidência das contagens não demonstra
+identidade das caixas, e sim ausência de divergência no número de objetos
+detectados. A verificação da sobreposição entre caixas exigiria registrar as
+coordenadas em cada aparelho, o que não foi solicitado aos voluntários.
 
 A exceção é o YOLOv8n em \ac{INT8} com \textit{delegate} \ac{GPU}, em que 11
 das 26 imagens comuns aos sete aparelhos apresentam contagens distintas, com
