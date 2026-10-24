@@ -175,7 +175,7 @@ Apesar dos avanços observados na literatura, a maior parte dos trabalhos concen
 
 Diante dessa lacuna, este trabalho propõe uma avaliação experimental de diferentes configurações dos modelos YOLOv8n e YOLOv10n convertidos para \ac{TFLite}, visando à detecção da maturação de frutos de café em \textit{smartphones} Android. Para isso, é utilizado um conjunto de dados próprio, composto por aproximadamente 5.000 imagens coletadas em lavouras cafeeiras do município de Bambuí, Minas Gerais, entre novembro de 2023 e fevereiro de 2024. Após as etapas de anotação, validação e curadoria, o conjunto passou a conter 2.168 imagens únicas. A proposta contempla o treinamento dos modelos, sua conversão para o formato \texttt{.tflite}, a aplicação de diferentes estratégias de quantização e a avaliação da execução utilizando diferentes mecanismos de aceleração disponíveis na plataforma Android.
 
-O objetivo geral deste trabalho é comparar configurações dos modelos YOLOv8n e YOLOv10n executados por meio do \ac{TFLite} para a detecção da maturação de frutos de café em \textit{smartphones} Android. Para atingir esse objetivo, foram definidos como objetivos específicos organizar e anotar o conjunto de imagens; treinar os modelos de detecção; converter os modelos para o formato \ac{TFLite}; aplicar estratégias de quantização; avaliar diferentes mecanismos de aceleração disponíveis no dispositivo; comparar os modelos quanto à acurácia, latência, estabilidade, consumo energético e tamanho do arquivo gerado; e verificar em que medida as diferenças observadas entre configurações se mantêm em aparelhos de fabricantes, faixas de desempenho e versões de sistema distintas.
+O objetivo geral deste trabalho é comparar configurações dos modelos YOLOv8n e YOLOv10n executados por meio do \ac{TFLite} para a detecção da maturação de frutos de café em \textit{smartphones} Android. Para atingir esse objetivo, foram definidos como objetivos específicos organizar e anotar o conjunto de imagens; treinar os modelos de detecção; converter os modelos para o formato \ac{TFLite}; aplicar estratégias de quantização; avaliar diferentes mecanismos de aceleração disponíveis no dispositivo; comparar os modelos quanto à acurácia, latência, estabilidade e tamanho do arquivo gerado; registrar o consumo energético na resolução permitida pelo indicador de bateria do sistema; e verificar em que medida as diferenças observadas entre configurações se mantêm em aparelhos de fabricantes, faixas de desempenho e versões de sistema distintas.
 
 A realização deste estudo contribui para ampliar o conhecimento sobre a implantação de modelos de visão computacional em dispositivos móveis aplicados à cafeicultura, fornecendo subsídios para o desenvolvimento de ferramentas capazes de auxiliar produtores rurais na tomada de decisão em campo. Além disso, os resultados obtidos podem orientar a escolha de configurações que conciliem desempenho de detecção e eficiência computacional, aspecto relevante para aplicações embarcadas em ambientes com restrições de processamento e conectividade.
 
@@ -1513,10 +1513,13 @@ de 0,700, conforme registro em
 execuções, registradas em \texttt{resultados/csv/tempos\_teste.csv}.}
 \end{table}
 
-Os resultados indicam desempenho de detecção equivalente entre as duas
+Os resultados indicam desempenho de detecção próximo entre as duas
 arquiteturas. A diferença observada no \ac{mAP}@0,50 foi de 0,0036 em favor do
-YOLOv8n, magnitude insuficiente para caracterizar superioridade de uma
-arquitetura sobre a outra, considerando que o treinamento foi conduzido em execução única por modelo. Na métrica \ac{mAP}@0,50--0,95, que considera limiares
+YOLOv8n, magnitude insuficiente para caracterizar superioridade de
+uma arquitetura sobre a outra, considerando que o treinamento foi conduzido em
+execução única por modelo. A proximidade não foi submetida a teste de
+equivalência estatística, de modo que o que se afirma é a ausência de evidência
+de superioridade, e não a demonstração de igualdade. Na métrica \ac{mAP}@0,50--0,95, que considera limiares
 progressivos de interseção sobre união, o YOLOv10n apresentou valor superior em
 0,0126, indicando maior precisão no ajuste das caixas delimitadoras. A precisão e a revocação
 distribuem-se de forma complementar entre as arquiteturas, com vantagem de
@@ -1596,8 +1599,8 @@ treinamento foi encerrado.
 
 A Figura~\ref{fig:curvas_pr} apresenta as curvas de precisão e revocação dos
 dois modelos no conjunto de teste, traçadas de forma paramétrica no limiar de
-confiança. As curvas praticamente se sobrepõem, o que é coerente com a
-equivalência de desempenho observada na Tabela~\ref{tab:resultados_deteccao}.
+confiança. As curvas praticamente se sobrepõem, o que é coerente com a proximidade de desempenho observada na
+Tabela~\ref{tab:resultados_deteccao}.
 A precisão mantém-se acima de 0,85 até revocação de 0,28 no YOLOv8n e de 0,32
 no YOLOv10n, recua para 0,79 e 0,81 em revocação de 0,40 e para 0,64 e 0,66 em
 revocação de 0,60. Esse comportamento indica que as detecções de maior confiança
@@ -1939,7 +1942,12 @@ A terceira é que a quantização \ac{FP16} preserva a saída dos modelos pela m
 
 A quarta é que, neste aparelho, as configurações mais rápidas são as menos estáveis, e as execuções em \ac{GPU} apresentaram degradação progressiva ao longo da sessão, com perda de até 57\% de desempenho em poucos minutos. A coleta relatada na Subseção~\ref{sec:dispersao_multidispositivo} mostra que a maior dispersão em \ac{GPU} não se reproduz nos demais aparelhos sobre execuções mais curtas, de modo que essa conclusão permanece circunscrita à plataforma avaliada.
 
-Para a aplicação proposta, a configuração recomendada é \textbf{YOLOv8n \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à do modelo em precisão plena e o menor pico de memória entre todas as configurações medidas.
+Para a aplicação proposta, a configuração recomendada é \textbf{YOLOv8n \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à do modelo em precisão plena e o menor pico
+de memória entre todas as configurações medidas. A recomendação vale para os
+critérios e as condições aqui avaliados. A estabilidade ao longo de sessões
+prolongadas permanece como ressalva, uma vez que essa mesma configuração
+apresentou deriva de 46,4\% entre o primeiro e o terceiro terço da execução,
+conforme a Tabela~\ref{tab:deriva}.
 
 \FloatBarrier
 
@@ -2156,7 +2164,7 @@ Foram conduzidas a construção e a curadoria de um conjunto de 2.168 imagens pr
 
 \subsection{Quanto aos Objetivos}
 
-Os modelos treinados apresentaram desempenho de detecção equivalente, com \ac{mAP}@0,50 de 0,6455 para o YOLOv8n e 0,6419 para o YOLOv10n sobre o conjunto de teste. A conversão preservou esse desempenho, com diferenças inferiores a 0,002 nas variantes em precisão plena.
+Os modelos treinados apresentaram desempenho de detecção próximo, com \ac{mAP}@0,50 de 0,6455 para o YOLOv8n e 0,6419 para o YOLOv10n sobre o conjunto de teste. A conversão preservou esse desempenho, com diferenças inferiores a 0,002 nas variantes em precisão plena.
 
 A comparação entre \textit{delegates}, objetivo central do trabalho, produziu o resultado mais relevante. O \textit{delegate} \ac{GPU} reduziu a latência de inferência do YOLOv8n por fator entre 3,58 e 4,72, conforme a precisão. No YOLOv10n o mesmo \textit{delegate} não produziu ganho, pois em \ac{FP32} a latência aumentou em 47\%, em \ac{FP16} permaneceu equivalente à obtida em \ac{CPU} e na precisão \ac{INT8} a execução não é possível.
 
@@ -2174,7 +2182,13 @@ A primeira supunha que a vantagem do YOLOv10n no tempo de pós-processamento, de
 
 A segunda supunha que o menor custo computacional do YOLOv10n, com 24,6\% menos parâmetros e 19,8\% menos operações de ponto flutuante, o tornaria mais adequado à execução embarcada. O resultado foi o oposto. Na presença de \textit{delegate} \ac{GPU}, o YOLOv10n é a escolha mais lenta por margem ampla, e sua variante de menor arquivo não é executável.
 
-A extensão da avaliação a sete aparelhos, descrita na Subseção~\ref{sec:multidispositivo}, verificou o alcance desse resultado. O sentido do efeito do \textit{delegate} \ac{GPU} repete-se em todos eles, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, cuja variante \ac{INT8} não executa em aparelho algum. A magnitude, por outro lado, varia por fator superior a quatro entre as plataformas, de modo que o ganho constitui resultado de plataforma e não propriedade do modelo. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem.
+A extensão da avaliação a sete aparelhos, descrita na Subseção~\ref{sec:multidispositivo}, verificou o alcance desse resultado. O sentido do efeito do \textit{delegate} \ac{GPU} repete-se em todos eles, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, cuja variante \ac{INT8} não executa em aparelho algum. A magnitude, por outro lado, varia por fator superior a quatro entre as plataformas, de modo que o ganho constitui resultado de plataforma e não propriedade do modelo. Em dez
+das onze configurações executáveis o número de detecções coincide em todos os
+aparelhos, imagem por imagem. Esses resultados têm caráter exploratório, uma
+vez que decorrem de execuções sobre 30 imagens, com número variável de sessões
+entre os aparelhos e um exemplar de cada modelo, de modo que sustentam a
+direção do efeito e não estimativas de magnitude por fabricante ou por
+plataforma.
 
 O exame conjunto dessas duas previsões sugere uma conclusão de alcance mais geral, segundo a qual os indicadores de custo computacional medidos em ambiente de desenvolvimento, como o número de parâmetros, as operações de ponto flutuante e o tempo de pós-processamento, não predizem o desempenho em dispositivo móvel quando há aceleração por \textit{hardware} envolvida. O fator determinante não é o volume de computação exigido pelo modelo,
 mas a compatibilidade entre as operações que ele emprega e aquelas que o
@@ -2195,7 +2209,11 @@ já dentro do ambiente de desenvolvimento.
 
 \subsection{Recomendação}
 
-Para a aplicação proposta, a configuração recomendada é o \textbf{YOLOv8n em precisão \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à da variante em precisão plena e o menor pico de memória entre as configurações avaliadas.
+Para a aplicação proposta, a configuração recomendada é o \textbf{YOLOv8n em precisão \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à da variante em precisão plena e o menor
+pico de memória entre as configurações avaliadas. A recomendação vale para os
+critérios e as condições avaliados, e a estabilidade ao longo de sessões
+prolongadas permanece como ressalva, dada a deriva de 46,4\% registrada nessa
+configuração no aparelho de referência.
 
 Para dispositivos sem \textit{delegate} \ac{GPU} funcional, a recomendação passa ao YOLOv8n em \ac{FP32} com \textit{delegate} de \ac{CPU}, que apresentou a menor latência entre as execuções em processador central.
 
