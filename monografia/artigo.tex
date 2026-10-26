@@ -66,7 +66,7 @@
 % \membrobanca{Ciclano de Tal}{Instituição do Ciclano de Tal}
 
 \resumo{
-    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,6455 e 0,6419 no conjunto de teste, respectivamente, com menor número de parâmetros e operações no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a sete aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
+    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,6455 e 0,6419 no conjunto de teste, respectivamente, com menor número de parâmetros e operações no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a oito aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,07 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a quatro entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
 }
 \abstract{\foreignlanguage{english}{%
     Coffee production is economically and socially relevant to Brazil, and
@@ -97,7 +97,7 @@
     quantisation preserved the models' output at half the file size, while
     INT8 changed the number of detections. Runs on the GPU were less
     stable on that device, with degradation of up to 57\% over a single
-    session. The evaluation was then extended to seven devices from three
+    session. The evaluation was then extended to eight devices from three
     System on Chip vendors, from entry level to flagship, over a subset of
     30 images. The direction of the delegate effect holds on all of them,
     with YOLOv8n accelerated by a factor between 1.48 and 7.28 and no gain
@@ -1955,14 +1955,15 @@ conforme a Tabela~\ref{tab:deriva}.
 \subsection{Desempenho em Múltiplos Dispositivos}
 \label{sec:multidispositivo}
 
-A Tabela~\ref{tab:aparelhos} apresenta os sete aparelhos em que foi conduzida
-a coleta descrita na Subseção~\ref{sec:coleta_multidispositivo}. O conjunto
+A Tabela~\ref{tab:aparelhos} apresenta os oito aparelhos em que foi
+conduzida a coleta descrita na Subseção~\ref{sec:coleta_multidispositivo}. O conjunto
 abrange os três fornecedores de \ac{SoC} presentes no mercado Android, cobre
 da faixa de entrada ao segmento superior e reúne cinco versões do sistema
-operacional, do Android~12 ao Android~17. Dois pares de aparelhos compartilham
-o mesmo identificador de \textit{hardware} ou o mesmo fornecedor com modelos
-distintos, o que permite distinguir o que decorre do fornecedor do que decorre
-do aparelho.
+operacional, do Android~12 ao Android~17. Três aparelhos
+compartilham o mesmo identificador de \textit{hardware}, dois deles
+compartilham também o mesmo \ac{SoC} segundo a especificação do fabricante e
+outros compartilham o fornecedor com modelos distintos, o que permite
+distinguir o que decorre do \textit{chipset} do que decorre do aparelho.
 
 \input{tabelas/aparelhos.tex}
 
@@ -1976,8 +1977,8 @@ que corresponde à diferença entre as plataformas avaliadas.
 O resultado de maior interesse não está nos valores absolutos, e sim na razão
 entre a execução em \ac{CPU} e em \ac{GPU}, apresentada na
 Tabela~\ref{tab:ganho_gpu_dispositivos}. O sentido do efeito do
-\textit{delegate} \ac{GPU} é o mesmo nos sete aparelhos. O YOLOv8n é acelerado
-em todas as plataformas, por fator entre 1,48 e 7,28, ao passo que no YOLOv10n
+\textit{delegate} \ac{GPU} é o mesmo nos oito aparelhos. O YOLOv8n é
+acelerado em todas as plataformas, por fator entre 1,07 e 7,28, ao passo que no YOLOv10n
 o \textit{delegate} não produz ganho em nenhuma delas, com razões entre 0,58 e
 0,97. A combinação YOLOv10n/\ac{INT8}/\ac{GPU} não executou em aparelho algum. A Figura~\ref{fig:razao_delegates} dispõe essas razões em escala logarítmica, em que reduzir à metade e dobrar guardam a mesma distância da unidade, e torna visível a separação entre as duas arquiteturas.
 
@@ -1992,15 +1993,26 @@ o \textit{delegate} não produz ganho em nenhuma delas, com razões entre 0,58 e
 \input{tabelas/ganho_gpu.tex}
 
 A única exceção ao ganho do YOLOv8n ocorre no moto~g15 na precisão \ac{INT8},
-com razão de 0,87. A magnitude do ganho varia por fator superior a quatro
-entre o maior e o menor valor observado e acompanha a faixa de desempenho do
-aparelho, de modo que o ganho do \textit{delegate} \ac{GPU} constitui
+com razão de 0,87. A magnitude do ganho varia por fator superior a seis entre o
+maior e o menor valor observado, de 1,07 a 7,28, e acompanha a faixa de
+desempenho do aparelho, de modo que o ganho do \textit{delegate} \ac{GPU} constitui
 resultado de plataforma, e não propriedade fixa do modelo. A direção do
 efeito, por outro lado, não depende do fornecedor nem da versão do sistema, o
 que sustenta a interpretação apresentada na Subseção~\ref{sec:v10n_gpu},
-segundo a qual a incompatibilidade do YOLOv10n decorre da cobertura de
-operações do \textit{delegate} e não de característica do aparelho de
-referência.
+segundo a qual a incompatibilidade do YOLOv10n decorre da cobertura de operações do \textit{delegate} e não
+de característica do aparelho de referência.
+
+O Redmi~13C e o Redmi Note~9 empregam o mesmo \ac{SoC}, o Helio~G85, e
+executam versões distintas do Android, 15 e 12. A comparação entre os dois
+separa o que decorre do \textit{chipset} do que decorre do restante da
+plataforma. A latência do YOLOv8n \ac{FP32} em \ac{GPU} é de 515,1~ms no
+primeiro e de 514,5~ms no segundo, diferença de 0,1\%. Na mesma configuração
+em \ac{CPU}, os valores são de 902,8~ms e 1.076,1~ms, de modo que o segundo é
+19,2\% mais lento. No YOLOv10n \ac{FP32} em \ac{GPU}, em que o grafo é
+particionado entre os dois processadores, a distância alcança fator de 2,25. O
+\ac{SoC} compartilhado reproduz, portanto, a latência do trecho que o
+\textit{delegate} executa por inteiro, ao passo que as demais configurações
+permanecem sensíveis ao aparelho e à versão do sistema.
 
 \subsubsection{Estabilidade das detecções entre aparelhos}
 \label{sec:estabilidade_deteccoes}
@@ -2008,7 +2020,7 @@ referência.
 A comparação das saídas verifica se o mesmo modelo produz o mesmo número
 de detecções em plataformas distintas. Em dez das onze configurações
 executáveis, o número de detecções coincide em todos os aparelhos, imagem por
-imagem, perfazendo 310 concordâncias em 321 comparações.
+imagem, perfazendo 312 concordâncias em 323 comparações.
 
 A medida é de concordância de quantidade. O registro produzido pela aplicação
 contém o número de detecções por imagem e não as coordenadas das caixas
@@ -2018,15 +2030,14 @@ detectados. A verificação da sobreposição entre caixas exigiria registrar as
 coordenadas em cada aparelho, o que não foi solicitado aos voluntários.
 
 A exceção é o YOLOv8n em \ac{INT8} com \textit{delegate} \ac{GPU}, em que 11
-das 26 imagens comuns aos sete aparelhos apresentam contagens distintas, com
+das 26 imagens comuns aos oito aparelhos apresentam contagens distintas, com
 diferença de uma ou duas detecções. Trata-se da única configuração que reúne
 quantização inteira e execução em \ac{GPU}, e a divergência é compatível com a
 variação da implementação dos núcleos quantizados entre fornecedores, uma vez
-que a mesma quantização executada em \ac{CPU} produz contagens idênticas nos
-sete aparelhos.
+que a mesma quantização executada em \ac{CPU} produz contagens
+idênticas nos oito aparelhos.
 
-Registre-se que o total acumulado nessas 26 imagens é de 275 detecções em
-todos os sete aparelhos, pois as diferenças individuais se compensam. A
+Registre-se que o total acumulado nessas 26 imagens é de 275 detecções em todos os oito aparelhos, pois as diferenças individuais se compensam. A
 leitura por totais indicaria concordância completa, e apenas a comparação
 imagem a imagem revela a divergência, o que recomenda cautela no uso de
 indicadores agregados para verificar equivalência de saída.
@@ -2051,7 +2062,7 @@ repete fora daquela plataforma.
 
 Considerada a mediana das configurações de cada aparelho, a dispersão em
 \ac{GPU} supera a observada em \ac{CPU} apenas no aparelho de referência,
-com 9,9\% contra 7,8\%. Nos seis demais a relação se inverte, com valores
+com 9,9\% contra 7,8\%. Nos sete demais a relação se inverte, com valores
 entre 0,9\% e 4,2\% em \ac{GPU} contra 1,7\% e 8,9\% em \ac{CPU}. A
 maior dispersão em \ac{GPU} não constitui, portanto, propriedade do
 \textit{delegate}.
@@ -2190,7 +2201,9 @@ A primeira supunha que a vantagem do YOLOv10n no tempo de pós-processamento, de
 
 A segunda supunha que o menor custo computacional do YOLOv10n, com 24,6\% menos parâmetros e 19,8\% menos operações de ponto flutuante, o tornaria mais adequado à execução embarcada. O resultado foi o oposto. Na presença de \textit{delegate} \ac{GPU}, o YOLOv10n é a escolha mais lenta por margem ampla, e sua variante de menor arquivo não é executável.
 
-A extensão da avaliação a sete aparelhos, descrita na Subseção~\ref{sec:multidispositivo}, verificou o alcance desse resultado. O sentido do efeito do \textit{delegate} \ac{GPU} repete-se em todos eles, com aceleração do YOLOv8n por fator entre 1,48 e 7,28 e ausência de ganho no YOLOv10n, cuja variante \ac{INT8} não executa em aparelho algum. A magnitude, por outro lado, varia por fator superior a quatro entre as plataformas, de modo que o ganho constitui resultado de plataforma e não propriedade do modelo. Em dez
+A extensão da avaliação a oito aparelhos, descrita na
+Subseção~\ref{sec:multidispositivo}, verificou o alcance desse resultado. O sentido do efeito do \textit{delegate} \ac{GPU} repete-se em todos eles, com aceleração do YOLOv8n por fator entre 1,07 e 7,28 e ausência de ganho no YOLOv10n, cuja variante \ac{INT8} não executa em aparelho algum. A magnitude, por outro lado, varia por fator superior a seis entre as
+plataformas, de modo que o ganho constitui resultado de plataforma e não propriedade do modelo. Em dez
 das onze configurações executáveis o número de detecções coincide em todos os
 aparelhos, imagem por imagem. Esses resultados têm caráter exploratório, uma
 vez que decorrem de execuções sobre 30 imagens, com número variável de sessões

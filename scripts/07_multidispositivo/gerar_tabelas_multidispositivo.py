@@ -187,6 +187,14 @@ for cod in codigos:
         nome_longo(cod), soc(r), r.get("hardware", "") or "--",
         r["android"], executadas, len(sessoes_de[cod])))
 
+# As duas tabelas largas crescem uma coluna por aparelho. Acima de sete
+# aparelhos a largura da pagina nao comporta o corpo em \\small, de modo que
+# o tamanho da fonte e o espacamento entre colunas acompanham a contagem.
+if len(codigos) > 7:
+    ajuste_largo = "\\footnotesize\n\\setlength{\\tabcolsep}{4pt}"
+else:
+    ajuste_largo = "\\small"
+
 gravar("aparelhos.tex", """\\begin{table}[H]
 \\centering
 \\small
@@ -223,7 +231,7 @@ for a in ("YOLOv8n", "YOLOv10n"):
 
 gravar("ganho_gpu.tex", """\\begin{table}[H]
 \\centering
-\\small
+%s
 \\caption{Razão entre a inferência em processador e em processador
 gráfico, por aparelho}
 \\label{tab:ganho_gpu_dispositivos}
@@ -238,7 +246,8 @@ gráfico, por aparelho}
 ganho do \\textit{delegate} de processador gráfico. O traço assinala
 configuração que não executou.}
 \\end{table}
-""" % ("c" * len(codigos),
+""" % (ajuste_largo,
+       "c" * len(codigos),
        " & ".join("\\textbf{%s}" % nome_curto(c) for c in codigos),
        "\n".join(corpo)))
 
@@ -252,7 +261,7 @@ for i, (a, p, d) in enumerate(CONFIGS):
 
 gravar("inferencia.tex", """\\begin{table}[H]
 \\centering
-\\small
+%s
 \\caption{Latência média de inferência, em milissegundos, por
 configuração e aparelho}
 \\label{tab:inferencia_dispositivos}
@@ -265,7 +274,8 @@ configuração e aparelho}
 \\end{tabular}
 \\legend{Elaborada pela autora (2026).}
 \\end{table}
-""" % ("r" * len(codigos),
+""" % (ajuste_largo,
+       "r" * len(codigos),
        " & ".join("\\textbf{%s}" % nome_curto(c) for c in codigos),
        "\n".join(corpo)))
 

@@ -1,0 +1,58 @@
+# Fabricante: Xiaomi
+# Aparelho: 23100RN82L
+# Codinome: gale
+# Placa: gale
+# Hardware: mt6768
+# Android: 15
+# Nivel de API: 35
+# Arquitetura: arm64-v8a
+# Aparelho fisico: sim
+# Configuracao: YOLOv8n · INT8 · CPU
+# Modelo: yolov8n_int8.tflite
+# Delegate: CPU
+# Inicio: 2026-10-25T11:59:53.349033
+# Imagens medidas: 30
+# Medicoes descartadas: 0
+# Inferencias de aquecimento: 10
+# Duracao total: 162 s
+# Latencia media: 5363.67 ms
+# Desvio padrao: 1225.03 ms
+# Coeficiente de variacao: 22.84 %
+# Inferencia media: 593.91 ms
+# Desvio inferencia: 35.70 ms
+# Memoria de pico: 591 MB
+# Bateria inicial: 76 %
+# Bateria final: 76 %
+# Bateria consumida: 0 %
+
+arquivo,deteccoes,preprocessamento_ms,inferencia_ms,posprocessamento_ms,total_ms,memoria_mb,descartada
+test_1010.jpg,1,1005.10,572.96,0.13,1578.19,333,0
+test_1041.jpg,52,6434.90,581.50,0.39,7016.78,355,0
+test_1070.jpg,15,5259.08,778.05,0.19,6037.32,353,0
+test_1111.jpg,2,4813.72,585.46,0.13,5399.31,327,0
+test_1155.jpg,3,4467.89,588.51,0.15,5056.55,319,0
+test_1199.jpg,9,5523.75,594.97,0.19,6118.90,329,0
+test_1205.jpg,4,5266.35,579.99,0.14,5846.48,520,0
+test_1216.jpg,10,5237.96,610.95,0.19,5849.09,344,0
+test_1244.jpg,9,5508.09,585.50,0.18,6093.76,342,0
+test_1260.jpg,14,5588.17,600.96,0.23,6189.36,330,0
+test_1343.jpg,3,4945.34,596.64,0.14,5542.12,339,0
+test_1562.jpg,2,4357.92,592.43,0.14,4950.48,337,0
+test_159.jpg,6,6549.64,587.39,0.15,7137.18,591,0
+test_1622.jpg,8,4428.75,583.15,0.18,5012.08,411,0
+test_1751.jpg,13,4478.66,596.42,0.19,5075.27,334,0
+test_1949.jpg,12,4060.05,572.73,0.18,4632.96,313,0
+test_211.jpg,4,4808.36,592.33,0.15,5400.84,349,0
+test_326.jpg,9,2165.70,578.65,0.17,2744.52,310,0
+test_331.jpg,16,5038.67,594.52,0.18,5633.37,336,0
+test_341.jpg,2,2192.97,579.75,0.13,2772.85,306,0
+test_362.jpg,7,4600.85,584.46,0.18,5185.49,323,0
+test_394.jpg,11,4768.96,587.01,0.19,5356.15,324,0
+test_430.jpg,9,5055.95,592.95,0.20,5649.09,348,0
+test_456.jpg,68,4855.09,581.36,0.60,5437.05,327,0
+test_468.jpg,33,4817.17,582.92,0.34,5400.42,324,0
+test_527.jpg,1,4702.92,591.16,0.12,5294.21,337,0
+test_651.jpg,14,6445.31,590.41,0.18,7035.91,357,0
+test_73.jpg,8,4335.34,584.93,0.17,4920.43,341,0
+test_817.jpg,6,6446.93,583.66,0.14,7030.73,521,0
+test_970.jpg,2,4927.47,585.59,0.14,5513.20,348,0

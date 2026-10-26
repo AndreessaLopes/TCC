@@ -1,20 +1,21 @@
 \begin{table}[H]
 \centering
-\small
+\footnotesize
+\setlength{\tabcolsep}{4pt}
 \caption{Razão entre a inferência em processador e em processador
 gráfico, por aparelho}
 \label{tab:ganho_gpu_dispositivos}
-\begin{tabular}{lccccccc}
+\begin{tabular}{lcccccccc}
 \toprule
-\textbf{Configuração} & \textbf{S23} & \textbf{S25} & \textbf{S24} & \textbf{S23 FE} & \textbf{A15} & \textbf{moto g15} & \textbf{Redmi 9} \\
+\textbf{Configuração} & \textbf{S23} & \textbf{S25} & \textbf{S24} & \textbf{S23 FE} & \textbf{A15} & \textbf{Redmi 13C} & \textbf{moto g15} & \textbf{Note 9} \\
 \midrule
-YOLOv8n FP32 & 3,68$\times$ & 5,70$\times$ & 5,29$\times$ & 6,23$\times$ & 2,04$\times$ & 1,49$\times$ & 2,09$\times$ \\
-YOLOv8n FP16 & 4,44$\times$ & 2,36$\times$ & 4,28$\times$ & 6,27$\times$ & 1,98$\times$ & 1,48$\times$ & 2,17$\times$ \\
-YOLOv8n INT8 & 4,75$\times$ & 2,14$\times$ & 3,57$\times$ & 7,28$\times$ & 1,65$\times$ & 0,87$\times$ & 1,22$\times$ \\
+YOLOv8n FP32 & 3,68$\times$ & 5,70$\times$ & 5,29$\times$ & 6,23$\times$ & 2,04$\times$ & 1,75$\times$ & 1,49$\times$ & 2,09$\times$ \\
+YOLOv8n FP16 & 4,44$\times$ & 2,36$\times$ & 4,28$\times$ & 6,27$\times$ & 1,98$\times$ & 1,76$\times$ & 1,48$\times$ & 2,17$\times$ \\
+YOLOv8n INT8 & 4,75$\times$ & 2,14$\times$ & 3,57$\times$ & 7,28$\times$ & 1,65$\times$ & 1,07$\times$ & 0,87$\times$ & 1,22$\times$ \\
 \midrule
-YOLOv10n FP32 & 0,79$\times$ & 0,66$\times$ & 0,74$\times$ & 0,92$\times$ & 0,97$\times$ & 0,85$\times$ & 0,60$\times$ \\
-YOLOv10n FP16 & 0,81$\times$ & 0,65$\times$ & 0,75$\times$ & 0,90$\times$ & 0,96$\times$ & 0,85$\times$ & 0,58$\times$ \\
-YOLOv10n INT8 & -- & -- & -- & -- & -- & -- & -- \\
+YOLOv10n FP32 & 0,79$\times$ & 0,66$\times$ & 0,74$\times$ & 0,92$\times$ & 0,97$\times$ & 0,83$\times$ & 0,85$\times$ & 0,60$\times$ \\
+YOLOv10n FP16 & 0,81$\times$ & 0,65$\times$ & 0,75$\times$ & 0,90$\times$ & 0,96$\times$ & 0,81$\times$ & 0,85$\times$ & 0,58$\times$ \\
+YOLOv10n INT8 & -- & -- & -- & -- & -- & -- & -- & -- \\
 \bottomrule
 \end{tabular}
 \legend{Elaborada pela autora (2026). Valores acima da unidade indicam
