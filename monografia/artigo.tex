@@ -272,7 +272,7 @@ O pHash pode ser implementado a partir da \ac{DCT}, utilizando componentes de ba
 
 \subsection{Transferência de Aprendizado, Aumento de Dados e Treinamento}
 
-O treinamento de modelos de detecção em bases específicas pode se beneficiar da transferência de aprendizado, na qual pesos previamente ajustados em bases amplas são utilizados como ponto de partida para uma nova tarefa. Essa estratégia reduz a necessidade de iniciar o treinamento do zero e pode melhorar a convergência quando o conjunto de dados do problema-alvo é limitado. No contexto de visão computacional, pesos pré-treinados em bases como \ac{COCO} são frequentemente empregados antes do ajuste fino (\textit{fine-tuning}) em dados específicos \cite{Tan2023TransferLearning}.
+O treinamento de modelos de detecção em bases específicas pode se beneficiar da transferência de aprendizado, na qual pesos previamente ajustados em bases amplas são utilizados como ponto de partida para uma nova tarefa. Essa estratégia reduz a necessidade de iniciar o treinamento do zero e pode melhorar a convergência quando o conjunto de dados do problema-alvo é limitado. No contexto de visão computacional, pesos pré-treinados em bases como \ac{COCO} são frequentemente empregados antes do ajuste fino (\textit{fine-tuning}) em dados específicos \cite{Tan2018TransferLearning}.
 
 O aumento artificial de dados (\textit{data augmentation}) é outra estratégia usada para ampliar a variabilidade das amostras apresentadas ao modelo. Transformações como espelhamento, variações de brilho, rotação, translação, alteração de escala e composição por mosaico permitem simular condições visuais distintas sem coletar novas imagens. Revisões sobre aumento de dados indicam que essas técnicas podem reduzir sobreajuste e melhorar a capacidade de generalização de modelos de aprendizado profundo, desde que sejam compatíveis com o domínio da aplicação \cite{Shorten2019,Mumuni2022DataAugmentation}. Em arquiteturas da família \ac{YOLO}, estratégias como o mosaico também foram utilizadas para aumentar a diversidade espacial das amostras durante o treinamento \cite{Bochkovskiy2020YOLOv4}.
 
@@ -984,7 +984,7 @@ Além do treinamento, o ambiente computacional foi empregado na conversão dos m
 
 Concluído o pré-processamento do conjunto de dados, iniciou-se a etapa de treinamento dos modelos de detecção de objetos empregados nesta pesquisa. Foram selecionadas duas arquiteturas da família YOLO, YOLOv8n e YOLOv10n, por apresentarem um equilíbrio entre desempenho de detecção e custo computacional, característica relevante para aplicações executadas em dispositivos móveis.
 
-Os modelos foram inicializados a partir de pesos pré-treinados no conjunto de dados \ac{COCO}, empregando a estratégia de \textit{transfer learning} por meio de \textit{fine-tuning} \cite{Tan2023TransferLearning}. Durante o treinamento foi considerada uma única classe denominada ``frutos'', permitindo que os modelos concentrassem o aprendizado na localização dos frutos presentes nas imagens.
+Os modelos foram inicializados a partir de pesos pré-treinados no conjunto de dados \ac{COCO}, empregando a estratégia de \textit{transfer learning} por meio de \textit{fine-tuning} \cite{Tan2018TransferLearning}. Durante o treinamento foi considerada uma única classe denominada ``frutos'', permitindo que os modelos concentrassem o aprendizado na localização dos frutos presentes nas imagens.
 
 Os treinamentos foram conduzidos utilizando a biblioteca Ultralytics YOLO.
 Foram adotados tamanho de entrada de 960~$\times$~960~pixels, otimizador
@@ -2264,7 +2264,7 @@ A avaliação em outros aparelhos, prevista como continuidade, foi conduzida e i
 
 A medição direta da temperatura do aparelho, ausente nesta coleta, permitiria substituir por verificação a atribuição da deriva a limitação térmica, hoje apenas compatível com os dados. A instrumentação necessária está descrita em protocolos de avaliação de inferência móvel \cite{Li2024Benchmark}.
 
-A otimização do pré-processamento, responsável pela maior parte da latência total, produziria ganho superior ao obtido pela substituição do \textit{delegate} e constitui a intervenção de maior efeito prático sobre a aplicação.
+O pré-processamento responde pela maior parcela da latência total, conforme a Subseção~\ref{sec:decomposicao_latencia}, de modo que a margem disponível para reduzi-la por essa via supera a obtida com a substituição do \textit{delegate}. Que parcela dessa margem é alcançável depende da implementação e não foi medida, uma vez que a otimização não foi conduzida. Resta implementá-la e verificar se o ganho efetivo supera o do \textit{delegate}.
 
 Por fim, a confrontação das detecções produzidas no dispositivo com as anotações de referência permitiria verificar a hipótese de introdução de falsos positivos pela quantização \ac{INT8}, aqui apenas sugerida pelo acréscimo no número de detecções.
 
