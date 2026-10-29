@@ -48,7 +48,7 @@
 
 \addbibresource{referencias.bib}
 
-\titulo{Desempenho e Estabilidade de Modelos YOLO para Detecção da Maturação de Frutos de Café em \textit{Smartphones}: comparação entre \textit{delegates} TFLite}
+\titulo{Desempenho e Estabilidade de Modelos YOLO para Detecção de Frutos de Café em \textit{Smartphones}: comparação entre \textit{delegates} TFLite}
 \autor{Andressa Caroline Lopes de Assis}
 \email{andressaclopesassis@gmail.com}
 \local{Bambuí - MG}
@@ -66,7 +66,7 @@
 % \membrobanca{Ciclano de Tal}{Instituição do Ciclano de Tal}
 
 \resumo{
-    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção da maturação de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,6455 e 0,6419 no conjunto de teste, respectivamente, com menor número de parâmetros e operações no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao consumo de memória. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a oito aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,07 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a seis entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico.
+    A cafeicultura possui relevância econômica e social para o Brasil, e a identificação do estágio de maturação dos frutos é importante para o planejamento da colheita, a composição dos lotes e a qualidade do café processado. Em lavouras de campo aberto, essa avaliação ainda depende, em grande parte, da inspeção visual, sujeita a variações de iluminação, distância de captura, oclusão por folhas e distribuição irregular dos frutos nas plantas. Embora modelos de visão computacional de detecção de objetos em etapa única tenham sido aplicados à detecção de frutos e defeitos em grãos de café, ainda são limitados os estudos que avaliam a execução desses modelos em \textit{smartphones} Android reais. Diante dessa lacuna, este trabalho compara configurações de modelos leves de detecção de objetos convertidos para TensorFlow Lite, visando à detecção de frutos de café em dispositivos móveis. O conjunto bruto foi composto por aproximadamente 5.000 imagens, das quais 2.168 imagens únicas foram utilizadas após anotação, validação e curadoria, totalizando 17.659 instâncias anotadas. Os modelos YOLOv8n e YOLOv10n foram treinados sobre esse conjunto, alcançando mAP@0,50 de 0,6455 e 0,6419 no conjunto de teste, respectivamente, com menor número de parâmetros e operações no YOLOv10n. A conversão para o formato TensorFlow Lite foi concluída, gerando seis variantes nas precisões FP32, FP16 e INT8, com tamanhos entre 2,82~MB e 11,96~MB. As onze configurações executáveis foram avaliadas em dispositivo Android quanto à latência, à estabilidade de execução e ao pico de memória do processo. O \textit{delegate} de processador gráfico reduziu a latência de inferência do YOLOv8n por fator de até 4,7, enquanto no YOLOv10n não produziu ganho, pois as operações que implementam sua arquitetura sem supressão não máxima não são suportadas pelo \textit{delegate}, o que inviabiliza a execução na precisão INT8 e elimina a vantagem nas demais. A quantização FP16 preservou a saída dos modelos pela metade do tamanho de arquivo, enquanto a INT8 alterou o número de detecções. As execuções em processador gráfico apresentaram menor estabilidade nesse aparelho, com degradação de até 57\% ao longo de uma sessão. A avaliação foi então estendida a oito aparelhos de três fornecedores de \textit{System on Chip}, da faixa de entrada ao segmento superior, sobre um subconjunto de 30 imagens. O sentido do efeito do \textit{delegate} repete-se em todos, com aceleração do YOLOv8n por fator entre 1,07 e 7,28 e ausência de ganho no YOLOv10n, ao passo que a magnitude varia por fator superior a seis entre as plataformas. Em dez das onze configurações executáveis o número de detecções coincide em todos os aparelhos, imagem por imagem. A configuração recomendada para a aplicação é o YOLOv8n em FP16 com \textit{delegate} de processador gráfico. A detecção foi conduzida com classe única, de modo que a classificação do estágio de maturação a partir dos frutos detectados constitui continuidade e não integra o escopo deste trabalho.
 }
 \abstract{\foreignlanguage{english}{%
     Coffee production is economically and socially relevant to Brazil, and
@@ -80,7 +80,7 @@
     how these models actually run on real Android smartphones. Addressing
     this gap, this work compares configurations of lightweight object
     detection models converted to TensorFlow Lite for the detection of
-    coffee fruit ripeness on mobile devices. The raw set comprised
+    coffee fruits on mobile devices. The raw set comprised
     approximately 5,000 images, of which 2,168 unique images were used
     after annotation, validation and curation, totalling 17,659 annotated
     instances. The YOLOv8n and YOLOv10n models were trained on this set and
@@ -89,7 +89,7 @@
     produced six variants in FP32, FP16 and INT8 precision, with file sizes
     between 2.82~MB and 11.96~MB. The eleven executable configurations were
     evaluated on an Android device for latency, execution stability and
-    memory use. The GPU delegate reduced YOLOv8n inference latency by a
+    process peak memory. The GPU delegate reduced YOLOv8n inference latency by a
     factor of up to 4.7, whereas for YOLOv10n it produced no gain, because the
     operations that implement its non-maximum suppression free architecture
     are not supported by the delegate, which prevents execution in INT8
@@ -103,9 +103,10 @@
     with YOLOv8n accelerated by a factor between 1.07 and 7.28 and no gain
     for YOLOv10n, whereas the magnitude varies by a factor greater than
     six across platforms. In ten of the eleven executable configurations
-    the number of detections matches on every device, image by image. The
-    recommended configuration for the application is YOLOv8n in FP16 with
-    the GPU delegate.}
+    the number of detections matches on every device, image by image. The recommended configuration for the application is YOLOv8n in FP16
+    with the GPU delegate. Detection was carried out with a single class, so
+    classifying the ripeness stage of the detected fruits is left as
+    continuation and is outside the scope of this work.}
 }
 \keywords{Computer vision.
 Coffee production.
@@ -173,9 +174,12 @@ Paralelamente ao avanço desses modelos, cresce o interesse pela execução da i
 
 Apesar dos avanços observados na literatura, a maior parte dos trabalhos concentra-se na avaliação da acurácia dos modelos ou na proposição de novas arquiteturas para detecção de objetos. Os estudos voltados à execução em dispositivos móveis, por sua vez, costumam recorrer a conjuntos de dados genéricos e a objetos de aparência regular, distantes das condições de uma lavoura a céu aberto. Por outro lado, pesquisas desenvolvidas no contexto agrícola raramente analisam o impacto de estratégias de quantização e mecanismos de aceleração na execução dos modelos em \textit{smartphones} reais. Dessa forma, ainda permanece pouco explorada a avaliação conjunta do desempenho computacional, consumo energético e estabilidade de modelos de detecção aplicados à maturação de frutos de café em condições reais de uso.
 
-Diante dessa lacuna, este trabalho propõe uma avaliação experimental de diferentes configurações dos modelos YOLOv8n e YOLOv10n convertidos para \ac{TFLite}, visando à detecção da maturação de frutos de café em \textit{smartphones} Android. Para isso, é utilizado um conjunto de dados próprio, composto por aproximadamente 5.000 imagens coletadas em lavouras cafeeiras do município de Bambuí, Minas Gerais, entre novembro de 2023 e fevereiro de 2024. Após as etapas de anotação, validação e curadoria, o conjunto passou a conter 2.168 imagens únicas. A proposta contempla o treinamento dos modelos, sua conversão para o formato \texttt{.tflite}, a aplicação de diferentes estratégias de quantização e a avaliação da execução utilizando diferentes mecanismos de aceleração disponíveis na plataforma Android.
+Diante dessa lacuna, este trabalho propõe uma avaliação experimental de diferentes configurações dos modelos YOLOv8n e YOLOv10n convertidos para \ac{TFLite}, visando à detecção de frutos de café em \textit{smartphones} Android. Para isso, é utilizado um conjunto de dados próprio, composto por aproximadamente 5.000 imagens coletadas em lavouras cafeeiras do município de Bambuí, Minas Gerais, entre novembro de 2023 e fevereiro de 2024. Após as etapas de anotação, validação e curadoria, o conjunto passou a conter 2.168 imagens únicas. A proposta contempla o treinamento dos modelos, sua conversão para o formato \texttt{.tflite}, a aplicação de diferentes estratégias de quantização e a avaliação da execução utilizando diferentes mecanismos de aceleração disponíveis na plataforma Android.
 
-O objetivo geral deste trabalho é comparar configurações dos modelos YOLOv8n e YOLOv10n executados por meio do \ac{TFLite} para a detecção da maturação de frutos de café em \textit{smartphones} Android. Para atingir esse objetivo, foram definidos como objetivos específicos organizar e anotar o conjunto de imagens; treinar os modelos de detecção; converter os modelos para o formato \ac{TFLite}; aplicar estratégias de quantização; avaliar diferentes mecanismos de aceleração disponíveis no dispositivo; comparar os modelos quanto à acurácia, latência, estabilidade e tamanho do arquivo gerado; registrar o consumo energético na resolução permitida pelo indicador de bateria do sistema; e verificar em que medida as diferenças observadas entre configurações se mantêm em aparelhos de fabricantes, faixas de desempenho e versões de sistema distintas.
+O objetivo geral deste trabalho é comparar configurações dos modelos YOLOv8n e YOLOv10n executados por meio do \ac{TFLite} para a detecção de frutos de café em
+\textit{smartphones} Android. A detecção é conduzida com classe única, de
+modo que localiza os frutos sem determinar o estágio de maturação de cada um,
+etapa que permanece como continuidade. Para atingir esse objetivo, foram definidos como objetivos específicos organizar e anotar o conjunto de imagens; treinar os modelos de detecção; converter os modelos para o formato \ac{TFLite}; aplicar estratégias de quantização; avaliar diferentes mecanismos de aceleração disponíveis no dispositivo; comparar os modelos quanto à acurácia, latência, estabilidade e tamanho do arquivo gerado; registrar o consumo energético na resolução permitida pelo indicador de bateria do sistema; e verificar em que medida as diferenças observadas entre configurações se mantêm em aparelhos de fabricantes, faixas de desempenho e versões de sistema distintas.
 
 A realização deste estudo contribui para ampliar o conhecimento sobre a implantação de modelos de visão computacional em dispositivos móveis aplicados à cafeicultura, fornecendo subsídios para o desenvolvimento de ferramentas capazes de auxiliar produtores rurais na tomada de decisão em campo. Além disso, os resultados obtidos podem orientar a escolha de configurações que conciliem desempenho de detecção e eficiência computacional, aspecto relevante para aplicações embarcadas em ambientes com restrições de processamento e conectividade.
 
@@ -1205,11 +1209,13 @@ permitir comparar a estabilidade entre configurações com latências médias
 distintas, situação em que o desvio padrão absoluto tende a acompanhar a
 magnitude da medida.
  
-Registra-se que a temperatura do dispositivo não pôde ser incorporada ao
-conjunto de métricas coletadas automaticamente. As interfaces de acesso a
-sensores térmicos no sistema Android requerem permissões de nível privilegiado,
-não disponíveis a aplicações comuns, e não são expostas pelo \textit{framework}
-utilizado.
+Registra-se que a temperatura do dispositivo não foi incorporada ao
+conjunto de métricas coletadas automaticamente. A temperatura da bateria é
+acessível a aplicações comuns por interface pública do sistema, ao passo que a
+temperatura do \ac{SoC}, que seria o indicador direto de limitação térmica,
+não é exposta. A primeira não foi coletada porque a aplicação já estava em uso
+pelos voluntários quando a necessidade se mostrou, e constitui instrumentação
+a incluir em coletas futuras.
  
 \subsection{Dispositivo de Avaliação}
 \label{sec:dispositivo}
@@ -1948,8 +1954,7 @@ A terceira é que a quantização \ac{FP16} preserva a saída dos modelos pela m
 
 A quarta é que, neste aparelho, as configurações mais rápidas são as menos estáveis, e as execuções em \ac{GPU} apresentaram degradação progressiva ao longo da sessão, com perda de até 57\% de desempenho em poucos minutos. A coleta relatada na Subseção~\ref{sec:dispersao_multidispositivo} mostra que a maior dispersão em \ac{GPU} não se reproduz nos demais aparelhos sobre execuções mais curtas, de modo que essa conclusão permanece circunscrita à plataforma avaliada.
 
-Para a aplicação proposta, a configuração recomendada é \textbf{YOLOv8n \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à do modelo em precisão plena e o menor pico
-de memória entre todas as configurações medidas. A recomendação vale para os
+Para a aplicação proposta, a configuração recomendada é \textbf{YOLOv8n \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à do modelo em precisão plena. A recomendação vale para os
 critérios e as condições aqui avaliados. A estabilidade ao longo de sessões
 prolongadas permanece como ressalva, uma vez que essa mesma configuração
 apresentou deriva de 46,4\% entre o primeiro e o terceiro terço da execução,
@@ -2026,7 +2031,12 @@ permanecem sensíveis ao aparelho e à versão do sistema.
 A comparação das saídas verifica se o mesmo modelo produz o mesmo número
 de detecções em plataformas distintas. Em dez das onze configurações
 executáveis, o número de detecções coincide em todos os aparelhos, imagem por
-imagem, perfazendo 312 concordâncias em 323 comparações.
+imagem, perfazendo 312 concordâncias em 323 comparações. O total de
+comparações é a soma, sobre as onze configurações, das imagens presentes em
+todos os aparelhos, uma vez que cada imagem produz uma comparação entre os
+oito aparelhos. As configurações diferem quanto ao número de imagens comuns
+porque medições descartadas não entram na comparação, conforme a
+Subseção~\ref{sec:coleta_multidispositivo}.
 
 A medida é de concordância de quantidade. O registro produzido pela aplicação
 contém o número de detecções por imagem e não as coordenadas das caixas
@@ -2242,8 +2252,7 @@ já dentro do ambiente de desenvolvimento.
 
 \subsection{Recomendação}
 
-Para a aplicação proposta, a configuração recomendada é o \textbf{YOLOv8n em precisão \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à da variante em precisão plena e o menor
-pico de memória entre as configurações avaliadas. A recomendação vale para os
+Para a aplicação proposta, a configuração recomendada é o \textbf{YOLOv8n em precisão \ac{FP16} com \textit{delegate} \ac{GPU}}, que apresentou latência de inferência de 69,2~ms, arquivo de 6,02~MB, saída equivalente à da variante em precisão plena. A recomendação vale para os
 critérios e as condições avaliados, e a estabilidade ao longo de sessões
 prolongadas permanece como ressalva, dada a deriva de 46,4\% registrada nessa
 configuração no aparelho de referência.
@@ -2253,13 +2262,17 @@ Para dispositivos sem \textit{delegate} \ac{GPU} funcional, a recomendação pas
 \subsection{Quanto à Classificação do Estágio de Maturação}
 \label{sec:quanto_maturacao}
 
-A detecção foi conduzida com classe única, de modo que o trabalho localiza frutos e não determina o estágio de maturação de cada um. Cabe expor a razão dessa delimitação, uma vez que o problema de origem, enunciado na Seção~\ref{sec:introducao}, é a avaliação da maturação.
+A detecção foi conduzida com classe única, de modo que o trabalho localiza frutos e não determina o estágio de maturação de cada um. Cabe expor a razão dessa delimitação, uma vez que a motivação do
+trabalho, enunciada na Seção~\ref{sec:introducao}, é a avaliação da
+maturação.
 
 A primeira razão está no conjunto de dados. A anotação em duas classes considerada durante a construção do conjunto, descrita na Subseção~\ref{sec:anotacao}, distingue cultivares de fruto vermelho e amarelo, e não estágios de maturação de um mesmo fruto. Classificar maturação exigiria reanotar as 17.659 instâncias segundo estágios, tarefa de natureza distinta da que foi executada e de porte comparável ao da construção do conjunto.
 
 A segunda razão está nos resultados de detecção. A revocação obtida é de 0,6132 no YOLOv8n sobre o conjunto de teste, de modo que aproximadamente 39\% dos frutos anotados não são localizados. Classificar o estágio de frutos que o detector não encontra não melhora a estimativa de maturação do talhão, e a precisão da localização constitui, portanto, a restrição que vincula o resultado final. Trabalhos que classificam maturação de frutos de café em campo partem de detectores ajustados a esse fim \cite{Ye2025ASD, Kazama2024Monitoring}, o que reforça a ordem adotada aqui.
 
-A terceira razão é de escopo. O objeto declarado deste trabalho é a comparação entre \textit{delegates} do \ac{TFLite} quanto a desempenho e estabilidade, e essa comparação não depende do número de classes do modelo. A classe única mantém o problema de detecção estável enquanto variam arquitetura, precisão numérica e mecanismo de aceleração, que são os fatores sob exame.
+A classe única mantém ainda o problema de detecção estável enquanto
+variam arquitetura, precisão numérica e mecanismo de aceleração, que são os
+fatores sob exame.
 
 A arquitetura de duas etapas, com detecção seguida de classificação dos recortes, permanece como caminho preparado. A detecção com classe única produz exatamente a entrada de que a etapa seguinte necessita.
 
