@@ -1217,8 +1217,10 @@ utilizado.
 As medições foram conduzidas em um aparelho Samsung Galaxy S24
 (SM-S921B), equipado com o \ac{SoC} Exynos 2400, de fabricação
 própria da Samsung, unidade gráfica Xclipse 940, baseada na
-arquitetura RDNA da AMD, 8~GB de memória principal e sistema
-operacional Android~16. A identificação do fornecedor da unidade
+arquitetura RDNA da AMD, 8~GB de memória principal e sistema operacional Android~16. O aparelho foi atualizado para o
+Android~17 entre a avaliação sobre o conjunto completo e a coleta em múltiplos
+dispositivos, de modo que a Tabela~\ref{tab:aparelhos} registra a versão
+vigente durante esta última. A identificação do fornecedor da unidade
 gráfica é relevante para a leitura dos resultados, uma vez que o
 suporte a operações do \textit{delegate} \ac{GPU} do \ac{TFLite}
 é implementado por fornecedor.
@@ -1328,10 +1330,13 @@ Android, o nível de carga no início e no fim da execução e as medições
 individuais por imagem, o que permite verificar o cumprimento do protocolo a
 partir dos próprios dados, sem depender do relato de quem executou.
 
-No aparelho de referência a varredura foi repetida em três sessões realizadas
-na mesma noite, com intervalos de 40 e 46~minutos entre elas e carga entre
-99\% e 83\%, com a finalidade de estimar a variação entre execuções de uma
-mesma configuração.
+No aparelho de referência a varredura foi repetida em quatro
+sessões, três delas na mesma noite, com intervalos de 40 e 46~minutos entre os
+respectivos inícios, e uma conduzida dois dias antes, com carga entre 100\% e
+83\% ao longo das quatro, com a finalidade de estimar a variação entre
+execuções de uma mesma configuração. Uma sessão anterior, executada antes da
+atualização do sistema operacional do aparelho, ficou de fora dessa
+comparação, para que as quatro consideradas se refiram à mesma versão.
 
 \subsection{Métricas de Avaliação}
 
@@ -2080,18 +2085,19 @@ aos voluntários.
 \subsubsection{Variação entre execuções de uma mesma configuração}
 \label{sec:repetibilidade}
 
-A variação da latência de inferência entre as três sessões realizadas no
-aparelho de referência consta da Tabela~\ref{tab:sessoes}. A amplitude entre a
-maior e a menor média obtidas para a mesma configuração corresponde a 18,6\%
-da média na mediana das onze configurações e alcança 32,1\% no YOLOv8n em
-\ac{INT8} com \textit{delegate} \ac{GPU}.
+A variação da latência de inferência entre as quatro sessões
+realizadas no aparelho de referência consta da Tabela~\ref{tab:sessoes}. A
+amplitude entre a maior e a menor média obtidas para a mesma configuração
+corresponde a 18,6\% da média na mediana das onze configurações e alcança
+38,0\% no YOLOv8n em \ac{FP16} com \textit{delegate} de \ac{CPU}.
 
 \input{tabelas/sessoes.tex}
 
-As configurações executadas em \ac{CPU} apresentam amplitude entre 2,3\% e
-24,2\%, ao passo que as executadas em \ac{GPU} situam-se entre 7,3\% e 32,1\%,
-o que é coerente com a menor estabilidade do \textit{delegate} \ac{GPU}
-registrada na Subseção~\ref{sec:estabilidade}.
+As configurações executadas em \ac{CPU} apresentam amplitude entre
+3,7\% e 38,0\%, ao passo que as executadas em \ac{GPU} situam-se entre
+7,3\% e 32,0\%. A variação entre execuções não separa, portanto, os dois
+\textit{delegates}, ao contrário da dispersão medida dentro de uma única
+execução, registrada na Subseção~\ref{sec:estabilidade}.
 
 Essa medida define a resolução do experimento. Diferenças de latência
 inferiores a cerca de 20\% entre duas configurações não se distinguem da
@@ -2141,7 +2147,7 @@ Os resultados apresentados estão condicionados por um conjunto de limitações 
 
 \textbf{Aparelho único na avaliação sobre o conjunto completo.} A avaliação sobre as 285 imagens da partição de teste foi conduzida em um único aparelho, pelas razões expostas na Subseção~\ref{sec:dispositivo}. A coleta descrita na Subseção~\ref{sec:coleta_multidispositivo} estendeu a avaliação a oito aparelhos, porém sobre o subconjunto de 30 imagens, de modo que os valores absolutos de latência reportados nas tabelas da Subseção~\ref{sec:resultados_movel} permanecem condicionados a uma plataforma. O que a coleta posterior sustenta é o sentido do efeito do \textit{delegate}, verificado nos oito aparelhos, e não a magnitude registrada naquelas tabelas, que varia por fator superior a seis entre as plataformas avaliadas.
 
-\textbf{Execução única sobre o conjunto completo.} Cada configuração foi executada uma única vez sobre as 285 imagens da partição de teste. A repetição conduzida sobre o subconjunto de 30 imagens, relatada na Subseção~\ref{sec:repetibilidade}, fornece a ordem de grandeza da variação entre execuções de uma mesma configuração, que é de 18,6\% na mediana das onze configurações e alcança 32,1\%. Esse valor foi obtido no aparelho de referência e sobre o subconjunto, e seu transporte para as medições sobre o conjunto completo e para os demais aparelhos constitui suposição, não verificação. Diferenças entre configurações próximas permanecem, portanto, sujeitas a reserva.
+\textbf{Execução única sobre o conjunto completo.} Cada configuração foi executada uma única vez sobre as 285 imagens da partição de teste. A repetição conduzida sobre o subconjunto de 30 imagens, relatada na Subseção~\ref{sec:repetibilidade}, fornece a ordem de grandeza da variação entre execuções de uma mesma configuração, que é de 18,6\% na mediana das onze configurações e alcança 38,0\%. Esse valor foi obtido no aparelho de referência e sobre o subconjunto, e seu transporte para as medições sobre o conjunto completo e para os demais aparelhos constitui suposição, não verificação. Diferenças entre configurações próximas permanecem, portanto, sujeitas a reserva.
 
 \textbf{Estado térmico não controlado.} As execuções foram distribuídas em dois dias e em horários distintos, sem padronização do intervalo de repouso entre elas nem verificação da temperatura inicial do aparelho. A análise de deriva apresentada na Subseção~\ref{sec:estabilidade} indica que o estado térmico afeta o desempenho em \ac{GPU} de forma desigual, uma vez que três execuções apresentaram degradação superior a 40\% e duas não apresentaram degradação alguma. Essa variação não foi controlada e constitui a limitação mais relevante do protocolo quanto às medidas de estabilidade.
 
