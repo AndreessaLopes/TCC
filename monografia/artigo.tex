@@ -140,6 +140,7 @@ TensorFlow Lite.}
     \acro{FP32}[FP32]{\textit{Floating Point 32-bit}}
     \acro{FPS}[FPS]{\textit{Frames Per Second}}
     \acro{GPU}[GPU]{\textit{Graphics Processing Unit}}
+    \acro{IC}[IC]{Intervalo de Confiança}
     \acro{INT8}[INT8]{\textit{Integer 8-bit}}
     \acro{JSON}[JSON]{\textit{JavaScript Object Notation}}
     \acro{mAP}[mAP]{\textit{mean Average Precision}}
@@ -1810,9 +1811,38 @@ YOLOv10n & \ac{INT8} & 517,0 & \multicolumn{2}{l}{não executável} \\
 
 \FloatBarrier
 
-No YOLOv8n o \textit{delegate} \ac{GPU} reduz a latência de inferência por fator entre 3,58 e 4,72, conforme a precisão. No YOLOv10n o mesmo \textit{delegate} não produz ganho, pois em \ac{FP32} a latência aumenta em 47\% e em \ac{FP16} permanece equivalente à obtida em \ac{CPU}. A configuração \ac{INT8} sequer é executável.
+No YOLOv8n o \textit{delegate} \ac{GPU} reduz a latência de inferência por fator entre 3,58 e 4,72, conforme a precisão. No YOLOv10n o mesmo \textit{delegate} não produz ganho, pois em \ac{FP32} a latência aumenta em 47\% e em \ac{FP16} supera em
+5\% a obtida em \ac{CPU}, com intervalo de confiança que exclui a igualdade,
+conforme a Subseção~\ref{sec:incerteza}. A configuração \ac{INT8} sequer é executável.
 
 O contraste é sistemático e de magnitude incompatível com variação de condições entre execuções. Duas observações o sustentam. A primeira é que as execuções em \ac{GPU} de 10 de setembro incluem configurações das duas arquiteturas medidas com vinte minutos de intervalo, sendo o YOLOv10n \ac{FP32} às 08h50 (462,3~ms) e o YOLOv8n \ac{FP16} às 09h10 (69,2~ms), sob condições térmicas e de carga equivalentes. A segunda é que a diferença entre arquiteturas em \ac{CPU} é pequena (303,6 contra 313,9~ms em \ac{FP32}), de modo que a disparidade emerge exclusivamente quando o \textit{delegate} \ac{GPU} é acionado.
+
+\subsubsection{Precisão das estimativas e comparação entre
+\textit{delegates}}
+\label{sec:incerteza}
+
+As médias da Tabela~\ref{tab:latencia_inferencia} são estimativas obtidas
+sobre um número finito de imagens, e a Tabela~\ref{tab:intervalos} apresenta o
+intervalo de confiança de cada uma, obtido por reamostragem com reposição
+sobre as imagens medidas. A largura dos intervalos situa-se entre 2,5\% e
+6,5\% da respectiva média.
+
+\input{tabelas/intervalos.tex}
+
+A comparação entre \textit{delegates} consta da
+Tabela~\ref{tab:razoes_ic}, que reúne a razão entre as médias, o intervalo de
+confiança dessa razão e o valor de $p$ de teste de permutação bilateral,
+corrigido por Holm para as cinco comparações possíveis. As cinco diferenças
+são significativas ao nível de 5\%, e nenhum dos intervalos contém a unidade.
+
+\input{tabelas/razoes_ic.tex}
+
+O ganho do \textit{delegate} \ac{GPU} no YOLOv8n situa-se entre 3,48 e 4,90
+conforme a precisão, de modo que a ordem de grandeza do efeito não depende da
+incerteza das estimativas. No YOLOv10n o mesmo \textit{delegate} produz
+perda, de 32\% em \ac{FP32} e de 5\% em \ac{FP16}. A perda em \ac{FP16},
+embora pequena, é distinguível da igualdade, uma vez que o intervalo da razão,
+de 0,92 a 0,98, não contém a unidade.
 
 \subsubsection{Incompatibilidade do YOLOv10n com o \textit{delegate} GPU}
 \label{sec:v10n_gpu}
@@ -2202,7 +2232,9 @@ Foram conduzidas a construção e a curadoria de um conjunto de 2.168 imagens pr
 
 Os modelos treinados apresentaram desempenho de detecção próximo, com \ac{mAP}@0,50 de 0,6455 para o YOLOv8n e 0,6419 para o YOLOv10n sobre o conjunto de teste. A conversão preservou esse desempenho, com diferenças inferiores a 0,002 nas variantes em precisão plena.
 
-A comparação entre \textit{delegates}, objetivo central do trabalho, produziu o resultado mais relevante. O \textit{delegate} \ac{GPU} reduziu a latência de inferência do YOLOv8n por fator entre 3,58 e 4,72, conforme a precisão. No YOLOv10n o mesmo \textit{delegate} não produziu ganho, pois em \ac{FP32} a latência aumentou em 47\%, em \ac{FP16} permaneceu equivalente à obtida em \ac{CPU} e na precisão \ac{INT8} a execução não é possível.
+A comparação entre \textit{delegates}, objetivo central do trabalho, produziu o resultado mais relevante. O \textit{delegate} \ac{GPU} reduziu a latência de inferência do YOLOv8n por fator entre 3,58 e 4,72, conforme a precisão. No YOLOv10n o mesmo \textit{delegate} não produziu ganho, pois em \ac{FP32} a latência aumentou em 47\%, em \ac{FP16} superou em
+5\% a obtida em \ac{CPU}, com intervalo de confiança que exclui a igualdade,
+e na precisão \ac{INT8} a execução não é possível.
 
 A causa está na própria arquitetura. A supressão da etapa de \ac{NMS}, que constitui a contribuição central do YOLOv10, é obtida por meio de operações como \texttt{TOPK\_V2}, \texttt{GATHER\_ND} e conversões para \texttt{INT64}, que o \textit{delegate} \ac{GPU} do \ac{TFLite} não suporta. O grafo é então particionado entre os dois processadores, e o custo das transferências entre suas memórias anula o ganho obtido nos segmentos delegados. Na precisão \ac{INT8} a fragmentação é acentuada, com apenas 13 das 345 operações delegadas, e a execução termina em erro.
 
