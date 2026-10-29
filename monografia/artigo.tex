@@ -1639,8 +1639,23 @@ de objetos pequenos. O segundo refere-se à oclusão parcial dos frutos por folh
 e ramos, condição recorrente em imagens adquiridas em lavouras de campo aberto.
 O terceiro refere-se aos casos residuais de anotação agrupada mencionados na
 Subseção~\ref{sec:preprocessamento}, nos quais frutos adjacentes permanecem
-delimitados por uma única caixa, situação que penaliza a correspondência entre
-predições e anotações independentemente da detecção efetiva dos frutos.
+delimitados por uma única caixa, situação que penaliza a correspondência entre predições e
+anotações independentemente da detecção efetiva dos frutos. A
+Tabela~\ref{tab:tamanho} quantifica o primeiro desses fatores, ao decompor a
+revocação por faixa de tamanho da instância anotada, com os limites
+convencionais de 32 e 96~pixels de lado aplicados à área que a caixa ocupa na
+entrada de 960~pixels.
+
+\input{tabelas/tamanho.tex}
+
+A revocação cresce com o tamanho da instância nas duas arquiteturas, de 0,386 a
+0,698 no YOLOv8n e de 0,286 a 0,678 no YOLOv10n, o que confirma a direção do
+efeito atribuído às dimensões do objeto. A faixa pequena, contudo, reúne 70 das
+2.399 instâncias anotadas, de modo que não responde pela maior parte do
+déficit. As instâncias de tamanho médio, que correspondem ao fruto típico nas
+imagens coletadas, concentram 1.276 anotações e respondem por 537 das 898 não
+detectadas pelo YOLOv8n. O tamanho do objeto orienta a dificuldade sem
+esgotá-la, o que atribui peso aos dois fatores seguintes.
 
 Comparativamente, \textcite{Kazama2024Monitoring} reportaram \ac{mAP}@0,50 de
 74,20\% na classificação de estágios de maturação de frutos de café em campo,
@@ -1887,7 +1902,19 @@ YOLOv10n \ac{INT8} & \ac{CPU} & 2.325 & 8,16 \\
 
 \FloatBarrier
 
-A quantização inteira, em contrapartida, altera a saída. O YOLOv8n \ac{INT8} produziu 2.536 detecções, 5,1\% acima do \ac{FP32}, e o YOLOv10n \ac{INT8} produziu 0,7\% a mais. O acréscimo no número de detecções, desacompanhado de qualquer alteração no conjunto de imagens, sugere a introdução de falsos positivos pelo erro de quantização, o que é compatível com a redução de revocação observada na Tabela~\ref{tab:validacao_tflite} e com o fato de a calibração ter sido realizada sobre o subconjunto de validação. Avaliar essa hipótese exigiria confrontar as detecções com as anotações de referência, o que não foi conduzido neste trabalho.
+A quantização inteira, em contrapartida, altera a saída. O YOLOv8n \ac{INT8} produziu 2.536 detecções, 5,1\% acima do \ac{FP32}, e o YOLOv10n \ac{INT8} produziu 0,7\% a mais. O acréscimo no número de detecções, desacompanhado de qualquer alteração no conjunto de imagens, sugere a introdução de falsos positivos pelo erro de
+quantização, o que é compatível com a redução de revocação observada na
+Tabela~\ref{tab:validacao_tflite} e com o fato de a calibração ter sido
+realizada sobre o subconjunto de validação. O confronto das detecções com as
+anotações de referência, conduzido em ambiente de desenvolvimento sobre as
+mesmas 285 imagens e com o limiar de confiança da aplicação, confirma a
+hipótese. A variante \ac{FP32} do YOLOv8n produz 2.415 detecções, das quais
+1.502 correspondem a instâncias anotadas, ao passo que a \ac{INT8} produz
+2.558, das quais 1.473. O acréscimo de 143 detecções decompõe-se em 172 falsos
+positivos a mais e 29 verdadeiros positivos a menos, e a precisão cai de 0,622
+para 0,576. No YOLOv10n o mesmo confronto registra acréscimo de 13 detecções e
+de 3 falsos positivos, coerente com a degradação menor relatada na
+Subseção~\ref{sec:validacao_convertidos}.
 
 Registre-se ainda que, dentro de cada precisão, a troca de \textit{delegate} praticamente não altera a saída, pois as diferenças entre \ac{CPU} e \ac{GPU} situam-se entre zero e 1,7\%, atribuíveis à ordem das operações de ponto flutuante. A equivalência numérica entre \textit{delegates} está, portanto, preservada.
 

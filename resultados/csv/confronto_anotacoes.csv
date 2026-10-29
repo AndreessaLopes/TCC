@@ -1,0 +1,7 @@
+modelo,precisao_numerica,deteccoes,verdadeiros_positivos,falsos_positivos,falsos_negativos,precisao,revocacao,conf,iou_pareamento
+YOLOv8n,PyTorch,2408,1501,907,898,0.6233,0.6257,0.25,0.5
+YOLOv10n,PyTorch,2243,1469,774,930,0.6549,0.6123,0.25,0.5
+YOLOv8n,FP32,2415,1502,913,897,0.6219,0.6261,0.25,0.5
+YOLOv8n,INT8,2558,1473,1085,926,0.5758,0.614,0.25,0.5
+YOLOv10n,FP32,2302,1477,825,922,0.6416,0.6157,0.25,0.5
+YOLOv10n,INT8,2315,1487,828,912,0.6423,0.6198,0.25,0.5
