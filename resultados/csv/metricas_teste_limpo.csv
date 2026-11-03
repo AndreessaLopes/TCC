@@ -1,0 +1,5 @@
+conjunto,n_imagens,modelo,mAP50,mAP50_95,precisao,revocacao
+completo,285,YOLOv8n,0.6455,0.361,0.634,0.6132
+completo,285,YOLOv10n,0.6419,0.3736,0.6306,0.6215
+nao_afetado,194,YOLOv8n,0.6557,0.3433,0.6322,0.6199
+nao_afetado,194,YOLOv10n,0.6441,0.3515,0.613,0.6474
