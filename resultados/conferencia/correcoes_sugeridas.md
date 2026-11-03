@@ -14,10 +14,9 @@ brasileira estimada, de 51,8 milhões de sacas, e a produção mundial
 estimada pelo USDA para 2024/25, de 174,9 milhões de sacas, sem
 relacioná-las. A razão entre as duas é de aproximadamente 30%, e não 37%.
 
-**Sugestão.** Substituir por "aproximadamente 30% da produção global,
-segundo a razão entre a estimativa brasileira e a produção mundial
-reportada na mesma publicação", ou citar fonte que afirme o percentual
-diretamente.
+**Resolvida em 2026-11-03.** A frase passa a declarar a produção
+estimada, de 51,8 milhões de sacas, e os aproximadamente 30% que ela
+representa na produção mundial reportada na mesma publicação.
 
 ## f002 — participação de Minas Gerais na produção nacional
 
@@ -31,7 +30,7 @@ sacas em Minas Gerais e 51,8 milhões no país, o que corresponde a 47,9%.
 O 3º Levantamento, de setembro de 2025, registra 25,3 de 55,2 milhões,
 ou 45,8%.
 
-**Sugestão.** Substituir por "cerca de 48% da produção nacional", valor
+**Resolvida em 2026-11-03.** A frase passa a dizer cerca de 48%, valor
 que decorre da própria publicação citada.
 
 ## f003 — receita do ano-cafeeiro
