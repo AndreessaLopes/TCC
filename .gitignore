@@ -82,3 +82,6 @@ monografia/TCC_*.pdf
 
 # Zip exportado do Drive, material de entrada ja descompactado
 cafescan_resultados-*.zip
+
+# PDFs de obras citadas, para conferencia; nao versionados por direito autoral
+artigos/

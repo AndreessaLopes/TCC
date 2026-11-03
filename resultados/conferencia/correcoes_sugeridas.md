@@ -144,3 +144,16 @@ conferida.
 **Pendente.** Confirmar na página do Ministério se consta número de
 empregos. Se constar, vale repor a magnitude com o número exato. A página
 não é alcançável deste ambiente.
+
+## f003, segunda passagem — a página do Ministério não menciona empregos
+
+Conferida a página citada em 2026-11-03, a partir do endereço da própria
+referência. Ela traz apenas a descrição da cultura e a informação de que
+o arábica responde por 80% da área plantada, e **não menciona empregos**.
+A afirmação sobre empregos, portanto, não tinha sustentação em nenhuma
+das duas obras citadas.
+
+**Resolvida.** A afirmação sobre empregos sai. A citação do Ministério
+passa a sustentar a participação do arábica na área plantada, que a
+página declara e que situa o conjunto de dados deste trabalho, composto
+por cultivares de fruto vermelho e amarelo.
