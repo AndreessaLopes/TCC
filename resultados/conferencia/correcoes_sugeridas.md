@@ -122,3 +122,25 @@ decorre do próprio escopo da ferramenta.
 Ambas têm texto completo em periódico que este ambiente não alcança,
 Proceedings of the IEEE e Sensors. Pelo Portal de Periódicos o acesso é
 direto.
+
+## f003 — faturamento e empregos
+
+**Frase (introdução).** "A cafeicultura movimentou aproximadamente
+R$ 125,7 bilhões no ano-cafeeiro de 2025 e gera milhões de empregos
+diretos e indiretos."
+
+**Obras citadas.** Cecafe2025 e MAPA2023, as duas ao fim da frase.
+
+**Resultado.** Parcial. O valor de R$ 125,7 bilhões confere, mas
+corresponde ao faturamento bruto da cadeia produtiva, e não a um
+movimento financeiro genérico. A notícia citada não menciona empregos, de
+modo que a segunda afirmação dependia inteiramente da outra obra.
+
+**Resolvida em 2026-11-03.** A frase passa a declarar o faturamento
+bruto, com a citação do Cecafé, e a afirmação sobre empregos passa a
+citar apenas o Ministério, sem a magnitude "milhões", que não foi
+conferida.
+
+**Pendente.** Confirmar na página do Ministério se consta número de
+empregos. Se constar, vale repor a magnitude com o número exato. A página
+não é alcançável deste ambiente.

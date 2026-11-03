@@ -104,3 +104,25 @@ aplicações. Trata a CNN como a rede mais usada e adequada a dados
 bidimensionais. Lista como desafios a falta de dados de treinamento, o
 sobreajuste, o desbalanceamento, a interpretabilidade e a compressão de
 modelos; o custo computacional aparece de forma indireta.
+
+## Cecafe2025 — Agrolink, reproduzindo dado do Cecafé
+Faturamento bruto da cadeia produtiva do café estimado em R$ 125,7
+bilhões no ano-cafeeiro de 2025, calculado sobre os preços médios
+recebidos pelos produtores entre janeiro e março. A notícia **não**
+menciona empregos. Observação: o valor foi revisto em divulgações
+posteriores, que trazem R$ 123,28 bilhões e R$ 127,88 bilhões, de modo
+que convém manter a referência à publicação citada.
+
+## Bochkovskiy2020YOLOv4 — arXiv 2004.10934
+Apresenta o Mosaic como novo método de aumento de dados, que combina
+quatro imagens de treinamento e mistura quatro contextos, com o objetivo
+declarado de detectar objetos fora do contexto habitual e reduzir a
+necessidade de minilotes grandes. Confere com o texto.
+
+## Obras conferidas pelo próprio objeto
+Flutter2024, documentação do framework Flutter; Makesense2024, a
+ferramenta de anotação MakeSense.ai; Redmon2016YOLO, proposição do
+detector de estágio único; Zauner2010ImplementationAB, implementação e
+avaliação de funções de hash perceptual; Shorten2019, levantamento sobre
+aumento de dados para aprendizado profundo. Em todas, a afirmação do
+texto corresponde ao objeto declarado da obra.
