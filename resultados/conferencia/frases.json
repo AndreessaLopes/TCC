@@ -1,0 +1,643 @@
+[
+  {
+    "id": "f001",
+    "secao": "INTRODUÇÃO",
+    "linha": 168,
+    "frase": "O Brasil ocupa posição de destaque na produção e exportação mundial de café, sendo responsável por aproximadamente 37\\% da produção global na safra 2024/2025 \\cite{CONAB2025}.",
+    "chaves": [
+      "CONAB2025"
+    ]
+  },
+  {
+    "id": "f002",
+    "secao": "INTRODUÇÃO",
+    "linha": 168,
+    "frase": "Nesse cenário, Minas Gerais concentra cerca de 52\\% da produção nacional e representa uma das principais regiões produtoras do país \\cite{CONAB2025}.",
+    "chaves": [
+      "CONAB2025"
+    ]
+  },
+  {
+    "id": "f003",
+    "secao": "INTRODUÇÃO",
+    "linha": 168,
+    "frase": "Nesse contexto, a cafeicultura movimentou aproximadamente R\\$~125,7 bilhões no ano-cafeeiro de 2025 e gera milhões de empregos diretos e indiretos, constituindo uma atividade estratégica para o desenvolvimento econômico e social brasileiro \\cite{Cecafe2025,MAPA2023}.",
+    "chaves": [
+      "Cecafe2025",
+      "MAPA2023"
+    ]
+  },
+  {
+    "id": "f004",
+    "secao": "INTRODUÇÃO",
+    "linha": 170,
+    "frase": "A presença de frutos verdes, maduros e sobremaduros em um mesmo lote compromete a uniformidade do processamento e influencia características sensoriais e comerciais do produto final \\cite{Kazama2024Monitoring}.",
+    "chaves": [
+      "Kazama2024Monitoring"
+    ]
+  },
+  {
+    "id": "f005",
+    "secao": "INTRODUÇÃO",
+    "linha": 170,
+    "frase": "Entretanto, a avaliação da maturação ainda é realizada predominantemente por inspeção visual, um procedimento sujeito à experiência do avaliador e às condições de campo, como variações de iluminação, oclusão por folhas, distância de captura e distribuição irregular dos frutos nas plantas \\cite{Bazame2021Detection}.",
+    "chaves": [
+      "Bazame2021Detection"
+    ]
+  },
+  {
+    "id": "f006",
+    "secao": "INTRODUÇÃO",
+    "linha": 172,
+    "frase": "Nos últimos anos, técnicas de visão computacional e aprendizado profundo têm sido aplicadas à automatização de tarefas de inspeção agrícola, incluindo detecção de frutos, classificação de estágios de maturação e identificação de defeitos em grãos de café \\cite{Eron2024Computer}.",
+    "chaves": [
+      "Eron2024Computer"
+    ]
+  },
+  {
+    "id": "f007",
+    "secao": "INTRODUÇÃO",
+    "linha": 172,
+    "frase": "Entre essas técnicas, destacam-se os modelos da família YOLO (do inglês \\textit{You Only Look Once})\\acused{YOLO}, capazes de realizar detecção de objetos em uma única etapa de inferência, característica que favorece aplicações em tempo real \\cite{Gope2024Comparative}.",
+    "chaves": [
+      "Gope2024Comparative"
+    ]
+  },
+  {
+    "id": "f008",
+    "secao": "INTRODUÇÃO",
+    "linha": 172,
+    "frase": "Trabalhos recentes demonstram o potencial dessas arquiteturas tanto para monitoramento de frutos em campo quanto para inspeção de grãos de café, empregando variantes como YOLOv8n e YOLOv10n \\cite{Bazame2021Detection,Kazama2024Monitoring,Gope2024Comparative,Wang2024YOLOv10}.",
+    "chaves": [
+      "Bazame2021Detection",
+      "Kazama2024Monitoring",
+      "Gope2024Comparative",
+      "Wang2024YOLOv10"
+    ]
+  },
+  {
+    "id": "f009",
+    "secao": "INTRODUÇÃO",
+    "linha": 174,
+    "frase": "Essa estratégia reduz a dependência de conexão com a internet, diminui a latência e permite que aplicações funcionem mesmo em regiões com infraestrutura limitada \\cite{Thai2024Coffee}.",
+    "chaves": [
+      "Thai2024Coffee"
+    ]
+  },
+  {
+    "id": "f010",
+    "secao": "INTRODUÇÃO",
+    "linha": 174,
+    "frase": "Além da conversão dos modelos para dispositivos móveis, o \\ac{TFLite} oferece recursos como quantização e mecanismos de aceleração por \\textit{hardware}, que podem influenciar diretamente o desempenho, o consumo energético e a estabilidade da aplicação \\cite{Zhao2022A,Menghani2023Efficient,Chu2023nnPerf,Hirsch2025Exploring}.",
+    "chaves": [
+      "Zhao2022A",
+      "Menghani2023Efficient",
+      "Chu2023nnPerf",
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f011",
+    "secao": "Visão Computacional",
+    "linha": 204,
+    "frase": "\\textcite{Eron2024Computer} apresentam uma abordagem baseada em visão computacional para monitoramento de frutos de café, utilizando YOLOv7 para detecção, classificação e estimativa de maturação em campo.",
+    "chaves": [
+      "Eron2024Computer"
+    ]
+  },
+  {
+    "id": "f012",
+    "secao": "Redes Neurais Convolucionais",
+    "linha": 210,
+    "frase": "Revisões recentes indicam que essas arquiteturas são amplamente utilizadas em aplicações de classificação e detecção de padrões visuais, embora apresentem desafios relacionados a custo computacional, necessidade de dados anotados e generalização para diferentes cenários \\cite{Alzubaidi2021Review}.",
+    "chaves": [
+      "Alzubaidi2021Review"
+    ]
+  },
+  {
+    "id": "f013",
+    "secao": "Arquitetura YOLO",
+    "linha": 216,
+    "frase": "\\ac{YOLO} é uma arquitetura de detecção de objetos baseada em estágio único (\\textit{single-stage detector}), proposta por \\textcite{Redmon2016YOLO}.",
+    "chaves": [
+      "Redmon2016YOLO"
+    ]
+  },
+  {
+    "id": "f014",
+    "secao": "Arquitetura YOLO",
+    "linha": 216,
+    "frase": "O YOLOv10 propõe detecção em tempo real de ponta a ponta, com remoção da etapa de supressão não máxima e desenho arquitetural orientado à relação entre eficiência e acurácia \\cite{Wang2024YOLOv10}.",
+    "chaves": [
+      "Wang2024YOLOv10"
+    ]
+  },
+  {
+    "id": "f015",
+    "secao": "Arquitetura YOLO",
+    "linha": 216,
+    "frase": "\\textcite{Gope2024Comparative} realizaram uma análise comparativa entre diferentes variantes da arquitetura YOLO para detecção e classificação de defeitos em grãos de café verdes.",
+    "chaves": [
+      "Gope2024Comparative"
+    ]
+  },
+  {
+    "id": "f016",
+    "secao": "TensorFlow Lite",
+    "linha": 222,
+    "frase": "\\textcite{Zhao2022A} apontam o \\ac{TFLite} como uma alternativa adequada para aplicações de aprendizado profundo em dispositivos móveis, especialmente em cenários com restrições de conectividade, devido à possibilidade de execução local e otimização para \\textit{hardware} embarcado.",
+    "chaves": [
+      "Zhao2022A"
+    ]
+  },
+  {
+    "id": "f017",
+    "secao": "Delegates",
+    "linha": 228,
+    "frase": "\\textcite{Chu2023nnPerf} demonstraram que o comportamento dos \\textit{delegates} varia entre diferentes \\acp{SoC}, indicando a necessidade de avaliação experimental em dispositivos reais.",
+    "chaves": [
+      "Chu2023nnPerf"
+    ]
+  },
+  {
+    "id": "f018",
+    "secao": "Quantização de Modelos",
+    "linha": 234,
+    "frase": "\\textcite{Menghani2023Efficient} destaca que técnicas de quantização \\ac{INT8} podem reduzir o custo computacional de modelos de visão computacional, diminuindo o tamanho do modelo e a latência de inferência, com variação de acurácia dependente do modelo e dos dados utilizados.",
+    "chaves": [
+      "Menghani2023Efficient"
+    ]
+  },
+  {
+    "id": "f019",
+    "secao": "Inferência em Smartphones",
+    "linha": 245,
+    "frase": "\\textcite{Thai2024Coffee} propuseram um sistema em tempo real para",
+    "chaves": [
+      "Thai2024Coffee"
+    ]
+  },
+  {
+    "id": "f020",
+    "secao": "Inferência em Smartphones",
+    "linha": 249,
+    "frase": "\\textcite{Hirsch2025Exploring} investigaram a",
+    "chaves": [
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f021",
+    "secao": "Métricas de Desempenho para Inferência Móvel",
+    "linha": 258,
+    "frase": "\\textcite{Menghani2023Efficient} enfatiza que a escolha das métricas deve ser guiada pelo perfil da aplicação.",
+    "chaves": [
+      "Menghani2023Efficient"
+    ]
+  },
+  {
+    "id": "f022",
+    "secao": "Métricas de Desempenho para Inferência Móvel",
+    "linha": 258,
+    "frase": "\\textcite{Hirsch2025Exploring} demonstram que modelos com latência semelhante podem apresentar consumo energético distinto dependendo do \\textit{delegate} e do dispositivo utilizado.",
+    "chaves": [
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f023",
+    "secao": "Eficiência Energética em Inteligência Artificial de Borda",
+    "linha": 264,
+    "frase": "Aceleradores dedicados, como \\acp{NPU} e \\acp{DSP}, podem apresentar menor consumo energético por operação em comparação à \\ac{CPU} de propósito geral. \\textcite{Zhao2022A} indicam que a combinação de quantização, poda e uso de aceleradores contribui para equilibrar desempenho e eficiência energética em aplicações de aprendizado profundo móvel.",
+    "chaves": [
+      "Zhao2022A"
+    ]
+  },
+  {
+    "id": "f024",
+    "secao": "Anotação de Imagens e Formatos de Dados",
+    "linha": 268,
+    "frase": "Ferramentas de anotação, como MakeSense.ai, são utilizadas para criar essas marcações de forma visual e exportá-las em formatos compatíveis com fluxos de treinamento \\cite{Makesense2024}.",
+    "chaves": [
+      "Makesense2024"
+    ]
+  },
+  {
+    "id": "f025",
+    "secao": "Curadoria, Redundância Visual e Perceptual Hashing",
+    "linha": 276,
+    "frase": "\\textcite{Zauner2010ImplementationAB} discute a implementação e avaliação de funções de hash perceptual, fundamentando o uso desse tipo de técnica na etapa de curadoria dos dados.",
+    "chaves": [
+      "Zauner2010ImplementationAB"
+    ]
+  },
+  {
+    "id": "f026",
+    "secao": "Transferência de Aprendizado, Aumento de Dados e Treinamento",
+    "linha": 280,
+    "frase": "No contexto de visão computacional, pesos pré-treinados em bases como \\ac{COCO} são frequentemente empregados antes do ajuste fino (\\textit{fine-tuning}) em dados específicos \\cite{Tan2018TransferLearning}.",
+    "chaves": [
+      "Tan2018TransferLearning"
+    ]
+  },
+  {
+    "id": "f027",
+    "secao": "Transferência de Aprendizado, Aumento de Dados e Treinamento",
+    "linha": 282,
+    "frase": "Revisões sobre aumento de dados indicam que essas técnicas podem reduzir sobreajuste e melhorar a capacidade de generalização de modelos de aprendizado profundo, desde que sejam compatíveis com o domínio da aplicação \\cite{Shorten2019,Mumuni2022DataAugmentation}.",
+    "chaves": [
+      "Shorten2019",
+      "Mumuni2022DataAugmentation"
+    ]
+  },
+  {
+    "id": "f028",
+    "secao": "Transferência de Aprendizado, Aumento de Dados e Treinamento",
+    "linha": 282,
+    "frase": "Em arquiteturas da família \\ac{YOLO}, estratégias como o mosaico também foram utilizadas para aumentar a diversidade espacial das amostras durante o treinamento \\cite{Bochkovskiy2020YOLOv4}.",
+    "chaves": [
+      "Bochkovskiy2020YOLOv4"
+    ]
+  },
+  {
+    "id": "f029",
+    "secao": "Aplicações Android e Coleta de Métricas no Dispositivo",
+    "linha": 286,
+    "frase": "O uso de \\textit{frameworks} como Flutter permite desenvolver interfaces móveis e integrar recursos do dispositivo, facilitando a criação de protótipos experimentais para avaliação de modelos em ambiente real de uso \\cite{Flutter2024}.",
+    "chaves": [
+      "Flutter2024"
+    ]
+  },
+  {
+    "id": "f030",
+    "secao": "Aplicações Android e Coleta de Métricas no Dispositivo",
+    "linha": 288,
+    "frase": "Esse tipo de avaliação demonstra que os resultados obtidos em ambiente de desenvolvimento nem sempre refletem o comportamento observado em \\textit{smartphones} reais, nos quais há variação de \\textit{hardware}, gerenciamento térmico e concorrência por recursos \\cite{Chu2023nnPerf,Hirsch2025Exploring}.",
+    "chaves": [
+      "Chu2023nnPerf",
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f031",
+    "secao": "Trabalhos Relacionados",
+    "linha": 338,
+    "frase": "Em 2021, \\textcite{Bazame2021Detection} trataram a detecção da",
+    "chaves": [
+      "Bazame2021Detection"
+    ]
+  },
+  {
+    "id": "f032",
+    "secao": "Trabalhos Relacionados",
+    "linha": 350,
+    "frase": "Ainda em 2021, a revisão de \\textcite{Alzubaidi2021Review} descreve conceitos, arquiteturas e aplicações de aprendizado profundo, com destaque para o papel das \\ac{CNN} em tarefas de visão computacional. O estudo também aponta desafios recorrentes, como demanda por bases de dados representativas, custo computacional, escolha de arquitetura e capacidade de generalização.",
+    "chaves": [
+      "Alzubaidi2021Review"
+    ]
+  },
+  {
+    "id": "f033",
+    "secao": "Trabalhos Relacionados",
+    "linha": 352,
+    "frase": "Em 2022, \\textcite{Zhao2022A} discutem a inferência móvel a partir de",
+    "chaves": [
+      "Zhao2022A"
+    ]
+  },
+  {
+    "id": "f034",
+    "secao": "Trabalhos Relacionados",
+    "linha": 362,
+    "frase": "Em 2023, no estudo de \\textcite{Chu2023nnPerf}, a contribuição principal não se concentra na proposição de uma",
+    "chaves": [
+      "Chu2023nnPerf"
+    ]
+  },
+  {
+    "id": "f035",
+    "secao": "Trabalhos Relacionados",
+    "linha": 372,
+    "frase": "Em 2023, \\textcite{Menghani2023Efficient} discute técnicas de eficiência",
+    "chaves": [
+      "Menghani2023Efficient"
+    ]
+  },
+  {
+    "id": "f036",
+    "secao": "Trabalhos Relacionados",
+    "linha": 380,
+    "frase": "No contexto específico da cafeicultura, \\textcite{Eron2024Computer} apresentam",
+    "chaves": [
+      "Eron2024Computer"
+    ]
+  },
+  {
+    "id": "f037",
+    "secao": "Trabalhos Relacionados",
+    "linha": 389,
+    "frase": "Para \\textcite{Gope2024Comparative}, a comparação entre variantes do \\ac{YOLO} foi",
+    "chaves": [
+      "Gope2024Comparative"
+    ]
+  },
+  {
+    "id": "f038",
+    "secao": "Trabalhos Relacionados",
+    "linha": 398,
+    "frase": "Enquanto \\textcite{Kazama2024Monitoring} investigaram diretamente a maturação de",
+    "chaves": [
+      "Kazama2024Monitoring"
+    ]
+  },
+  {
+    "id": "f039",
+    "secao": "Trabalhos Relacionados",
+    "linha": 409,
+    "frase": "Na mesma direção, \\textcite{Ye2025ASD} propuseram o ASD-YOLO, construído",
+    "chaves": [
+      "Ye2025ASD"
+    ]
+  },
+  {
+    "id": "f040",
+    "secao": "Trabalhos Relacionados",
+    "linha": 419,
+    "frase": "Já no trabalho de \\textcite{Wang2024YOLOv10}, a contribuição está associada à proposição",
+    "chaves": [
+      "Wang2024YOLOv10"
+    ]
+  },
+  {
+    "id": "f041",
+    "secao": "Trabalhos Relacionados",
+    "linha": 429,
+    "frase": "No trabalho de \\textcite{Thai2024Coffee}, a classificação automática de defeitos",
+    "chaves": [
+      "Thai2024Coffee"
+    ]
+  },
+  {
+    "id": "f042",
+    "secao": "Trabalhos Relacionados",
+    "linha": 438,
+    "frase": "Por fim, em \\textcite{Hirsch2025Exploring}, a inferência de modelos de visão",
+    "chaves": [
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f043",
+    "secao": "Trabalhos Relacionados",
+    "linha": 467,
+    "frase": "2021 & \\textcite{Bazame2021Detection} & YOLOv3-Tiny para detectar, classificar e mapear",
+    "chaves": [
+      "Bazame2021Detection"
+    ]
+  },
+  {
+    "id": "f044",
+    "secao": "Trabalhos Relacionados",
+    "linha": 473,
+    "frase": "2021 & \\textcite{Alzubaidi2021Review} & Revisão sobre aprendizado profundo, arquiteturas de \\ac{CNN}, desafios e aplicações.",
+    "chaves": [
+      "Alzubaidi2021Review"
+    ]
+  },
+  {
+    "id": "f045",
+    "secao": "Trabalhos Relacionados",
+    "linha": 475,
+    "frase": "2022 & \\textcite{Zhao2022A} & Revisão sobre inferência de aprendizado profundo",
+    "chaves": [
+      "Zhao2022A"
+    ]
+  },
+  {
+    "id": "f046",
+    "secao": "Trabalhos Relacionados",
+    "linha": 480,
+    "frase": "2023 & \\textcite{Chu2023nnPerf} & nnPerf para \\textit{profiling} de",
+    "chaves": [
+      "Chu2023nnPerf"
+    ]
+  },
+  {
+    "id": "f047",
+    "secao": "Trabalhos Relacionados",
+    "linha": 485,
+    "frase": "2023 & \\textcite{Menghani2023Efficient} & Revisão sobre quantização, poda, compressão e",
+    "chaves": [
+      "Menghani2023Efficient"
+    ]
+  },
+  {
+    "id": "f048",
+    "secao": "Trabalhos Relacionados",
+    "linha": 490,
+    "frase": "2024 & \\textcite{Eron2024Computer} & Monitoramento inteligente do café com visão computacional e modelo baseado em YOLOv7.",
+    "chaves": [
+      "Eron2024Computer"
+    ]
+  },
+  {
+    "id": "f049",
+    "secao": "Trabalhos Relacionados",
+    "linha": 492,
+    "frase": "2024 & \\textcite{Gope2024Comparative} & Comparação entre YOLOv3, YOLOv4, YOLOv5, YOLOv7,",
+    "chaves": [
+      "Gope2024Comparative"
+    ]
+  },
+  {
+    "id": "f050",
+    "secao": "Trabalhos Relacionados",
+    "linha": 498,
+    "frase": "2024 & \\textcite{Kazama2024Monitoring} & YOLOv8n com RFCAConv para classificação de",
+    "chaves": [
+      "Kazama2024Monitoring"
+    ]
+  },
+  {
+    "id": "f051",
+    "secao": "Trabalhos Relacionados",
+    "linha": 503,
+    "frase": "2024 & \\textcite{Wang2024YOLOv10} & YOLOv10 para detecção em tempo real de",
+    "chaves": [
+      "Wang2024YOLOv10"
+    ]
+  },
+  {
+    "id": "f052",
+    "secao": "Trabalhos Relacionados",
+    "linha": 508,
+    "frase": "2024 & \\textcite{Thai2024Coffee} & YOLOv8, OpenCV, aplicativo móvel e nuvem para",
+    "chaves": [
+      "Thai2024Coffee"
+    ]
+  },
+  {
+    "id": "f053",
+    "secao": "Trabalhos Relacionados",
+    "linha": 513,
+    "frase": "2025 & \\textcite{Ye2025ASD} & ASD-YOLO, sobre o YOLOv7, com atenção",
+    "chaves": [
+      "Ye2025ASD"
+    ]
+  },
+  {
+    "id": "f054",
+    "secao": "Trabalhos Relacionados",
+    "linha": 519,
+    "frase": "2025 & \\textcite{Hirsch2025Exploring} & Avaliação de inferência de visão computacional em",
+    "chaves": [
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f055",
+    "secao": "Trabalhos Relacionados",
+    "linha": 563,
+    "frase": "Enquanto \\textcite{Hirsch2025Exploring} avaliam inferência móvel",
+    "chaves": [
+      "Hirsch2025Exploring"
+    ]
+  },
+  {
+    "id": "f056",
+    "secao": "Trabalhos Relacionados",
+    "linha": 564,
+    "frase": "sem uso de \\ac{YOLO} e \\textcite{Chu2023nnPerf} investigam",
+    "chaves": [
+      "Chu2023nnPerf"
+    ]
+  },
+  {
+    "id": "f057",
+    "secao": "Anotação e Organização dos Dados",
+    "linha": 682,
+    "frase": "As anotações foram realizadas utilizando a plataforma MakeSense.ai \\cite{Makesense2024}.",
+    "chaves": [
+      "Makesense2024"
+    ]
+  },
+  {
+    "id": "f058",
+    "secao": "Pré-processamento dos Dados",
+    "linha": 852,
+    "frase": "Essas operações contribuem para aumentar a capacidade de generalização dos modelos e reduzir efeitos associados ao sobreajuste (\\textit{overfitting}) \\cite{Shorten2019,Mumuni2022DataAugmentation}.",
+    "chaves": [
+      "Shorten2019",
+      "Mumuni2022DataAugmentation"
+    ]
+  },
+  {
+    "id": "f059",
+    "secao": "Ambiente Computacional",
+    "linha": 956,
+    "frase": "Para o desenvolvimento da aplicação Android foi utilizado o \\textit{framework} Flutter \\cite{Flutter2024}, responsável pela integração dos modelos treinados e pela execução dos experimentos em \\textit{smartphones}.",
+    "chaves": [
+      "Flutter2024"
+    ]
+  },
+  {
+    "id": "f060",
+    "secao": "Treinamento dos Modelos",
+    "linha": 992,
+    "frase": "Os modelos foram inicializados a partir de pesos pré-treinados no conjunto de dados \\ac{COCO}, empregando a estratégia de \\textit{transfer learning} por meio de \\textit{fine-tuning} \\cite{Tan2018TransferLearning}.",
+    "chaves": [
+      "Tan2018TransferLearning"
+    ]
+  },
+  {
+    "id": "f061",
+    "secao": "Conversão dos Modelos para TFLite",
+    "linha": 1060,
+    "frase": "Essas estratégias permitem reduzir o tamanho final dos modelos e, em determinados cenários, melhorar o tempo de inferência e a eficiência energética dos dispositivos móveis \\cite{Menghani2023Efficient}.",
+    "chaves": [
+      "Menghani2023Efficient"
+    ]
+  },
+  {
+    "id": "f062",
+    "secao": "Aplicação Android",
+    "linha": 1110,
+    "frase": "\\textit{framework} Flutter \\cite{Flutter2024}.",
+    "chaves": [
+      "Flutter2024"
+    ]
+  },
+  {
+    "id": "f063",
+    "secao": "Desempenho dos Modelos de Detecção",
+    "linha": 1564,
+    "frase": "\\textcite{Wang2024YOLOv10}, na qual a remoção da etapa de supressão não máxima",
+    "chaves": [
+      "Wang2024YOLOv10"
+    ]
+  },
+  {
+    "id": "f064",
+    "secao": "Desempenho dos Modelos de Detecção",
+    "linha": 1660,
+    "frase": "Comparativamente, \\textcite{Kazama2024Monitoring} reportaram \\ac{mAP}@0,50 de",
+    "chaves": [
+      "Kazama2024Monitoring"
+    ]
+  },
+  {
+    "id": "f065",
+    "secao": "Incompatibilidade do YOLOv10n com o delegate",
+    "linha": 1865,
+    "frase": "A supressão da etapa de \\ac{NMS}, que constitui sua principal contribuição \\cite{Wang2024YOLOv10}, é obtida por meio de uma seleção de candidatos realizada no próprio grafo computacional, o que introduz as operações \\texttt{TOPK\\_V2} e \\texttt{GATHER\\_ND}, além de conversões de tipo para \\texttt{INT64}.",
+    "chaves": [
+      "Wang2024YOLOv10"
+    ]
+  },
+  {
+    "id": "f066",
+    "secao": "Incompatibilidade do YOLOv10n com o delegate",
+    "linha": 1867,
+    "frase": "Esse comportamento está previsto na documentação do \\textit{delegate}, segundo a qual operações não suportadas levam à execução parcial do grafo e o custo de sincronização entre os dois processadores torna o resultado, com frequência, mais lento do que a execução integral em \\ac{CPU} \\cite{GoogleAIEdge2026GPU}.",
+    "chaves": [
+      "GoogleAIEdge2026GPU"
+    ]
+  },
+  {
+    "id": "f067",
+    "secao": "Limitações das medidas",
+    "linha": 2231,
+    "frase": "Protocolos de avaliação de inferência em dispositivos móveis recorrem à fixação das frequências de operação e ao resfriamento ativo do aparelho para conter esse efeito \\cite{Li2024Benchmark}, recursos incompatíveis com uma coleta conduzida por terceiros em aparelhos próprios.",
+    "chaves": [
+      "Li2024Benchmark"
+    ]
+  },
+  {
+    "id": "f068",
+    "secao": "Limitações de escopo",
+    "linha": 2245,
+    "frase": "\\textbf{\\textit{Delegate} NNAPI não avaliado.} A \\ac{NNAPI}, que direciona a inferência a aceleradores dedicados do \\ac{SoC}, foi depreciada a partir do Android~15, e a própria documentação recomenda a migração para o \\ac{TFLite} \\cite{Android2026NNAPI}.",
+    "chaves": [
+      "Android2026NNAPI"
+    ]
+  },
+  {
+    "id": "f069",
+    "secao": "Quanto à Classificação do Estágio de Maturação",
+    "linha": 2330,
+    "frase": "Classificar o estágio de frutos que o detector não encontra não melhora a estimativa de maturação do talhão, e a precisão da localização constitui, portanto, a restrição que vincula o resultado final. Trabalhos que classificam maturação de frutos de café em campo partem de detectores ajustados a esse fim \\cite{Ye2025ASD, Kazama2024Monitoring}, o que reforça a ordem adotada aqui.",
+    "chaves": [
+      "Ye2025ASD",
+      "Kazama2024Monitoring"
+    ]
+  },
+  {
+    "id": "f070",
+    "secao": "Trabalhos Futuros",
+    "linha": 2344,
+    "frase": "A instrumentação necessária está descrita em protocolos de avaliação de inferência móvel \\cite{Li2024Benchmark}.",
+    "chaves": [
+      "Li2024Benchmark"
+    ]
+  }
+]
