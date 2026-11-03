@@ -71,3 +71,36 @@ Depreciação da NNAPI a partir do Android~15 com recomendação de migração
 para o TFLite; operações não suportadas pelo delegate de GPU levam a
 particionamento do grafo, cujo custo de sincronização torna o resultado
 com frequência mais lento do que a execução integral em CPU.
+
+## Wang2024YOLOv10 — arXiv 2405.14458
+Treinamento sem supressão não máxima por atribuição dupla consistente,
+voltado à implantação de ponta a ponta. No COCO com entrada de 640, o
+YOLOv10-N apresenta AP de 38,5%, 2,3 milhões de parâmetros, 6,7 bilhões
+de operações e latência de 1,84~ms; o YOLOv10-X apresenta AP de 54,4%,
+29,5 milhões de parâmetros e latência de 10,70~ms. Confere com o texto.
+
+## Menghani2023Efficient — ACM Computing Surveys 55, arXiv 2106.08962
+Levantamento sobre compressão, aprendizado, automação, arquiteturas
+eficientes e infraestrutura, cobrindo poda, quantização pós-treinamento e
+consciente de treinamento, fatoração de baixo posto e destilação.
+Defende escolher o modelo pelos compromissos que importam à aplicação.
+Observação útil: no exemplo do próprio levantamento, a quantização
+pós-treinamento do MobileNet~v2 reduz o arquivo de 14~MB para 3,6~MB mas
+**aumenta** a latência, de 89 para 98~ms, ao passo que a quantização
+consciente de treinamento a reduz para 54~ms. O ganho de latência em
+INT8, portanto, não é automático, o que coincide com o medido neste TCC.
+
+## Chu2023nnPerf — SenSys '23, DOI 10.1145/3625687.3625797
+Ferramenta de profiling em tempo real, executada no próprio aparelho,
+implementada sobre o TFLite, que mede latência de ponta a ponta, por
+operador e por núcleo, avaliada em quatro plataformas móveis em CPU e em
+GPU. O resumo **não** apresenta variação de comportamento de delegates
+entre SoC como resultado.
+
+## Alzubaidi2021Review — Journal of Big Data 8, 53
+Revisão ampla de aprendizado profundo, com conceitos, categorias de
+aprendizado, evolução das arquiteturas de CNN da AlexNet à HRNetV2 e
+aplicações. Trata a CNN como a rede mais usada e adequada a dados
+bidimensionais. Lista como desafios a falta de dados de treinamento, o
+sobreajuste, o desbalanceamento, a interpretabilidade e a compressão de
+modelos; o custo computacional aparece de forma indireta.

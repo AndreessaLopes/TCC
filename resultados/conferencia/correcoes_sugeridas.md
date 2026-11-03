@@ -93,3 +93,32 @@ restrito. Cada uma leva menos de um minuto pelo portal de periódicos.
 Observação sobre a segunda: a notação "mAP@0,95" não é usual. Se o valor
 for o mAP calculado sobre limiares de 0,50 a 0,95, a notação correta é
 mAP@0,50--0,95, como no restante do trabalho.
+
+## f017 — resultado atribuído a Chu e outros
+
+**Frase (fundamentação).** "Chu e outros demonstraram que o comportamento
+dos delegates varia entre diferentes SoC, indicando a necessidade de
+avaliação experimental em dispositivos reais."
+
+**Obra citada.** Chu2023nnPerf.
+
+**Resultado.** Não sustenta. A obra propõe o nnPerf, ferramenta de
+profiling de latência em nível de operador e de núcleo sobre o TFLite,
+avaliada em quatro plataformas móveis em CPU e em GPU. O resumo não
+apresenta variação de comportamento de delegates entre SoC como
+resultado.
+
+**Resolvida em 2026-11-03.** A frase passa a descrever o que a obra
+apresenta e mantém a conclusão sobre medição em dispositivos reais, que
+decorre do próprio escopo da ferramenta.
+
+## Verificação pendente, segunda leva
+
+| Obra | O que conferir | Onde aparece |
+|---|---|---|
+| Zhao2022A | se o levantamento aponta o TFLite para execução local sob restrição de conectividade, e se relaciona quantização, poda e aceleradores a consumo energético | f016, f023 |
+| Hirsch2025Exploring | número de aparelhos do testbed, métricas medidas e a afirmação de que modelos com latência semelhante podem ter consumo distinto conforme delegate e aparelho | f020, f022, f042, f054 |
+
+Ambas têm texto completo em periódico que este ambiente não alcança,
+Proceedings of the IEEE e Sensors. Pelo Portal de Periódicos o acesso é
+direto.
