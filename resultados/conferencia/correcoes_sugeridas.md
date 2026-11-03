@@ -157,3 +157,33 @@ das duas obras citadas.
 passa a sustentar a participação do arábica na área plantada, que a
 página declara e que situa o conjunto de dados deste trabalho, composto
 por cultivares de fruto vermelho e amarelo.
+
+## f022 — resultado sobre delegates atribuído a Hirsch
+
+**Resultado.** Não sustenta. O artigo não menciona delegates em passagem
+alguma. Avalia três modelos pré-treinados em oito nós heterogêneos, cinco
+smartphones e três computadores de placa única, comparando latência e
+eficiência energética entre configurações.
+
+**Resolvida em 2026-11-03.** A frase passa a descrever o que o trabalho
+avalia.
+
+## f016 — recomendação do TFLite atribuída a Zhao
+
+**Resultado.** Parcial. O levantamento descreve o TFLite entre os
+arcabouços para dispositivos de recursos limitados, e em uma passagem o
+apresenta como superado por outro arcabouço em 8,8 vezes. Não o aponta
+como alternativa adequada para cenários de conectividade restrita. As
+vantagens da inferência local que o trabalho de fato enuncia são
+privacidade, custo de comunicação e custo de sistema.
+
+**Resolvida em 2026-11-03.** A frase passa a dizer o que a obra afirma.
+
+## f010 — citação que não sustenta a afirmação
+
+**Resultado.** Parcial. A frase atribui a quatro obras a afirmação de que
+o TFLite oferece quantização e aceleração por hardware. Hirsch não trata
+dos recursos do TFLite, que ali aparece apenas como formato de modelo e
+ferramenta de medição.
+
+**Resolvida em 2026-11-03.** A citação de Hirsch sai da frase.

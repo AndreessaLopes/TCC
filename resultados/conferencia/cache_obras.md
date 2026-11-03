@@ -126,3 +126,32 @@ detector de estágio único; Zauner2010ImplementationAB, implementação e
 avaliação de funções de hash perceptual; Shorten2019, levantamento sobre
 aumento de dados para aprendizado profundo. Em todas, a afirmação do
 texto corresponde ao objeto declarado da obra.
+
+## Gope2024Comparative — texto completo conferido
+"our custom-YOLOv8n model performed the best, with a precision of 0.977,
+recall of 0.990, f1-score of 0.983, and mAP of 0.995". Os quatro valores
+do texto conferem.
+
+## Kazama2024Monitoring — notação do mAP conferida
+"achieves a mAP of 74.20 % at an IoU threshold of 0.50 and 45.90 % at
+0.95". O artigo usa mesmo mAP@0,95 para o limiar de 0,95, e não para a
+faixa de 0,50 a 0,95. A notação do TCC reproduz a da fonte.
+
+## Hirsch2025Exploring — Sensors 25, 2875
+Três modelos pré-treinados em oito nós heterogêneos, cinco smartphones de
+desempenho baixo e intermediário e três computadores de placa única.
+Compara latência e eficiência energética entre agrupamentos de aparelhos
+e configurações apenas com placa única, e mede o impacto sobre o nível de
+bateria. **A palavra delegate não aparece no artigo**, e o TFLite é
+mencionado apenas como formato de modelo e ferramenta de medição.
+
+## Zhao2022A — Proceedings of the IEEE 110(3)
+Levantamento sobre adoção e implantação de aprendizado profundo em
+dispositivos móveis. Aponta como vantagens da inferência local, ante
+servidores remotos, a privacidade dos dados, o custo de comunicação e o
+custo de sistema. Descreve o TFLite como versão leve do TensorFlow
+adotada em dispositivos de recursos limitados e, em outra passagem, como
+arcabouço popular e altamente otimizado, ali superado por outro em 8,8
+vezes. **Não o recomenda para cenários de conectividade restrita.**
+Sustenta a relação entre poda, quantização, aceleradores e eficiência
+energética.
