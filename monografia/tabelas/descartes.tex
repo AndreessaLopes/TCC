@@ -1,0 +1,26 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Efeito do descarte de medições sobre a latência de inferência
+das configurações afetadas}
+\label{tab:descartes}
+\begin{tabular}{llrrrr}
+\toprule
+\textbf{Configuração} & \textbf{Medições} & \textbf{n} &
+\textbf{Média} & \textbf{p95} & \textbf{CV} \\
+ &  &  & (ms) & (ms) & (\%) \\
+\midrule
+YOLOv8n \ac{FP32} \ac{GPU} & Com descarte & 284 & 64,5 & 101,8 & 28,5 \\
+ & Sem descarte & 285 & 64,4 & 101,8 & 28,5 \\
+\midrule
+YOLOv8n \ac{INT8} \ac{GPU} & Com descarte & 281 & 104,0 & 150,5 & 21,2 \\
+ & Sem descarte & 285 & 104,1 & 151,2 & 21,3 \\
+\bottomrule
+\end{tabular}
+\legend{Elaborada pela autora (2026). A linha com descarte reproduz a
+Tabela~\ref{tab:latencia_inferencia} e a linha sem descarte incorpora as
+medições excluídas pelo critério. No YOLOv8n \ac{FP32} \ac{GPU} foi excluída test\_166.jpg, com inferência de 53,41~ms e total de 3.441,22~ms. No YOLOv8n \ac{INT8} \ac{GPU} foram excluídas test\_161.jpg, com inferência de 92,68~ms e total de 3.697,67~ms, test\_166.jpg, com inferência de 117,00~ms e total de 4.271,73~ms, test\_183.jpg, com inferência de 87,15~ms e total de 3.607,33~ms e test\_537.jpg, com inferência de 152,42~ms e total de 3.379,43~ms. O
+coeficiente de variação emprega desvio populacional e o p95 emprega
+interpolação linear, nas mesmas convenções da
+Tabela~\ref{tab:latencia_inferencia}.}
+\end{table}
