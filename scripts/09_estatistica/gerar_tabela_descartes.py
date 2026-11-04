@@ -60,25 +60,18 @@ def milhar(x):
 
 
 linhas = []
-descartados = []
+brutos = []
 for rotulo, marca in ALVOS:
     registros = carregar(marca)
     mantidas = [r for r in registros
                 if r.get("descartada", "0").strip() in ("0", "")]
     fora = [r for r in registros
             if r.get("descartada", "0").strip() not in ("0", "")]
-    if fora:
-        itens = ["%s, com inferência de %s~ms e total de %s~ms"
-                 % (r["arquivo"].replace("_", "\\_"),
-                    milhar(float(r["inferencia_ms"])),
-                    milhar(float(r["total_ms"]))) for r in fora]
-        descartados.append("No %s %s excluída%s %s"
-                           % (rotulo,
-                              "foi" if len(itens) == 1 else "foram",
-                              "" if len(itens) == 1 else "s",
-                              ", ".join(itens[:-1]) + (
-                                  " e " + itens[-1] if len(itens) > 1
-                                  else itens[0])))
+    for r in fora:
+        brutos.append("%s & %s & %s & %s \\\\"
+                      % (rotulo, r["arquivo"].replace("_", "\\_"),
+                         milhar(float(r["inferencia_ms"])),
+                         milhar(float(r["total_ms"]))))
 
     a = resumo(float(r["inferencia_ms"]) for r in mantidas)
     b = resumo(float(r["inferencia_ms"]) for r in registros)
@@ -106,15 +99,33 @@ das configurações afetadas}
 \\end{tabular}
 \\legend{Elaborada pela autora (2026). A linha com descarte reproduz a
 Tabela~\\ref{tab:latencia_inferencia} e a linha sem descarte incorpora as
-medições excluídas pelo critério. %s. O
-coeficiente de variação emprega desvio populacional e o p95 emprega
-interpolação linear, nas mesmas convenções da
-Tabela~\\ref{tab:latencia_inferencia}.}
+medições excluídas pelo critério, relacionadas na
+Tabela~\\ref{tab:descartes_brutos}. O coeficiente de variação emprega desvio
+populacional e o p95 emprega interpolação linear, nas mesmas convenções
+daquela tabela.}
 \\end{table}
-""" % (
-    "\n".join(linhas),
-    ". ".join(descartados),
-)
+""" % "\n".join(linhas)
+
+texto += """
+\\begin{table}[H]
+\\centering
+\\small
+\\caption{Medições excluídas pelo critério de descarte}
+\\label{tab:descartes_brutos}
+\\begin{tabular}{llrr}
+\\toprule
+\\textbf{Configuração} & \\textbf{Imagem} & \\textbf{Inferência} &
+\\textbf{Total} \\\\
+ &  & (ms) & (ms) \\\\
+\\midrule
+%s
+\\bottomrule
+\\end{tabular}
+\\legend{Elaborada pela autora (2026). A latência de inferência situa-se na
+faixa da respectiva execução, ao passo que a latência total alcança cerca do
+dobro da média, o que localiza a anomalia na preparação da imagem.}
+\\end{table}
+""" % "\n".join(brutos)
 
 os.makedirs(SAIDA, exist_ok=True)
 caminho = os.path.join(SAIDA, "descartes.tex")

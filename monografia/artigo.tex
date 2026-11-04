@@ -11,6 +11,11 @@
 \usetikzlibrary{positioning, arrows.meta}
 \usepackage{adjustbox}
 \usepackage{pdflscape}
+% O iftex2024.cls carrega o hyperref sem desligar a moldura de
+% anotacao, que o leitor de PDF desenha em volta de todo link, como
+% as siglas do \ac e os numeros do \ref. O hidelinks remove a
+% moldura e mantem o link ativo, sem alterar a cor do texto.
+\hypersetup{hidelinks}
 \graphicspath{{figuras/}}
 \hbadness=10000
 \setcounter{topnumber}{3}
@@ -1766,11 +1771,6 @@ Esta subseção apresenta os resultados da execução dos modelos convertidos no
 
 Cada execução processou as mesmas 285 imagens da partição de teste, precedida de dez inferências de aquecimento descartadas da apuração. A ordem das imagens foi mantida constante entre execuções. A aplicação descarta da apuração a medição cuja latência total supera o terceiro quartil acrescido de três vezes a amplitude interquartil da própria execução, critério fixado antes da coleta e destinado a excluir suspensões do processo pelo sistema operacional. O descarte ocorreu em duas configurações, com uma medição no YOLOv8n \ac{FP32} em \ac{GPU} e quatro no YOLOv8n \ac{INT8} em \ac{GPU}. A configuração YOLOv8n \ac{FP16} em \ac{GPU} registrou 283 medições, uma vez que duas imagens não produziram registro no arquivo de saída, ausência cuja causa não foi identificada e que permanece classificada como dado faltante. Esses valores explicam a coluna n da Tabela~\ref{tab:latencia_inferencia}.
 
-O efeito do descarte sobre os indicadores de latência de inferência consta da Tabela~\ref{tab:descartes}. As medições excluídas apresentam latência de inferência compatível com a distribuição da própria execução, entre 53,41~ms e 152,42~ms, e latência total entre 3.379,43~ms e 4.271,73~ms, da ordem do dobro da média da execução. O descarte altera a média da latência de inferência em até 0,1~ms, o p95 em até 0,7~ms e o coeficiente de variação em até 0,1 ponto percentual, de modo que não melhora de forma apreciável os indicadores de estabilidade da inferência. O critério incide sobre a latência total porque a anomalia que ele visa, a suspensão do processo pelo sistema operacional, manifesta-se na preparação da imagem e não na inferência, leitura compatível com os valores observados.
-
-\input{tabelas/descartes.tex}
-
-
 \subsubsection{Latência de inferência}
 \label{sec:latencia_inferencia}
 
@@ -1842,6 +1842,12 @@ No YOLOv8n o \textit{delegate} \ac{GPU} reduz a latência de inferência por fat
 conforme a Subseção~\ref{sec:incerteza}. A configuração \ac{INT8} sequer é executável.
 
 O contraste é sistemático e de magnitude incompatível com variação de condições entre execuções. Duas observações o sustentam. A primeira é que as execuções em \ac{GPU} de 10 de setembro incluem configurações das duas arquiteturas medidas com vinte minutos de intervalo, sendo o YOLOv10n \ac{FP32} às 08h50 (462,3~ms) e o YOLOv8n \ac{FP16} às 09h10 (69,2~ms), sob condições térmicas e de carga equivalentes. A segunda é que a diferença entre arquiteturas em \ac{CPU} é pequena (303,6 contra 313,9~ms em \ac{FP32}), de modo que a disparidade emerge exclusivamente quando o \textit{delegate} \ac{GPU} é acionado.
+
+O efeito do descarte sobre os indicadores de latência de inferência consta da Tabela~\ref{tab:descartes}. As medições excluídas, relacionadas na Tabela~\ref{tab:descartes_brutos}, apresentam latência de inferência compatível com a distribuição da própria execução, entre 53,41~ms e 152,42~ms, e latência total entre 3.379,43~ms e 4.271,73~ms, da ordem do dobro da média da execução. O descarte altera a média da latência de inferência em até 0,1~ms, o p95 em até 0,7~ms e o coeficiente de variação em até 0,1 ponto percentual, de modo que não melhora de forma apreciável os indicadores de estabilidade da inferência. O critério incide sobre a latência total porque a anomalia que ele visa, a suspensão do processo pelo sistema operacional, manifesta-se na preparação da imagem e não na inferência, leitura compatível com os valores observados.
+
+\input{tabelas/descartes.tex}
+
+\FloatBarrier
 
 \subsubsection{Precisão das estimativas e comparação entre
 \textit{delegates}}
