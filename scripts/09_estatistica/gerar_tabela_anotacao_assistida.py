@@ -56,12 +56,8 @@ subconjunto não submetido a anotação assistida por modelo}
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). As 194 imagens correspondem à
-partição de teste após a retirada dos 91 arquivos cujas caixas foram
-propostas pelo modelo auxiliar. Ambas as medições empregaram os mesmos
-ajustes de avaliação, com entrada de 960~pixels e preenchimento até o
-quadrado. Valores obtidos com o avaliar\\_teste\\_limpo.py e registrados em
-resultados/csv/metricas\\_teste\\_limpo.csv.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{As 194 imagens correspondem à partição de teste após a retirada dos 91 arquivos cujas caixas foram propostas pelo modelo auxiliar. Ambas as medições empregaram os mesmos ajustes de avaliação, com entrada de 960~pixels e preenchimento até o quadrado. Valores obtidos com o avaliar\\_teste\\_limpo.py e registrados em resultados/csv/metricas\\_teste\\_limpo.csv.}
 \\end{table}
 """ % corpo
 

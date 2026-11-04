@@ -208,9 +208,8 @@ gravar("aparelhos.tex", """\\begin{table}[H]
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). O identificador é o informado
-pelo próprio aparelho e registrado em cada arquivo de medição; o nome
-do \\ac{SoC} corresponde à especificação do fabricante para o modelo.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{O identificador é o informado pelo próprio aparelho e registrado em cada arquivo de medição; o nome do \\ac{SoC} corresponde à especificação do fabricante para o modelo.}
 \\end{table}
 """ % "\n".join(linhas_tab))
 
@@ -242,9 +241,8 @@ gráfico, por aparelho}
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). Valores acima da unidade indicam
-ganho do \\textit{delegate} de processador gráfico. O traço assinala
-configuração que não executou.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{Valores acima da unidade indicam ganho do \\textit{delegate} de processador gráfico. O traço assinala configuração que não executou.}
 \\end{table}
 """ % (ajuste_largo,
        "c" * len(codigos),
@@ -323,10 +321,8 @@ mesmo aparelho, em milissegundos}
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). %s A amplitude é a diferença
-entre a maior e a menor média obtidas para a mesma configuração em
-sessões distintas, e a última coluna exprime essa amplitude como
-percentual da média.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{%s A amplitude é a diferença entre a maior e a menor média obtidas para a mesma configuração em sessões distintas, e a última coluna exprime essa amplitude como percentual da média.}
 \\end{table}
 """ % ("rrr" * len(repetidos), cabecalho, sub, "\n".join(corpo),
        " ".join("Em %s, %d sessões sobre Android %s."

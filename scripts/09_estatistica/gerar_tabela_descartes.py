@@ -97,12 +97,8 @@ das configurações afetadas}
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). A linha com descarte reproduz a
-Tabela~\\ref{tab:latencia_inferencia} e a linha sem descarte incorpora as
-medições excluídas pelo critério, relacionadas na
-Tabela~\\ref{tab:descartes_brutos}. O coeficiente de variação emprega desvio
-populacional e o p95 emprega interpolação linear, nas mesmas convenções
-daquela tabela.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{A linha com descarte reproduz a Tabela~\\ref{tab:latencia_inferencia} e a linha sem descarte incorpora as medições excluídas pelo critério, relacionadas na Tabela~\\ref{tab:descartes_brutos}. O coeficiente de variação emprega desvio populacional e o p95 emprega interpolação linear, nas mesmas convenções daquela tabela.}
 \\end{table}
 """ % "\n".join(linhas)
 
@@ -121,9 +117,8 @@ texto += """
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). A latência de inferência situa-se na
-faixa da respectiva execução, ao passo que a latência total alcança cerca do
-dobro da média, o que localiza a anomalia na preparação da imagem.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{A latência de inferência situa-se na faixa da respectiva execução, ao passo que a latência total alcança cerca do dobro da média, o que localiza a anomalia na preparação da imagem.}
 \\end{table}
 """ % "\n".join(brutos)
 

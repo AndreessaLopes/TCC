@@ -11,11 +11,16 @@
 \usetikzlibrary{positioning, arrows.meta}
 \usepackage{adjustbox}
 \usepackage{pdflscape}
-% O iftex2024.cls carrega o hyperref sem desligar a moldura de
-% anotacao, que o leitor de PDF desenha em volta de todo link, como
-% as siglas do \ac e os numeros do \ref. O hidelinks remove a
-% moldura e mantem o link ativo, sem alterar a cor do texto.
-\hypersetup{hidelinks}
+% A classe define apenas \legend, que imprime "Fonte: ...". As normas
+% preveem a nota logo abaixo da fonte, e o \nota abaixo cumpre esse
+% papel sem alterar a classe.
+\newcommand{\nota}[1]{%
+  \begingroup%
+    \parskip=3pt%
+    \par\footnotesize%
+     Nota: #1\par%
+  \endgroup%
+}
 \graphicspath{{figuras/}}
 \hbadness=10000
 \setcounter{topnumber}{3}
@@ -1530,12 +1535,8 @@ Tempo de inferência (ms) & 8,32 & 10,20 \\
 Tempo de pós-processamento (ms) & 1,95 & 0,48 \\
 \bottomrule
 \end{tabular}
-\legend{Elaborada pela autora (2026). Os indicadores de detecção foram
-medidos sobre as 285 imagens do conjunto de teste, com entrada quadrada de
-960~pixels, limiar de confiança de 0,001 e limiar de interseção sobre união
-de 0,700, conforme registro em
-\texttt{resultados/csv/metricas\_teste.csv}. Os tempos são a média de três
-execuções, registradas em \texttt{resultados/csv/tempos\_teste.csv}.}
+\legend{Elaborada pela autora (2026).}
+\nota{Os indicadores de detecção foram medidos sobre as 285 imagens do conjunto de teste, com entrada quadrada de 960~pixels, limiar de confiança de 0,001 e limiar de interseção sobre união de 0,700, conforme registro em \texttt{resultados/csv/metricas\_teste.csv}. Os tempos são a média de três execuções, registradas em \texttt{resultados/csv/tempos\_teste.csv}.}
 \end{table}
 
 Os resultados indicam desempenho de detecção próximo entre as duas
@@ -2066,7 +2067,8 @@ Tabela~\ref{tab:ganho_gpu_dispositivos}. No YOLOv10n o \textit{delegate} \ac{GPU
     \caption{Razão entre a inferência em processador e em processador gráfico, por aparelho, arquitetura e precisão}
     \label{fig:razao_delegates}
     \figuraHorizontal{figuras/razao_delegates.pdf}
-    \legend{Elaborada pela autora (2026). Os aparelhos aparecem ordenados pela latência de inferência do YOLOv8n \ac{FP32} em \ac{CPU}, do mais lento ao mais rápido. A faixa sombreada reúne as razões inferiores à unidade.}
+    \legend{Elaborada pela autora (2026).}
+\nota{Os aparelhos aparecem ordenados pela latência de inferência do YOLOv8n \ac{FP32} em \ac{CPU}, do mais lento ao mais rápido. A faixa sombreada reúne as razões inferiores à unidade.}
 \end{figure}
 
 \input{tabelas/ganho_gpu.tex}

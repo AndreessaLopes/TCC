@@ -89,7 +89,7 @@
 % Espaçamento entre linhas
 \RequirePackage{setspace}%
 % Idioma português
-\RequirePackage[main=brazilian,english]{babel}%
+\RequirePackage[main=brazil,english]{babel}%
 % Referências bibliográficas
 \RequirePackage{biblatexfix}%
 % Metadados

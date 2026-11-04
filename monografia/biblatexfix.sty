@@ -11,35 +11,9 @@ repeatfields,      % Repetir entradas, não usar sublinhado
 giveninits,        % Usar iniciais na bibliografia
 noslsn,            % Omitir SL e SN
 alldates=short,    % Todas as datas abreviadas
-accite,            % Citações com sobrenomes em maiúsculas
 backend=biber]{biblatex}%
 % URLs
 \RequirePackage{xurl}%
-
-% Sobrenomes em maiúsculas também nas citações narrativas (\textcite).
-% A opção accite do biblatex-abnt já resolve as citações parentéticas (\cite),
-% mas o formato narrativo usa textlabelname separadamente.
-\DeclareNameFormat{textlabelname}{%
-  \ifcase\value{uniquename}%
-    \usebibmacro{name:family}%
-      {\MakeUppercase{\namepartfamily}}%
-      {\namepartgiven}%
-      {\namepartprefix}%
-      {\namepartsuffix}%
-  \or%
-    \usebibmacro{name:family-given}%
-      {\MakeUppercase{\namepartfamily}}%
-      {\namepartgiveni}%
-      {\namepartprefix}%
-      {\namepartsuffixi}%
-  \or%
-    \usebibmacro{name:family-given}%
-      {\MakeUppercase{\namepartfamily}}%
-      {\namepartgiven}%
-      {\namepartprefix}%
-      {\namepartsuffix}%
-  \fi%
-  \usebibmacro{name:andothers}}%
 
 % Redefinição do título de referências
 \defbibheading{bibliography}[REFERÊNCIAS]{\vspace*{-12pt}}%
@@ -279,3 +253,4 @@ backend=biber]{biblatex}%
 
 % Correção da abreviação de páginas
 \DeclareFieldFormat*{pages}{p. #1}%
+

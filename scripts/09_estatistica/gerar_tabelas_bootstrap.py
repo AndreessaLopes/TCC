@@ -59,9 +59,8 @@ em milissegundos}
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). O intervalo decorre de reamostragem
-com reposição sobre as imagens, com 10.000 reamostras e percentis 2,5 e
-97,5, conforme \\texttt{scripts/09\\_estatistica/intervalos\\_bootstrap.py}.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{O intervalo decorre de reamostragem com reposição sobre as imagens, com 10.000 reamostras e percentis 2,5 e 97,5, conforme \\texttt{scripts/09\\_estatistica/intervalos\\_bootstrap.py}.}
 \\end{table}
 """ % "\n".join(corpo))
 
@@ -97,10 +96,7 @@ processador gráfico, com intervalo de confiança e significância}
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). Valores acima da unidade indicam ganho
-do \\textit{delegate} de processador gráfico. O intervalo decorre de
-reamostragem conjunta das duas execuções e o valor de $p$, de teste de
-permutação bilateral sobre a diferença das médias, com 10.000 permutações e
-correção de Holm para as cinco comparações.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{Valores acima da unidade indicam ganho do \\textit{delegate} de processador gráfico. O intervalo decorre de reamostragem conjunta das duas execuções e o valor de $p$, de teste de permutação bilateral sobre a diferença das médias, com 10.000 permutações e correção de Holm para as cinco comparações.}
 \\end{table}
 """ % "\n".join(corpo))

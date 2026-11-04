@@ -47,11 +47,8 @@ io.open(destino, "w", encoding="utf-8").write("""\\begin{table}[H]
 %s
 \\bottomrule
 \\end{tabular}
-\\legend{Elaborada pela autora (2026). A faixa decorre da área que a caixa
-anotada ocupa na entrada de 960~pixels, com os limites convencionais de 32 e
-96~pixels de lado. A instância é considerada encontrada quando alguma detecção
-com confiança igual ou superior a 0,25 alcança interseção sobre união de 0,50
-com ela.}
+\\legend{Elaborada pela autora (2026).}
+\\nota{A faixa decorre da área que a caixa anotada ocupa na entrada de 960~pixels, com os limites convencionais de 32 e 96~pixels de lado. A instância é considerada encontrada quando alguma detecção com confiança igual ou superior a 0,25 alcança interseção sobre união de 0,50 com ela.}
 \\end{table}
 """ % "\n".join(corpo))
 print("gravado %s" % destino)
