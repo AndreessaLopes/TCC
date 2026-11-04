@@ -1866,10 +1866,7 @@ corrigido por Holm para as cinco comparações possíveis. Dentro da sessão obs
 
 O ganho do \textit{delegate} \ac{GPU} no YOLOv8n situa-se entre 3,48 e 4,90
 conforme a precisão, de modo que a ordem de grandeza do efeito não depende da
-incerteza das estimativas. No YOLOv10n o mesmo \textit{delegate} produz
-perda, de 32\% em \ac{FP32} e de 5\% em \ac{FP16}. A perda em \ac{FP16},
-embora pequena, é distinguível da igualdade, uma vez que o intervalo da razão,
-de 0,92 a 0,98, não contém a unidade.
+incerteza das estimativas. No YOLOv10n o mesmo \textit{delegate} apresenta razão de 0,68 em \ac{FP32} e de 0,95 em \ac{FP16}. A perda de 32\% em \ac{FP32} excede com folga a resolução do experimento. Em \ac{FP16}, embora o intervalo da razão obtido dentro da sessão, de 0,92 a 0,98, não contenha a unidade, a diferença de 5\% situa-se abaixo da resolução entre sessões estabelecida na Subseção~\ref{sec:repetibilidade}, de modo que deve ser interpretada como ausência de ganho demonstrável, e não como perda reproduzível.
 
 \subsubsection{Incompatibilidade do YOLOv10n com o \textit{delegate} GPU}
 \label{sec:v10n_gpu}
