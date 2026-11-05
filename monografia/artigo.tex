@@ -2330,6 +2330,13 @@ O pré-processamento responde pela maior parcela da latência total, conforme a 
 
 Por fim, a confrontação das detecções produzidas no dispositivo com as anotações de referência permitiria verificar a hipótese de introdução de falsos positivos pela quantização \ac{INT8}, aqui apenas sugerida pelo acréscimo no número de detecções.
 
+\section*{DISPONIBILIDADE DOS DADOS E DO CÓDIGO}
+\addcontentsline{toc}{section}{DISPONIBILIDADE DOS DADOS E DO CÓDIGO}
+
+O código de preparação do conjunto de dados, de treinamento, de conversão e de análise, a aplicação Android empregada nas medições, as variantes convertidas para \ac{TFLite} e os arquivos de medição que sustentam cada tabela e cada figura deste trabalho estão depositados em repositório público \cite{Assis2026Repositorio}, sob licença AGPL-3.0-or-later para o código e Creative Commons Atribuição 4.0 Internacional para o conteúdo textual. As tabelas são geradas por script a partir dos arquivos de medição versionados, de modo que podem ser reproduzidas sem acesso às imagens.
+
+O conjunto de imagens de lavoura não integra o depósito, uma vez que as imagens foram adquiridas em propriedades privadas e sua divulgação depende de autorização dos proprietários das áreas, ainda não obtida. Os pesos em formato PyTorch também não foram depositados, por volume, ao passo que as variantes convertidas, que são as efetivamente avaliadas no dispositivo, estão disponíveis.
+
 \section*{REFERÊNCIAS}
 
 \printbibliography

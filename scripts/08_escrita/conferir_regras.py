@@ -192,6 +192,11 @@ for n, l in PROSA:
         # 1.410 e 3.401 sao milhares, grafia correta em portugues.
         if re.match(r"^\d{1,3}\.\d{3}(\D|$)", limpa[m.start():]):
             continue
+        # Versao de licenca e nome proprio, nao numero. AGPL-3.0, CC BY 4.0.
+        antes = limpa[max(0, m.start() - 28):m.start()]
+        if re.search(r"(AGPL|LGPL|GPL|Apache|MIT|BSD|Creative Commons|"
+                     r"CC BY|Atribuição|Python|Android|versão)[\s-]*$", antes):
+            continue
         casos.append((n, trecho))
 anotar("11", "separador decimal com ponto", casos)
 

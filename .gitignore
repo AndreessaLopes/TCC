@@ -85,37 +85,5 @@ cafescan_resultados-*.zip
 
 # PDFs de obras citadas, para conferencia; nao versionados por direito autoral
 artigos/
-_mono_tmp.tgz
-_m2.tgz
-_m3.tgz
-_m4.tgz
-_m5.tgz
-_m6.tgz
-_m7.tgz
-_m8.tgz
-_m9.tgz
-_ma.tgz
-_mb.tgz
-_mc.tgz
-_md.tgz
-_me.tgz
-_mf.tgz
-_mg.tgz
-_mh.tgz
-_mi.tgz
-_mj.tgz
-_mk.tgz
-_ml.tgz
-_mm.tgz
-_mn.tgz
-_mo.tgz
-_mp.tgz
-_mq.tgz
-_mr.tgz
-_ms.tgz
-_mt.tgz
-_mu.tgz
-_mv.tgz
-_mw.tgz
-_mx.tgz
-_my.tgz
+# Pacotes temporarios de transferencia para compilacao fora da maquina
+_m*.tgz
