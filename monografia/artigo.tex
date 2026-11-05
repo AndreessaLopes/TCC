@@ -34,10 +34,6 @@
 \displaywidowpenalty=10000
 % Nao divide palavra hifenizada entre duas paginas.
 \brokenpenalty=10000
-% Impede que a pagina seja virada no meio de um paragrafo. O paragrafo
-% que nao couber migra inteiro para a pagina seguinte, de modo que o
-% raciocinio nunca e cortado na passagem de uma folha para a outra.
-\interlinepenalty=10000
 % Mantem a altura natural do texto, sem esticar os espacos verticais para
 % igualar o rodape de todas as paginas.
 \raggedbottom
@@ -1266,7 +1262,7 @@ A coleta dessas métricas foi realizada diretamente pela aplicação Android des
 
 Os resultados obtidos foram organizados em tabelas e gráficos comparativos, de modo a permitir a análise simultânea do desempenho da detecção e do custo computacional associado a cada configuração experimental, e a identificação da combinação que oferece o melhor equilíbrio entre qualidade da detecção, latência e estabilidade de execução em dispositivos móveis.
 
-\begin{board}[htbp]
+\begin{board}[H]
 \centering
 \caption{Configurações avaliadas experimentalmente}
 \label{quad:configuracoes_experimentos}
@@ -1590,7 +1586,7 @@ prosseguiu por 30 épocas sem superá-lo, o que acionou a parada antecipada na
 executadas, de modo que esse modelo ainda apresentava melhoria quando o
 treinamento foi encerrado.
  
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \caption{Evolução da perda de caixa e das métricas de avaliação ao longo do treinamento}
     \label{fig:curvas_treinamento}
