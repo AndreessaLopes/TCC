@@ -34,3 +34,11 @@ keywords:
   - cafeicultura
 license: AGPL-3.0-or-later
 repository-code: https://github.com/AndreessaLopes/TCC
+doi: 10.5281/zenodo.23989617
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23989617
+    description: DOI de conceito, resolve para a versão mais recente
+  - type: doi
+    value: 10.5281/zenodo.23989618
+    description: DOI da versão 1.0.0

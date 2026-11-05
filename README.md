@@ -116,8 +116,18 @@ documento.
 ## Como citar
 
 Os campos de citação estão em `CITATION.cff`, em formato legível por
-máquina. O depósito no Zenodo possui identificador persistente próprio,
-informado na página do repositório após a publicação da primeira versão.
+máquina. O depósito no Zenodo possui identificador persistente próprio.
+
+| | |
+|---|---|
+| DOI de conceito, resolve para a versão mais recente | [10.5281/zenodo.23989617](https://doi.org/10.5281/zenodo.23989617) |
+| DOI da versão 1.0.0 | [10.5281/zenodo.23989618](https://doi.org/10.5281/zenodo.23989618) |
+
+Em trabalhos que citem este material, prefira o DOI de conceito.
+
+> Lopes de Assis, A. C. (2026). *Desempenho e Estabilidade de Modelos YOLO
+> para Detecção de Frutos de Café em Smartphones: comparação entre delegates
+> TFLite* (Versão 1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.23989617
 
 ## Financiamento
 
