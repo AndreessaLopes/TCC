@@ -1,7 +1,7 @@
 \documentclass[artigo,times,capa]{iftex2024}
 
 % PACOTES NECESSÁRIOS NO PREÂMBULO
-\usepackage{acronym}
+\usepackage[nolist]{acronym}
 \usepackage{float}
 \usepackage[section]{placeins}
 \usepackage{graphicx}
@@ -23,6 +23,20 @@
 }
 \graphicspath{{figuras/}}
 \hbadness=10000
+
+% Controle de quebra de pagina no meio do paragrafo. Os padroes do LaTeX,
+% de 150, sao fracos e permitem que uma ou duas linhas fiquem separadas do
+% restante do paragrafo na virada da pagina, o que interrompe a leitura.
+% As penalidades abaixo proibem que uma unica linha do paragrafo fique
+% separada do restante na virada da pagina.
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+% Nao divide palavra hifenizada entre duas paginas.
+\brokenpenalty=10000
+% Mantem a altura natural do texto, sem esticar os espacos verticais para
+% igualar o rodape de todas as paginas.
+\raggedbottom
 \setcounter{topnumber}{3}
 \setcounter{bottomnumber}{2}
 \setcounter{totalnumber}{5}
@@ -89,11 +103,10 @@ TensorFlow Lite.}
 % SIGLAS
 
 \maketitle
-\newpage
 
-\section*{LISTA DE SIGLAS}
-\addcontentsline{toc}{section}{LISTA DE SIGLAS}
-
+% A lista de siglas nao e impressa, por nao constar do modelo oficial
+% de artigo do curso. As declaracoes abaixo permanecem porque sao elas
+% que fazem o \ac expandir a sigla na primeira ocorrencia.
 \begin{acronym}[OpenCV]
     \acro{CNN}[CNN]{\textit{Convolutional Neural Networks}}
     \acro{COCO}[COCO]{\textit{Common Objects in Context}}
@@ -119,7 +132,6 @@ TensorFlow Lite.}
     \acro{YOLO}[YOLO]{\textit{You Only Look Once}}
 \end{acronym}
 
-\newpage
 \acresetall
 
 % Espaçamento entre linhas das tabelas, conforme o padrão
@@ -1476,7 +1488,7 @@ validação. A Tabela~\ref{tab:resultados_deteccao} apresenta as métricas obtid
 modelo, acompanhadas dos respectivos indicadores de custo computacional medidos
 em ambiente de desenvolvimento.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Desempenho dos modelos de detecção no conjunto de teste}
 \label{tab:resultados_deteccao}
@@ -1900,7 +1912,7 @@ Subseção~\ref{sec:dispersao_multidispositivo}.
 
 A análise da deriva ao longo de cada execução, apresentada na Tabela~\ref{tab:deriva} e na Figura~\ref{fig:deriva_execucao}, esclarece a origem dessa dispersão.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Deriva da latência de inferência ao longo da execução}
 \label{tab:deriva}
