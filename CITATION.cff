@@ -6,11 +6,12 @@ message: >-
   Se este material for utilizado, por favor cite-o conforme os campos
   abaixo.
 type: software
-version: 1.0.0
+version: 1.1.0
 authors:
   - given-names: Andressa Caroline
     family-names: Lopes de Assis
     affiliation: Instituto Federal de Minas Gerais, Campus Bambuí
+    orcid: https://orcid.org/0009-0007-8189-2045
 abstract: >-
   Código, aplicação Android, modelos convertidos para TensorFlow Lite e
   dados de medição do Trabalho de Conclusão de Curso que compara

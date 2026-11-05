@@ -7,7 +7,7 @@ TFLite*.
 
 | | |
 |---|---|
-| Autora | Andressa Caroline Lopes de Assis |
+| Autora | Andressa Caroline Lopes de Assis ([ORCID](https://orcid.org/0009-0007-8189-2045)) |
 | Orientador | Prof. Dr. Bruno Alberto Soares Oliveira |
 | Instituição | Instituto Federal de Minas Gerais, *Campus* Bambuí |
 | Curso | Bacharelado em Engenharia de Computação |
@@ -44,20 +44,24 @@ entrada ao segmento superior, sobre um subconjunto de 30 imagens.
 | `modelos_tflite/` | As seis variantes convertidas, nas três precisões, para as duas arquiteturas |
 | `cafescan/` | Aplicação Android em Flutter empregada na medição em dispositivo |
 | `resultados/` | Dezessete arquivos CSV com as medições, além das figuras geradas |
-| `monografia/` | Fontes LaTeX do documento, tabelas geradas por script e figuras |
 
 ## O que este repositório não contém
 
-O conjunto de imagens de lavoura não integra o depósito. As imagens foram
-adquiridas em propriedades privadas no município de Bambuí, Minas Gerais,
-e sua divulgação depende de autorização específica dos proprietários, ainda
-não obtida. O repositório traz, em contrapartida, os arquivos de medição
-que sustentam cada número publicado, de modo que as tabelas e as figuras do
+**O texto da monografia.** Os fontes do documento permanecem fora do
+repositório até a defesa e a incorporação das correções solicitadas pela
+banca. Após a aprovação, o documento será depositado no repositório
+institucional do IFMG e passará a integrar este repositório.
+
+**O conjunto de imagens de lavoura.** As imagens foram adquiridas em
+propriedades privadas no município de Bambuí, Minas Gerais, e sua
+divulgação depende de autorização específica dos proprietários, ainda não
+obtida. O repositório traz, em contrapartida, os arquivos de medição que
+sustentam cada número publicado, de modo que as tabelas e as figuras do
 documento podem ser regeradas sem acesso às imagens.
 
-Os pesos em formato PyTorch também não são versionados, por volume. As
-variantes convertidas para TensorFlow Lite, que são as efetivamente
-avaliadas no dispositivo, estão disponíveis em `modelos_tflite/`.
+**Os pesos em formato PyTorch**, por volume. As variantes convertidas para
+TensorFlow Lite, que são as efetivamente avaliadas no dispositivo, estão
+disponíveis em `modelos_tflite/`.
 
 ## Procedência dos resultados
 
@@ -95,14 +99,6 @@ python scripts/09_estatistica/intervalos_bootstrap.py
 python scripts/09_estatistica/gerar_tabelas_bootstrap.py
 ```
 
-A compilação do documento exige uma distribuição TeX com `biber`, o pacote
-`biblatex` e os arquivos de idioma português.
-
-```
-cd monografia
-pdflatex artigo.tex && biber artigo && pdflatex artigo.tex && pdflatex artigo.tex
-```
-
 ## Delimitação
 
 Os valores de latência total reportados caracterizam a aplicação
@@ -121,13 +117,12 @@ máquina. O depósito no Zenodo possui identificador persistente próprio.
 | | |
 |---|---|
 | DOI de conceito, resolve para a versão mais recente | [10.5281/zenodo.23989617](https://doi.org/10.5281/zenodo.23989617) |
-| DOI da versão 1.0.0 | [10.5281/zenodo.23989618](https://doi.org/10.5281/zenodo.23989618) |
 
 Em trabalhos que citem este material, prefira o DOI de conceito.
 
 > Lopes de Assis, A. C. (2026). *Desempenho e Estabilidade de Modelos YOLO
 > para Detecção de Frutos de Café em Smartphones: comparação entre delegates
-> TFLite* (Versão 1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.23989617
+> TFLite* [Software]. Zenodo. https://doi.org/10.5281/zenodo.23989617
 
 ## Financiamento
 

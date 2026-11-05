@@ -87,3 +87,19 @@ cafescan_resultados-*.zip
 artigos/
 # Pacotes temporarios de transferencia para compilacao fora da maquina
 _m*.tgz
+
+# ===========================================
+# Fontes da monografia
+# Nao versionados ate a defesa, para que o texto nao
+# circule antes da aprovacao pela banca. Os arquivos
+# permanecem na maquina local.
+# ===========================================
+monografia/
+
+# ===========================================
+# Documentos internos de revisao
+# Pareceres criticos, plano de submissao e
+# correspondencia. Material de trabalho, nao de
+# divulgacao.
+# ===========================================
+resultados/revisao/
