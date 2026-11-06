@@ -45,19 +45,20 @@ entrada ao segmento superior, sobre um subconjunto de 30 imagens.
 | `cafescan/` | Aplicação Android em Flutter empregada na medição em dispositivo |
 | `resultados/` | Dezessete arquivos CSV com as medições, além das figuras geradas |
 
+## Conjunto de imagens
+
+As 2.168 imagens de lavoura e os 17.659 frutos anotados são distribuídos à parte, por volume, sob licença Creative Commons Atribuição 4.0 Internacional, em <https://www.kaggle.com/datasets/andressac/coffee-fruit-detection-yolo>.
+
+Os metadados EXIF, XMP e IPTC foram removidos dos arquivos, que registravam a coordenada de aquisição em 618 das imagens. O cartão do conjunto descreve a procedência, o procedimento de anotação e as limitações conhecidas.
+
+Os arquivos de medição versionados aqui sustentam cada número publicado, de modo que as tabelas e as figuras do documento podem ser regeradas sem acesso às imagens.
+
 ## O que este repositório não contém
 
 **O texto da monografia.** Os fontes do documento permanecem fora do
 repositório até a defesa e a incorporação das correções solicitadas pela
 banca. Após a aprovação, o documento será depositado no repositório
 institucional do IFMG e passará a integrar este repositório.
-
-**O conjunto de imagens de lavoura.** As imagens foram adquiridas em
-propriedades privadas no município de Bambuí, Minas Gerais, e sua
-divulgação depende de autorização específica dos proprietários, ainda não
-obtida. O repositório traz, em contrapartida, os arquivos de medição que
-sustentam cada número publicado, de modo que as tabelas e as figuras do
-documento podem ser regeradas sem acesso às imagens.
 
 **Os pesos em formato PyTorch**, por volume. As variantes convertidas para
 TensorFlow Lite, que são as efetivamente avaliadas no dispositivo, estão
@@ -89,8 +90,7 @@ pip install -r requirements.txt
 ```
 
 As etapas, na ordem em que foram executadas, correspondem à numeração dos
-diretórios em `scripts/`. O treinamento e a avaliação dependem do conjunto
-de imagens, ausente pelo motivo exposto acima. As etapas estatísticas e de
+diretórios em `scripts/`. O treinamento e a avaliação dependem do conjunto de imagens, distribuído à parte conforme indicado acima. As etapas estatísticas e de
 geração de tabelas operam apenas sobre os arquivos CSV versionados e podem
 ser executadas de imediato.
 

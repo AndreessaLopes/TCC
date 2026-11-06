@@ -6,7 +6,7 @@ message: >-
   Se este material for utilizado, por favor cite-o conforme os campos
   abaixo.
 type: software
-version: 1.1.0
+version: 1.2.0
 authors:
   - given-names: Andressa Caroline
     family-names: Lopes de Assis
