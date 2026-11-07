@@ -106,3 +106,6 @@ resultados/revisao/
 
 # Pasta de material superado, mantida localmente e fora do controle de versao.
 obsoletos/
+
+# Rascunho do artigo, fora do repositorio publico ate a submissao.
+artigo_jrtip/

@@ -5,3 +5,11 @@
 .gitattributes  export-ignore
 .gitignore      export-ignore
 obsoletos/      export-ignore
+
+# Ferramentas de producao do texto da monografia. Editam o LaTeX e
+# conferem regras de redacao, de modo que nao sustentam nenhum numero
+# publicado nem geram nenhuma tabela ou figura. Permanecem no GitHub,
+# onde registram como o documento foi escrito, e ficam fora do pacote
+# citavel, que reune o codigo e os dados do experimento.
+scripts/08_escrita/     export-ignore
+scripts/10_conferencia/ export-ignore
