@@ -40,10 +40,10 @@ entrada ao segmento superior, sobre um subconjunto de 30 imagens.
 
 | Diretório | Conteúdo |
 |---|---|
-| `scripts/` | Oitenta e nove scripts, organizados por etapa do trabalho, do pré-processamento à geração das tabelas e figuras |
+| `scripts/` | Scripts organizados por etapa do trabalho, do pré-processamento à geração das tabelas e figuras |
 | `modelos_tflite/` | As seis variantes convertidas, nas três precisões, para as duas arquiteturas |
 | `cafescan/` | Aplicação Android em Flutter empregada na medição em dispositivo |
-| `resultados/` | Dezessete arquivos CSV com as medições, além das figuras geradas |
+| `resultados/` | Arquivos CSV com as medições do aparelho de referência e dos demais dispositivos, além das figuras geradas |
 
 ## Conjunto de imagens
 
@@ -90,14 +90,38 @@ pip install -r requirements.txt
 ```
 
 As etapas, na ordem em que foram executadas, correspondem à numeração dos
-diretórios em `scripts/`. O treinamento e a avaliação dependem do conjunto de imagens, distribuído à parte conforme indicado acima. As etapas estatísticas e de
-geração de tabelas operam apenas sobre os arquivos CSV versionados e podem
-ser executadas de imediato.
+diretórios em `scripts/`. O treinamento e a avaliação dependem do conjunto
+de imagens, distribuído à parte conforme indicado acima. As etapas
+estatísticas e de geração de tabelas operam apenas sobre os arquivos CSV
+versionados.
 
+Para reproduzir os intervalos de confiança, os testes de permutação e as
+respectivas tabelas, crie primeiro um diretório de saída.
+
+No PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force resultados/reproducao
 ```
-python scripts/09_estatistica/intervalos_bootstrap.py
-python scripts/09_estatistica/gerar_tabelas_bootstrap.py
+
+No Linux ou macOS:
+
+```bash
+mkdir -p resultados/reproducao
 ```
+
+Em seguida, execute:
+
+```bash
+python scripts/09_estatistica/intervalos_bootstrap.py resultados/csv/medicoes_dispositivo resultados/reproducao/intervalos_bootstrap.csv
+python scripts/09_estatistica/gerar_tabelas_bootstrap.py resultados/reproducao/intervalos_bootstrap.csv resultados/reproducao/intervalos_bootstrap_razoes.csv resultados/reproducao
+```
+
+O primeiro comando gera `intervalos_bootstrap.csv` e
+`intervalos_bootstrap_razoes.csv`. Com a versão publicada dos dados, esses
+arquivos devem ser idênticos aos correspondentes disponíveis em
+`resultados/csv/`. O segundo comando gera `intervalos.tex` e
+`razoes_ic.tex` no diretório de reprodução.
 
 ## Delimitação
 
@@ -117,12 +141,15 @@ máquina. O depósito no Zenodo possui identificador persistente próprio.
 | | |
 |---|---|
 | DOI de conceito, resolve para a versão mais recente | [10.5281/zenodo.23989617](https://doi.org/10.5281/zenodo.23989617) |
+| DOI da versão 1.4.0, empregada no TCC | [10.5281/zenodo.24025782](https://doi.org/10.5281/zenodo.24025782) |
 
-Em trabalhos que citem este material, prefira o DOI de conceito.
+Use o DOI de conceito para citar o projeto de forma geral. Para reproduzir
+ou citar exatamente os artefatos empregados no TCC, use o DOI da versão
+1.4.0.
 
 > Lopes de Assis, A. C. (2026). *Desempenho e Estabilidade de Modelos YOLO
 > para Detecção de Frutos de Café em Smartphones: comparação entre delegates
-> TFLite* [Software]. Zenodo. https://doi.org/10.5281/zenodo.23989617
+> TFLite* [Software]. Zenodo. https://doi.org/10.5281/zenodo.24025782
 
 ## Financiamento
 
