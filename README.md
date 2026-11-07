@@ -47,7 +47,7 @@ entrada ao segmento superior, sobre um subconjunto de 30 imagens.
 
 ## Conjunto de imagens
 
-As 2.168 imagens de lavoura e os 17.659 frutos anotados são distribuídos à parte, por volume, sob licença Creative Commons Atribuição 4.0 Internacional, em <https://www.kaggle.com/datasets/andressac/coffee-fruit-detection-yolo>.
+As 2.168 imagens de lavoura e os 17.659 frutos anotados são distribuídos à parte, por volume, sob licença Creative Commons Atribuição 4.0 Internacional, em <https://www.kaggle.com/datasets/andressac/coffee-fruit-detection-yolo>, sob DOI `10.34740/KAGGLE/DSV/21781111`.
 
 Os metadados EXIF, XMP e IPTC foram removidos dos arquivos, que registravam a coordenada de aquisição em 618 das imagens. O cartão do conjunto descreve a procedência, o procedimento de anotação e as limitações conhecidas.
 
