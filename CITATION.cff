@@ -1,4 +1,4 @@
-cff-version: 1.4.0
+cff-version: 1.2.0
 title: >-
   Desempenho e Estabilidade de Modelos YOLO para Detecção de Frutos de
   Café em Smartphones: comparação entre delegates TFLite
@@ -6,7 +6,7 @@ message: >-
   Se este material for utilizado, por favor cite-o conforme os campos
   abaixo.
 type: software
-version: 1.2.0
+version: 1.4.1
 authors:
   - given-names: Andressa Caroline
     family-names: Lopes de Assis
