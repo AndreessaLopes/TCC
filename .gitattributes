@@ -1,0 +1,7 @@
+# Arquivos que ficam no repositorio mas nao entram no pacote da release,
+# e portanto nao entram no deposito com DOI. O GitHub monta os pacotes com
+# git archive, que respeita a marcacao export-ignore.
+
+.gitattributes  export-ignore
+.gitignore      export-ignore
+obsoletos/      export-ignore

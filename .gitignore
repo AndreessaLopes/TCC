@@ -103,3 +103,6 @@ monografia/
 # divulgacao.
 # ===========================================
 resultados/revisao/
+
+# Pasta de material superado, mantida localmente e fora do controle de versao.
+obsoletos/
